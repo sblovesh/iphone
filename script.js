@@ -206,7 +206,6 @@
     $("#app-title").textContent = "메시지";
     $("#header-action").textContent = "";
     content.innerHTML = `
-      <div class="sms-note"><strong>메시지 미리보기</strong><span>문자는 목록으로만 확인할 수 있어요.</span></div>
       <div class="section-label">최근 메시지 · ${smsPreviews.length}</div>
       <div class="list-card sms-list">
         ${smsPreviews.map((item) => `
