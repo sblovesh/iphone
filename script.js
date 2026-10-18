@@ -12,48 +12,22 @@
     view: "lock",
     app: null,
     activeChat: null,
+    instagramScreen: "feed",
+    activeDM: null,
     activePhoto: null,
     activeNote: null,
     unread: true,
     messages: [
-      {
-        id: "minji",
-        name: "김민지",
-        avatar: "민",
-        color: "pink",
-        preview: "오늘 사진 보냈어! 확인해 봐",
-        time: "오후 7:42",
-        messages: [
-          { from: "incoming", text: "집에 잘 들어갔어?" },
-          { from: "outgoing", text: "응, 방금 도착했어." },
-          { from: "incoming", text: "오늘 찍은 사진 보내줄게!" },
-          { from: "incoming", text: "오늘 사진 보냈어! 확인해 봐" }
-        ]
-      },
-      {
-        id: "mom",
-        name: "엄마",
-        avatar: "엄",
-        color: "green",
-        preview: "내일 늦지 않게 일어나",
-        time: "오후 6:18",
-        messages: [
-          { from: "incoming", text: "밥은 먹었니?" },
-          { from: "outgoing", text: "응, 먹었어. 걱정하지 마." },
-          { from: "incoming", text: "내일 늦지 않게 일어나" }
-        ]
-      },
-      {
-        id: "unknown",
-        name: "알 수 없는 번호",
-        avatar: "?",
-        color: "gold",
-        preview: "모르는 번호로 온 메시지",
-        time: "오후 4:03",
-        messages: [
-          { from: "incoming", text: "안녕하세요. 번호가 맞는지 확인하려고 연락드렸습니다." }
-        ]
-      }
+      { id: "seobin", name: "서빈 님", avatar: "서", color: "pink", preview: "오늘 촬영 정말 수고했어요!", time: "오후 9:55", messages: [{from:"incoming",text:"오늘 촬영 정말 수고했어요!"},{from:"outgoing",text:"고마워요. 덕분에 잘 마무리했어요."}] },
+      { id: "uyeon", name: "우연 형", avatar: "우", color: "blue", preview: "내일 일정은 내가 정리해 둘게", time: "오후 9:20", messages: [{from:"incoming",text:"내일 일정은 내가 정리해 둘게"},{from:"outgoing",text:"고마워 형! 아침에 확인할게."}] },
+      { id: "mom", name: "엄마", avatar: "엄", color: "green", preview: "밥은 꼭 챙겨 먹어", time: "오후 8:42", messages: [{from:"incoming",text:"밥은 꼭 챙겨 먹어"},{from:"outgoing",text:"응 엄마. 촬영 끝나고 먹었어."}] },
+      { id: "director", name: "김도윤 감독님", avatar: "김", color: "gold", preview: "오늘 감정 연기 좋았습니다.", time: "오후 7:18", messages: [{from:"incoming",text:"오늘 감정 연기 좋았습니다. 다음 장면도 잘 부탁해요."}] },
+      { id: "agency", name: "소속사 홍보팀", avatar: "홍", color: "pink", preview: "내일 공개될 티저 확인 부탁드립니다.", time: "오후 6:50", messages: [{from:"incoming",text:"내일 공개될 티저 확인 부탁드립니다."}] },
+      { id: "coactor", name: "지훈이", avatar: "지", color: "blue", preview: "형 사진 올라온 거 봤어요ㅋㅋ", time: "오후 5:32", messages: [{from:"incoming",text:"형 사진 올라온 거 봤어요ㅋㅋ 완전 잘 나왔던데요?"}] },
+      { id: "stylist", name: "수연 실장님", avatar: "수", color: "green", preview: "피팅 사진 전달드려요!", time: "오후 4:11", messages: [{from:"incoming",text:"피팅 사진 전달드려요! 내일 의상은 이걸로 준비할게요."}] },
+      { id: "fanclub", name: "공식 팬카페 운영진", avatar: "팬", color: "gold", preview: "생일 라이브 일정 문의드립니다.", time: "오후 2:06", messages: [{from:"incoming",text:"생일 라이브 일정 관련해 확인 부탁드립니다."}] },
+      { id: "college", name: "동기 배우들", avatar: "동", color: "pink", preview: "다 같이 밥 먹자!", time: "어제", messages: [{from:"incoming",text:"이번 주에 다 같이 밥 먹자!"}] },
+      { id: "brand", name: "브랜드 협찬 담당자", avatar: "브", color: "blue", preview: "캠페인 제안서 보내드립니다.", time: "어제", messages: [{from:"incoming",text:"신규 캠페인 제안서 보내드립니다. 검토 부탁드립니다."}] }
     ],
     photos: [
       { id: 1, scene: "scene-1", title: "저녁 하늘", date: "오늘 오후 6:42" },
@@ -226,7 +200,8 @@
 
   function renderKakao() {
     const content = $("#app-content");
-    $("#app-title").textContent = state.activeChat ? (state.messages.find((item) => item.id === state.activeChat)?.name || "채팅") : "카카오톡";
+    $("#app-title").textContent = state.activeChat ? (state.messages.find((item) => item.id === state.activeChat)?.name || "채팅") : "채팅";
+    $("#app-screen").classList.toggle("kakao-mode", !state.activeChat);
     $("#header-action").textContent = state.activeChat ? "" : "＋";
     if (state.activeChat) {
       const chat = state.messages.find((item) => item.id === state.activeChat);
@@ -248,8 +223,9 @@
       return;
     }
     content.innerHTML = `
-      <div class="kakao-tools"><span>친구</span><span>채팅</span><span>오픈채팅</span><span>쇼핑</span></div>
-      <div class="kakao-search">⌕　이름 또는 채팅방 검색</div>
+      <div class="kakao-top-actions"><span>⌕</span><span>☏＋</span><span>⚙</span></div>
+      <div class="kakao-filters"><b>전체</b><span>안읽음 <i>289</i></span><span>ChatGPT</span><span>통화</span><span>☷</span></div>
+      <div class="kakao-ad"><small>AD</small><strong>찬 바람 불면 우울한가요?</strong><span>계절성 우울증인지 확인하기</span></div>
       <div class="kakao-list-label">채팅 ${state.messages.length}</div>
       <div class="kakao-list">
         ${state.messages.map((chat) => `<button class="kakao-row" data-kakao-chat="${chat.id}"><span class="kakao-avatar ${chat.color}">${escapeHTML(chat.avatar)}</span><span class="kakao-row-main"><strong>${escapeHTML(chat.name)}</strong><span>${escapeHTML(chat.preview)}</span></span><span class="kakao-row-meta">${escapeHTML(chat.time)}<i>1</i></span></button>`).join("")}
@@ -260,29 +236,31 @@
 
   function renderInstagram() {
     const content = $("#app-content");
-    $("#app-title").textContent = "Instagram";
-    $("#header-action").textContent = "♡";
-    content.innerHTML = `
-      <div class="ig-topbar"><strong>Instagram</strong><span>＋　♡　➤</span></div>
-      <div class="ig-stories">
-        ${[{n:"내 스토리",c:"mine"},{n:"minji_day",c:"pink"},{n:"daily.j",c:"orange"},{n:"summer_lee",c:"blue"},{n:"coffee.zip",c:"green"}].map((x,i)=>`<button class="ig-story" data-story="${x.n}"><span class="ig-story-ring ${x.c}"><i>${["＋","민","J","S","☕"][i]}</i></span><small>${x.n}</small></button>`).join("")}
-      </div>
-      <article class="ig-post">
-        <div class="ig-post-user"><span class="ig-mini-avatar pink">민</span><strong>minji_day</strong><span class="ig-more">•••</span></div>
-        <div class="ig-photo ig-photo-sunset" role="img" aria-label="노을이 지는 바다 사진"><span class="ig-sun"></span><span class="ig-water"></span><span class="ig-horizon"></span></div>
-        <div class="ig-actions"><button data-like="post1" aria-label="좋아요">♡</button><button data-comment="post1" aria-label="댓글">♧</button><button aria-label="공유">➤</button><button class="ig-save" aria-label="저장">♧</button></div>
-        <div class="ig-post-copy"><strong id="ig-likes">좋아요 128개</strong><p><strong>minji_day</strong> 오늘 하늘 색이 너무 예뻤다 🌅</p><p class="ig-comments" id="ig-comment-count">댓글 12개 모두 보기</p><small>2시간 전</small></div>
-      </article>
-      <article class="ig-post">
-        <div class="ig-post-user"><span class="ig-mini-avatar orange">J</span><strong>daily.j</strong><span class="ig-more">•••</span></div>
-        <div class="ig-photo ig-photo-cafe" role="img" aria-label="따뜻한 커피와 카페 테이블 사진"><div class="ig-cup"><span></span></div><div class="ig-plate"></div><div class="ig-table-line"></div></div>
-        <div class="ig-actions"><button data-like="post2" aria-label="좋아요">♡</button><button data-comment="post2" aria-label="댓글">♧</button><button aria-label="공유">➤</button><button class="ig-save" aria-label="저장">♧</button></div>
-        <div class="ig-post-copy"><strong>좋아요 86개</strong><p><strong>daily.j</strong> 느긋한 주말 오후 ☕</p><small>5시간 전</small></div>
-      </article>
-      <div class="ig-bottom-tabs"><span>⌂</span><span>⌕</span><span>＋</span><span>▣</span><span class="ig-profile-dot">예</span></div>`;
-    content.querySelectorAll("[data-like]").forEach((button) => button.addEventListener("click", () => { const liked = button.classList.toggle("liked"); button.textContent = liked ? "♥" : "♡"; const likes = $("#ig-likes"); if (likes) likes.textContent = liked ? "좋아요 129개" : "좋아요 128개"; }));
-    content.querySelectorAll("[data-comment]").forEach((button) => button.addEventListener("click", () => showToast("댓글 기능은 다음 단계에서 추가할 수 있어요.")));
-    content.querySelectorAll("[data-story]").forEach((button) => button.addEventListener("click", () => showToast(`${button.dataset.story} 스토리 · 데모`)));
+    $("#app-screen").classList.remove("kakao-mode");
+    const dmItems = [
+      {name:"서빈", avatar:"서", color:"pink", preview:"오늘도 고생 많았어!", time:"방금"},
+      {name:"민서", avatar:"민", color:"blue", preview:"팬이에요! 항상 응원해요 💗", time:"12분"},
+      {name:"라온 엔터테인먼트", avatar:"R", color:"gold", preview:"브랜드 캠페인 협업 문의드립니다.", time:"1시간"},
+      {name:"드라마 공식 계정", avatar:"D", color:"green", preview:"티저 게시물 확인 부탁드려요.", time:"3시간"},
+      {name:"지우", avatar:"지", color:"pink", preview:"촬영장 사진 너무 멋있어요!", time:"어제"},
+      {name:"팬 계정", avatar:"♡", color:"blue", preview:"정말 팬이에요 🥹", time:"어제"}
+    ];
+    if (state.instagramScreen === "dm-chat") {
+      $("#app-title").textContent = "서빈"; $("#header-action").textContent = "⋯";
+      content.innerHTML = `<div class="ig-dm-chat"><div class="ig-dm-person"><span class="ig-mini-avatar pink">서</span><strong>서빈</strong><small>프로필 보기</small></div><div class="ig-dm-history"><div class="ig-dm-date">오늘</div><div class="ig-dm-bubble incoming">오늘 촬영 끝났어? 고생 많았어!</div><div class="ig-dm-bubble outgoing">응 이제 끝났어 ㅎㅎ 너는 뭐 해?</div><div class="ig-dm-bubble incoming">나도 방금 집 도착! 내일 티저 공개라며 👀</div><div class="ig-dm-bubble outgoing">맞아ㅋㅋ 긴장된다</div></div><form class="ig-dm-compose" id="ig-dm-form"><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300"><button>➤</button></form></div>`;
+      $("#ig-dm-form").addEventListener("submit", e => { e.preventDefault(); const input=$("#ig-dm-input"); if(input.value.trim()){ const bubble=document.createElement("div"); bubble.className="ig-dm-bubble outgoing"; bubble.textContent=input.value.trim(); $(".ig-dm-history").appendChild(bubble); input.value=""; }}); return;
+    }
+    if (state.instagramScreen === "dm") {
+      $("#app-title").textContent = "ye_751"; $("#header-action").textContent = "✎";
+      content.innerHTML = `<div class="ig-dm-top"><div class="ig-dm-account">ye_751 <span>●</span></div><div class="ig-dm-search">⌕　검색</div></div><div class="ig-dm-list-title">메시지 <span>요청</span></div><div class="ig-dm-list">${dmItems.map(x=>`<button class="ig-dm-row" data-dm="${x.name}"><span class="ig-mini-avatar ${x.color}">${x.avatar}</span><span><strong>${x.name}</strong><small>${x.preview}</small></span><time>${x.time}</time></button>`).join("")}</div><div class="ig-bottom-tabs"><button data-ig-nav="feed">⌂</button><button>▣</button><button data-ig-nav="dm" class="ig-nav-active">➤</button><button>⌕</button><button>●</button></div>`;
+      content.querySelectorAll("[data-dm]").forEach(b=>b.addEventListener("click",()=>{state.activeDM=b.dataset.dm;state.instagramScreen="dm-chat";renderInstagram();}));
+      content.querySelectorAll("[data-ig-nav]").forEach(b=>b.addEventListener("click",()=>{state.instagramScreen=b.dataset.igNav;renderInstagram();})); return;
+    }
+    $("#app-title").textContent = "Instagram"; $("#header-action").textContent = "♡";
+    content.innerHTML = `<div class="ig-topbar"><span>＋</span><strong>Instagram</strong><span>▣　♡</span></div><div class="ig-post"><div class="ig-post-user"><span class="ig-mini-avatar blue">tvN</span><div><strong>tvn_drama</strong><small>협찬 · 공식 계정</small></div><span class="ig-more">•••</span></div><div class="ig-drama-ad"><div class="ig-drama-tag">COMING SOON</div><div class="ig-drama-title">올겨울, 가장 뜨거운 이야기</div><div class="ig-drama-subtitle">새로운 얼굴 · 새로운 로맨스</div><div class="ig-drama-credit">주연 황예찬</div><div class="ig-drama-caption">첫 티저 공개 D-3</div></div><div class="ig-actions"><button data-like="drama" aria-label="좋아요">♡</button><button data-comment="drama" aria-label="댓글">♧</button><button aria-label="공유">➤</button><button class="ig-save" aria-label="저장">♧</button></div><div class="ig-post-copy"><strong id="ig-likes">좋아요 24,681개</strong><p><strong>tvn_drama</strong> 올겨울을 설레게 할 새로운 드라마. 주연 황예찬의 첫 티저를 곧 공개합니다 🎬</p><p class="ig-comments">댓글 318개 모두 보기</p><small>홍보 · 2시간 전</small></div></div><div class="ig-bottom-tabs"><button data-ig-nav="feed" class="ig-nav-active">⌂</button><button>▣</button><button data-ig-nav="dm">➤</button><button>⌕</button><button>●</button></div>`;
+    content.querySelectorAll("[data-like]").forEach(button=>button.addEventListener("click",()=>{button.classList.toggle("liked");button.textContent=button.classList.contains("liked")?"♥":"♡";}));
+    content.querySelectorAll("[data-comment]").forEach(button=>button.addEventListener("click",()=>showToast("댓글 기능은 다음 단계에서 추가할 수 있어요.")));
+    content.querySelectorAll("[data-ig-nav]").forEach(button=>button.addEventListener("click",()=>{state.instagramScreen=button.dataset.igNav;renderInstagram();}));
   }
 
   function renderPhotos() {
@@ -429,7 +407,9 @@
   });
 
   $("#back-button").addEventListener("click", () => {
-    if ((state.app === "messages" || state.app === "kakao") && state.activeChat) {
+    if (state.app === "instagram" && state.instagramScreen !== "feed") {
+      state.instagramScreen = state.instagramScreen === "dm-chat" ? "dm" : "feed"; renderInstagram();
+    } else if ((state.app === "messages" || state.app === "kakao") && state.activeChat) {
       state.activeChat = null;
       if (state.app === "kakao") renderKakao(); else renderMessages();
     } else if (state.app === "photos" && state.activePhoto) {

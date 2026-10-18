@@ -278,3 +278,76 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .ig-post-copy p { margin: 4px 0; }.ig-post-copy small { display: block; color: #999; font-size: 9px; margin-top: 5px; }.ig-comments { color: #8d8d8d; }
 .ig-bottom-tabs { position: sticky; bottom: 0; display: flex; justify-content: space-around; align-items: center; height: 47px; background: #fffffff5; border-top: 1px solid #eee; font-size: 22px; }
 .ig-profile-dot { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: #d9b3a1; font-size: 10px; font-weight: 700; }
+
+/* Detailed actor-phone KakaoTalk and Instagram mock screens */
+.app-screen.kakao-mode { background:#fff; }
+.app-screen.kakao-mode .app-header { border-bottom:0; background:#fff; }
+.app-screen.kakao-mode .app-header h1 { font-size:23px; font-weight:500; }
+.app-screen.kakao-mode .app-content { overflow-y:auto; background:#fff; }
+.kakao-top-actions { display:flex; justify-content:flex-end; gap:25px; padding:7px 20px 13px; font-size:24px; color:#222; }
+.kakao-filters { display:flex; align-items:center; gap:8px; overflow-x:auto; padding:0 15px 15px; white-space:nowrap; }
+.kakao-filters b,.kakao-filters span { border-radius:28px; padding:10px 17px; background:#f2f2f2; color:#666; font-size:13px; font-weight:400; }
+.kakao-filters b { background:#171717; color:white; }
+.kakao-filters i { font-style:normal; color:white; background:#fa572b; border-radius:12px; padding:2px 7px; font-size:10px; }
+.kakao-ad { position:relative; min-height:86px; margin:4px 15px 15px; padding:22px 14px 16px 38%; border-radius:16px; background:linear-gradient(110deg,#f1f1f1,#f7f7f7); display:flex; flex-direction:column; justify-content:center; gap:5px; }
+.kakao-ad:before { content:'마음건강'; position:absolute; left:12%; top:17px; color:#64b8df; font-weight:700; font-size:13px; }
+.kakao-ad small { position:absolute; right:10px; top:8px; border:1px solid #aaa; border-radius:12px; padding:1px 5px; color:#999; background:white; }
+.kakao-ad strong { font-size:15px; color:#444; }
+.kakao-ad span { font-size:12px; color:#888; }
+.kakao-list-label { padding:8px 17px 5px; font-size:12px; color:#888; }
+.kakao-list { padding-bottom:14px; }
+.kakao-row { min-height:69px; padding:10px 16px; gap:12px; }
+.kakao-avatar { border-radius:17px; width:47px; height:47px; flex-basis:47px; }
+.kakao-avatar.blue { background:linear-gradient(145deg,#b4e0ff,#79baff); }
+.kakao-row-meta i { display:none; }
+.kakao-bottom-tabs { position:sticky; bottom:0; }
+.ig-topbar { display:flex; align-items:center; justify-content:space-between; padding:7px 18px 13px; font-size:22px; }
+.ig-topbar strong { font-size:27px; letter-spacing:-1.5px; }
+.ig-post-user { display:flex; align-items:center; gap:9px; padding:10px 14px; }
+.ig-post-user div { display:flex; flex-direction:column; gap:3px; flex:1; }
+.ig-post-user small { color:#888; font-size:10px; }
+.ig-drama-ad { height: min(54vh,470px); min-height:310px; padding:30px 22px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:white; background:radial-gradient(ellipse at 50% 35%,#b9a28b 0%,#665b62 32%,#252734 72%,#11131c 100%); position:relative; overflow:hidden; }
+.ig-drama-ad:before,.ig-drama-ad:after { content:''; position:absolute; width:65%; height:120%; top:-10%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent); transform:rotate(20deg); }
+.ig-drama-ad:after { transform:rotate(-20deg); }
+.ig-drama-tag { font-size:10px; letter-spacing:4px; border:1px solid rgba(255,255,255,.8); padding:8px 12px; margin-bottom:26px; z-index:1; }
+.ig-drama-title { font-size:clamp(24px,6vw,38px); font-weight:800; line-height:1.35; text-shadow:0 2px 10px #111; z-index:1; }
+.ig-drama-subtitle { margin-top:13px; font-size:13px; letter-spacing:1px; z-index:1; }
+.ig-drama-credit { margin-top:50px; border-top:1px solid #ffffff88; padding-top:12px; font-size:12px; z-index:1; }
+.ig-drama-caption { position:absolute; bottom:15px; right:15px; font-size:10px; color:#eee; z-index:1; }
+.ig-actions { display:flex; align-items:center; gap:17px; padding:9px 15px 5px; }
+.ig-actions button { border:0; background:transparent; font-size:25px; padding:0; color:#111; }
+.ig-actions .ig-save { margin-left:auto; }
+.ig-post-copy { padding:0 15px 12px; font-size:12px; line-height:1.5; }
+.ig-post-copy p { margin:5px 0; }
+.ig-post-copy small,.ig-comments { color:#888; }
+.ig-bottom-tabs { position:sticky; bottom:0; display:flex; justify-content:space-around; align-items:center; padding:12px 6px calc(12px + env(safe-area-inset-bottom)); background:rgba(255,255,255,.97); border-top:1px solid #f1f1f1; z-index:5; }
+.ig-bottom-tabs button { border:0; background:transparent; color:#111; font-size:25px; min-width:36px; }
+.ig-bottom-tabs .ig-nav-active { font-weight:800; }
+.ig-dm-top { padding:8px 17px 14px; }
+.ig-dm-account { text-align:center; font-size:22px; font-weight:700; padding:0 0 18px; }
+.ig-dm-account span { color:#ff3040; font-size:10px; }
+.ig-dm-search { background:#f0f1f5; border-radius:12px; padding:12px 14px; color:#737985; font-size:14px; }
+.ig-dm-list-title { display:flex; justify-content:space-between; padding:8px 16px 6px; font-size:15px; font-weight:700; }
+.ig-dm-list-title span { color:#7b9ed1; font-size:12px; }
+.ig-dm-row { width:100%; border:0; background:white; display:flex; align-items:center; gap:12px; text-align:left; padding:11px 15px; min-height:67px; }
+.ig-dm-row .ig-mini-avatar { width:47px; height:47px; flex:0 0 47px; border-radius:50%; display:grid; place-items:center; font-size:17px; }
+.ig-mini-avatar.blue { background:#dce8f5; color:#58718d; }
+.ig-mini-avatar.gold { background:#f3dfb4; color:#805c2a; }
+.ig-mini-avatar.green { background:#d5e9d9; color:#467b54; }
+.ig-mini-avatar.pink { background:#f0d7df; color:#8c5267; }
+.ig-dm-row>span:nth-child(2) { display:flex; flex-direction:column; gap:5px; flex:1; min-width:0; }
+.ig-dm-row strong { font-size:13px; font-weight:500; }
+.ig-dm-row small,.ig-dm-row time { color:#858585; font-size:11px; }
+.ig-dm-row small { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ig-dm-chat { height:100%; min-height:440px; display:flex; flex-direction:column; background:white; }
+.ig-dm-person { display:flex; align-items:center; gap:10px; padding:12px 15px; border-bottom:1px solid #eee; }
+.ig-dm-person .ig-mini-avatar { width:37px; height:37px; display:grid; place-items:center; border-radius:50%; }
+.ig-dm-person small { margin-left:auto; color:#888; font-size:11px; }
+.ig-dm-history { display:flex; flex-direction:column; gap:10px; padding:18px 13px; flex:1; overflow:auto; }
+.ig-dm-date { text-align:center; color:#999; font-size:10px; margin-bottom:12px; }
+.ig-dm-bubble { max-width:78%; border-radius:20px; padding:10px 13px; font-size:13px; line-height:1.4; }
+.ig-dm-bubble.incoming { align-self:flex-start; background:#f0f0f0; color:#222; }
+.ig-dm-bubble.outgoing { align-self:flex-end; background:#5b5ce2; color:white; }
+.ig-dm-compose { display:flex; gap:8px; padding:10px; border:1px solid #eee; border-radius:24px; margin:8px 10px 14px; }
+.ig-dm-compose input { border:0; outline:0; flex:1; min-width:0; font-size:13px; }
+.ig-dm-compose button { border:0; background:transparent; color:#5367d9; font-size:20px; }
