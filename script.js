@@ -89,9 +89,10 @@
 
   function closePasscode() {
     $("#passcode-modal").classList.add("hidden");
+    $("#passcode-modal").setAttribute("aria-hidden", "true");
     enteredPasscode = "";
     updatePasscodeDots();
-    $("#passcode-error").textContent = "데모 암호: 0711";
+    $("#passcode-error").textContent = "암호를 입력하세요.";
   }
 
   function escapeHTML(value) {
@@ -323,8 +324,9 @@
   $("#unlock-button").addEventListener("click", () => {
     enteredPasscode = "";
     updatePasscodeDots();
-    $("#passcode-error").textContent = "데모 암호: 0711";
+    $("#passcode-error").textContent = "암호를 입력하세요.";
     $("#passcode-modal").classList.remove("hidden");
+    $("#passcode-modal").setAttribute("aria-hidden", "false");
   });
 
   $("#passcode-close").addEventListener("click", closePasscode);
@@ -355,7 +357,7 @@
   $("#passcode-delete").addEventListener("click", () => {
     enteredPasscode = enteredPasscode.slice(0, -1);
     updatePasscodeDots();
-    $("#passcode-error").textContent = "데모 암호: 0711";
+    $("#passcode-error").textContent = "암호를 입력하세요.";
   });
 
   document.querySelectorAll("[data-open]").forEach((button) => {
