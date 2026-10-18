@@ -210,10 +210,8 @@
       if (!chat) { state.activeChat = null; renderKakao(); return; }
       content.innerHTML = `
         <div class="kakao-chat-screen">
-          <div class="kakao-chat-info">${kakaoAvatar(chat, true)}<strong>${escapeHTML(chat.name)}</strong><span>온라인</span></div>
           <div class="kakao-chat-log" id="kakao-chat-log">
-            <div class="kakao-date">오늘</div>
-            ${chat.messages.map((message) => message.from === "date" ? `<div class="kakao-date">${escapeHTML(message.text)}</div>` : message.from === "photo" ? `<div class="kakao-message-photo ${chat.id === "uyeon" ? "incoming" : "outgoing"}"><img src="${message.text}" alt="보낸 사진"></div>` : `<div class="kakao-message-wrap ${message.from}">${message.from === "incoming" ? kakaoAvatar(chat, true) : ""}<div class="kakao-message ${message.from}">${escapeHTML(message.text)}${message.time ? `<small>${escapeHTML(message.time)}</small>` : ""}</div></div>`).join("")}
+            ${chat.messages.map((message) => message.from === "date" ? `<div class="kakao-date">${escapeHTML(message.text)}</div>` : message.from === "photo" ? `<div class="kakao-message-photo incoming">${kakaoAvatar(chat, true)}<img src="${message.text}" alt="서빈 님이 보낸 사진"></div>` : `<div class="kakao-message-wrap ${message.from}">${message.from === "incoming" ? kakaoAvatar(chat, true) : ""}<div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}${message.time ? `<small>${escapeHTML(message.time)}</small>` : ""}</div></div>`).join("")}
           </div>
           <form class="kakao-compose" id="kakao-form"><button type="button" aria-label="첨부">＋</button><input id="kakao-input" maxlength="300" placeholder="메시지 입력" autocomplete="off"><button type="submit" aria-label="보내기">➤</button></form>
         </div>`;
@@ -233,33 +231,114 @@
         ${state.messages.map((chat) => `<button class="kakao-row" data-kakao-chat="${chat.id}">${kakaoAvatar(chat)}<span class="kakao-row-main"><strong>${escapeHTML(chat.name)}</strong><span>${escapeHTML(chat.preview)}</span></span><span class="kakao-row-meta">${escapeHTML(chat.time)}<i>1</i></span></button>`).join("")}
       </div>
       <div class="kakao-bottom-tabs"><span>♙<small>친구</small></span><span class="selected">▤<small>채팅</small></span><span>◉<small>오픈채팅</small></span><span>◷<small>쇼핑</small></span><span>•••<small>더보기</small></span></div>`;
-    content.querySelectorAll("[data-kakao-chat]").forEach((button) => button.addEventListener("click", () => { state.activeChat = button.dataset.kakaoChat; renderKakao(); }));
+    content.querySelectorAll("[data-kakao-chat]").forEach((button) => button.addEventListener("click", () => { if (!["seobin", "uyeon"].includes(button.dataset.kakaoChat)) return; state.activeChat = button.dataset.kakaoChat; renderKakao(); }));
   }
 
   function renderInstagram() {
     const content = $("#app-content");
     $("#app-screen").classList.remove("kakao-mode");
+    const defaultAvatar = '<img class="ig-avatar-photo" src="avatar-default.jpg" alt="프로필">';
+    const seobinAvatar = '<img class="ig-avatar-photo" src="instagram-seobin.jpg" alt="서빈 프로필">';
     const dmItems = [
-      {name:"서빈", avatar:"서", color:"pink", preview:"오늘도 고생 많았어!", time:"방금"},
-      {name:"민서", avatar:"민", color:"blue", preview:"팬이에요! 항상 응원해요 💗", time:"12분", disabled:true},
-      {name:"라온 엔터테인먼트", avatar:"R", color:"gold", preview:"브랜드 캠페인 협업 문의드립니다.", time:"1시간"},
-      {name:"드라마 공식 계정", avatar:"D", color:"green", preview:"티저 게시물 확인 부탁드려요.", time:"3시간"},
-      {name:"지우", avatar:"지", color:"pink", preview:"촬영장 사진 너무 멋있어요!", time:"어제"},
-      {name:"팬 계정", avatar:"♡", color:"blue", preview:"정말 팬이에요 🥹", time:"어제"}
+      {name:"서빈", handle:"seo_BBini", preview:"알림을 꺼놔서…", time:"방금", avatar:seobinAvatar},
+      {name:"민서", handle:"minseo_fan", preview:"팬이에요! 항상 응원해요 💗", time:"12분", avatar:defaultAvatar},
+      {name:"라온 엔터테인먼트", handle:"raon_ent", preview:"브랜드 캠페인 협업 문의드립니다.", time:"1시간", avatar:defaultAvatar},
+      {name:"드라마 공식 계정", handle:"drama_official", preview:"티저 게시물 확인 부탁드려요.", time:"3시간", avatar:defaultAvatar},
+      {name:"지우", handle:"jiwoo_actor", preview:"촬영장 사진 너무 멋있어요!", time:"어제", avatar:defaultAvatar},
+      {name:"팬 계정", handle:"sihyeon_fan", preview:"정말 팬이에요 🥹", time:"어제", avatar:defaultAvatar}
+    ];
+    const dmConversation = [
+      ["incoming","그..."],
+      ["incoming","저 좋아해 주셔서 감사하긴 한데"],
+      ["incoming","팔로우 취소 좀 해주시면 안 될까요...?"],
+      ["incoming","실수면 좋겠지만"],
+      ["incoming","실수가 아닐 수도 있으니..."],
+      ["incoming","저 연예인 같은 거 이제 안 할 거라"],
+      ["incoming","이런 관심 좀 부담스러워요"],
+      ["outgoing","연예인 안 하시려구요?"],
+      ["outgoing","왜요??"],
+      ["incoming","네"],
+      ["outgoing","이 시간에 안 주무세요?"],
+      ["incoming","아"],
+      ["incoming","저 원래 늦게 자서요..."],
+      ["outgoing","혹시 왜 연예인 안 하시려는 건지"],
+      ["outgoing","물어봐도 돼요?"],
+      ["incoming","어..."],
+      ["outgoing","너무 부담스러우시면 말씀 안 하셔도 돼요"],
+      ["outgoing","그냥 팬이라서 궁금했어요"],
+      ["incoming","아..."],
+      ["incoming","그러면 혹시 저도 궁금한 거 물어봐도 돼요?"],
+      ["outgoing","당연하죠"],
+      ["incoming","그, 많고 많은 아이돌 중에"],
+      ["incoming","왜 저를 좋아하시는 거예요?"],
+      ["outgoing","그거 대답하면 제 질문에도"],
+      ["outgoing","대답해 주시는 건가요? ㅎㅁㅎ"],
+      ["incoming","어..."],
+      ["incoming","넵"],
+      ["outgoing","서빈 님 노래가 제일 좋았어요"],
+      ["outgoing","그 릴스 딱 하나 올라온 거"],
+      ["outgoing","그래서 좀 찾아봤는데"],
+      ["outgoing","무대에서 춤도 잘 추시더라구요"],
+      ["outgoing","그래서 좋아해요"],
+      ["incoming","감사합니다..."],
+      ["incoming","제가 사실"],
+      ["incoming","저... 좋아하는 분 처음 봐요..."],
+      ["outgoing","이제 말해 주시는 건가요?"],
+      ["incoming","근데 들으셔도 별 감흥은 없으실 텐데요..."],
+      ["outgoing","괜찮아요"],
+      ["incoming","음..."],
+      ["incoming","제가 스물넷이라"],
+      ["incoming","아이돌 하기엔 넘 늦은 것 같아서요"],
+      ["outgoing","네???"],
+      ["outgoing","그런 게 어딨어요"],
+      ["outgoing","아무 오디션이나 가면 서빈 님은 다 받을 텐데??"],
+      ["incoming","그게 큰 이유는 아니고..."],
+      ["incoming","제가 그룹이 두 번 엎어져서요"],
+      ["outgoing","아 죄송해요"],
+      ["outgoing","그거까진 몰랐어요 ㅜㅁㅜ"],
+      ["incoming","괜찮아요"],
+      ["incoming","모르는 게 당연하니까..."],
+      ["incoming","아무튼 그래서 확신이 없어요"],
+      ["incoming","주변에서 좋게 말해줘도"],
+      ["incoming","제가 겁이 나서..."],
+      ["outgoing","그러면 노래라도 불러주시면 안 돼요?"],
+      ["incoming","노래요?"],
+      ["outgoing","네네, 그 인스타 릴스에"],
+      ["outgoing","올리신 거처럼..."],
+      ["incoming","아..."],
+      ["outgoing","인스타 릴스가 아니더라도"],
+      ["outgoing","사클 같은 데도 괜찮아요!!"],
+      ["incoming","어..."],
+      ["incoming","꼭 제 노래여야 하는 거예요?"],
+      ["outgoing","네!!"],
+      ["outgoing","제가 사실 서빈 님 노래 아니면 잠을 못 자요"],
+      ["incoming","네?"],
+      ["outgoing","진짜입니다..."],
+      ["outgoing","그러니까 부탁할게요"],
+      ["outgoing","노래라도 계속 해주시면 안 돼요?"],
+      ["incoming","조금만 더 고민 해보고..."],
+      ["outgoing","고민이라도 해주셔서 감사합니다"],
+      ["outgoing","그리고 늦은 밤에 팔로우 걸어서 죄송해요"],
+      ["incoming","아 그거 실수 아니었어요?"],
+      ["outgoing","실수는 맞는데"],
+      ["outgoing","피해 드린 건 맞으니..."],
+      ["incoming","괜찮아요"],
+      ["incoming","알림을 아예 꺼놔서"]
     ];
     if (state.instagramScreen === "dm-chat") {
-      $("#app-title").textContent = "서빈"; $("#header-action").textContent = "⋯";
-      content.innerHTML = `<div class="ig-dm-chat"><div class="ig-dm-person"><span class="ig-mini-avatar pink">서</span><strong>서빈</strong><small>프로필 보기</small></div><div class="ig-dm-history"><div class="ig-dm-date">오늘</div><div class="ig-dm-bubble incoming">오늘 촬영 끝났어? 고생 많았어!</div><div class="ig-dm-bubble outgoing">응 이제 끝났어 ㅎㅎ 너는 뭐 해?</div><div class="ig-dm-bubble incoming">나도 방금 집 도착! 내일 티저 공개라며 👀</div><div class="ig-dm-bubble outgoing">맞아ㅋㅋ 긴장된다</div></div><form class="ig-dm-compose" id="ig-dm-form"><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300"><button>➤</button></form></div>`;
-      $("#ig-dm-form").addEventListener("submit", e => { e.preventDefault(); const input=$("#ig-dm-input"); if(input.value.trim()){ const bubble=document.createElement("div"); bubble.className="ig-dm-bubble outgoing"; bubble.textContent=input.value.trim(); $(".ig-dm-history").appendChild(bubble); input.value=""; }}); return;
+      $("#app-title").textContent = "seo_BBini"; $("#header-action").textContent = "⋯";
+      content.innerHTML = `<div class="ig-dm-chat"><div class="ig-dm-person">${seobinAvatar}<div class="ig-dm-name"><strong>서빈</strong><small>seo_BBini</small></div><span class="ig-dm-head-actions">☎　▢</span></div><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우하지 않음</small></div><div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-date">2024년 7월 12일</div>${dmConversation.map(([from,text])=>`<div class="ig-dm-line ${from}">${from === "incoming" ? seobinAvatar : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div><form class="ig-dm-compose" id="ig-dm-form"><button type="button" class="ig-camera" aria-label="카메라">◎</button><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300"><button type="submit" aria-label="보내기">➤</button></form></div>`;
+      const history = $("#ig-dm-history"); history.scrollTop = history.scrollHeight;
+      $("#ig-dm-form").addEventListener("submit", e => { e.preventDefault(); const input=$("#ig-dm-input"); if(input.value.trim()){ const line=document.createElement("div"); line.className="ig-dm-line outgoing"; const bubble=document.createElement("div"); bubble.className="ig-dm-bubble outgoing"; bubble.textContent=input.value.trim(); line.appendChild(bubble); history.appendChild(line); input.value=""; history.scrollTop=history.scrollHeight; }}); return;
     }
     if (state.instagramScreen === "dm") {
       $("#app-title").textContent = "sihye0n_an"; $("#header-action").textContent = "✎";
-      content.innerHTML = `<div class="ig-dm-top"><div class="ig-dm-account">sihye0n_an <span>●</span></div><div class="ig-dm-search">⌕　검색</div></div><div class="ig-dm-list-title">메시지 <span>요청</span></div><div class="ig-dm-list">${dmItems.map(x=>`<button class="ig-dm-row" data-dm="${x.name}"><span class="ig-mini-avatar ${x.color}">${x.avatar}</span><span><strong>${x.name}</strong><small>${x.preview}</small></span><time>${x.time}</time></button>`).join("")}</div><div class="ig-bottom-tabs"><button data-ig-nav="feed">⌂</button><button>▣</button><button data-ig-nav="dm" class="ig-nav-active">➤</button><button>⌕</button><button>●</button></div>`;
+      content.innerHTML = `<div class="ig-dm-top"><div class="ig-dm-account">sihye0n_an <span>⌄</span></div><div class="ig-dm-search">⌕　검색</div></div><div class="ig-dm-list-title">메시지 <span>요청</span></div><div class="ig-dm-list">${dmItems.map(x=>`<button class="ig-dm-row" data-dm="${x.name}">${x.avatar}<span><strong>${x.name}</strong><small>${x.preview}</small></span><time>${x.time}</time></button>`).join("")}</div><div class="ig-bottom-tabs"><button data-ig-nav="feed">⌂</button><button>▣</button><button data-ig-nav="dm" class="ig-nav-active">➤</button><button>⌕</button><button>●</button></div>`;
       content.querySelectorAll("[data-dm]").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.dm !== "서빈") return; state.activeDM=b.dataset.dm;state.instagramScreen="dm-chat";renderInstagram();}));
       content.querySelectorAll("[data-ig-nav]").forEach(b=>b.addEventListener("click",()=>{state.instagramScreen=b.dataset.igNav;renderInstagram();})); return;
     }
     $("#app-title").textContent = "Instagram"; $("#header-action").textContent = "♡";
-    content.innerHTML = `<div class="ig-topbar"><span>＋</span><strong>Instagram</strong><span>▣　♡</span></div><div class="ig-post"><div class="ig-post-user"><span class="ig-mini-avatar blue">tvN</span><div><strong>tvn_drama</strong><small>협찬 · 공식 계정</small></div><span class="ig-more">•••</span></div><div class="ig-drama-ad ig-actor-photo"><img src="actor-feed.jpg" alt="안시현 배우 사진"></div><div class="ig-actions"><button data-like="drama" aria-label="좋아요">♡</button><button data-comment="drama" aria-label="댓글">♧</button><button aria-label="공유">➤</button><button class="ig-save" aria-label="저장">♧</button></div><div class="ig-post-copy"><strong id="ig-likes">좋아요 24,681개</strong><p><strong>tvn_drama</strong> 올겨울을 설레게 할 새로운 드라마. 배우 안시현, 드라마 ‘청춘 실종 사건’ 남자 주인공으로 캐스팅 🎬 많은 기대 부탁드립니다. #안시현 #청춘실종사건 #캐스팅</p><p class="ig-comments">댓글 318개 모두 보기</p><small>홍보 · 2시간 전</small></div></div><div class="ig-bottom-tabs"><button data-ig-nav="feed" class="ig-nav-active">⌂</button><button>▣</button><button data-ig-nav="dm">➤</button><button>⌕</button><button>●</button></div>`;
+    content.innerHTML = `<div class="ig-topbar"><span>＋</span><strong>Instagram</strong><span>▣　♡</span></div><div class="ig-post"><div class="ig-post-user"><img class="ig-brand-avatar" src="TVING.jpg" alt="tvN 드라마 프로필"><div><strong>tvn_drama</strong><small>추천 게시물</small></div><span class="ig-more">•••</span></div><div class="ig-drama-ad ig-actor-photo"><img class="ig-blurred-bg" src="actor-feed.jpg" alt="청춘 실종 사건 드라마 홍보 이미지"><div class="ig-promo-overlay"><span>tvN 새 드라마</span><strong>청춘 실종 사건</strong><b>배우 안시현<br>남자 주인공 캐스팅</b><small>COMING SOON · 2026</small></div></div><div class="ig-actions"><button data-like="drama" aria-label="좋아요">♡</button><button data-comment="drama" aria-label="댓글">♧</button><button aria-label="공유">➤</button><button class="ig-save" aria-label="저장">♧</button></div><div class="ig-post-copy"><strong id="ig-likes">좋아요 24,681개</strong><p><strong>tvn_drama</strong> 배우 안시현, 드라마 '청춘 실종 사건' 남자 주인공으로 캐스팅 🎬<br>올겨울, 청춘의 비밀을 추적할 새로운 얼굴을 만나보세요.<br><span class="ig-hashtags">#안시현 #청춘실종사건 #캐스팅 #tvN드라마</span></p><p class="ig-comments">댓글 318개 모두 보기</p><small>홍보 · 2시간 전</small></div></div><div class="ig-bottom-tabs"><button data-ig-nav="feed" class="ig-nav-active">⌂</button><button>▣</button><button data-ig-nav="dm">➤</button><button>⌕</button><button>●</button></div>`;
     content.querySelectorAll("[data-like]").forEach(button=>button.addEventListener("click",()=>{button.classList.toggle("liked");button.textContent=button.classList.contains("liked")?"♥":"♡";}));
     content.querySelectorAll("[data-comment]").forEach(button=>button.addEventListener("click",()=>showToast("댓글 기능은 다음 단계에서 추가할 수 있어요.")));
     content.querySelectorAll("[data-ig-nav]").forEach(button=>button.addEventListener("click",()=>{state.instagramScreen=button.dataset.igNav;renderInstagram();}));
