@@ -18,8 +18,27 @@
         <div class="status-bar">
           <span id="status-time">9:41</span>
           <div class="status-right" aria-label="상태 표시줄">
-            <span class="signal" aria-hidden="true">▮▮▮</span>
-            <span aria-hidden="true">Wi-Fi</span>
+            <svg class="signal-icon" viewBox="0 0 20 14"
+     aria-hidden="true">
+  <rect x="0" y="9" width="3.5" height="5" rx="1"/>
+  <rect x="5" y="6" width="3.5" height="8" rx="1"/>
+  <rect x="10" y="3" width="3.5" height="11" rx="1"/>
+  <rect x="15" y="0" width="3.5" height="14" rx="1"/>
+</svg>
+
+<svg class="wifi-icon" viewBox="0 0 20 16"
+     aria-hidden="true">
+  <path d="M1 5.5 Q10 -2 19 5.5"
+        fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round"/>
+  <path d="M4.5 9 Q10 3.5 15.5 9"
+        fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round"/>
+  <path d="M8 12 Q10 10 12 12"
+        fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round"/>
+  <circle cx="10" cy="14" r="1.2" fill="currentColor"/>
+</svg>
             <span class="battery" aria-label="배터리 100%"><span></span></span>
           </div>
         </div>
