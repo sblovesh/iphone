@@ -91,7 +91,7 @@
     $("#passcode-modal").classList.add("hidden");
     enteredPasscode = "";
     updatePasscodeDots();
-    $("#passcode-error").textContent = "데모 암호: 1234";
+    $("#passcode-error").textContent = "데모 암호: 0711";
   }
 
   function escapeHTML(value) {
@@ -323,7 +323,7 @@
   $("#unlock-button").addEventListener("click", () => {
     enteredPasscode = "";
     updatePasscodeDots();
-    $("#passcode-error").textContent = "데모 암호: 1234";
+    $("#passcode-error").textContent = "데모 암호: 0711";
     $("#passcode-modal").classList.remove("hidden");
   });
 
@@ -355,7 +355,7 @@
   $("#passcode-delete").addEventListener("click", () => {
     enteredPasscode = enteredPasscode.slice(0, -1);
     updatePasscodeDots();
-    $("#passcode-error").textContent = "데모 암호: 1234";
+    $("#passcode-error").textContent = "데모 암호: 0711";
   });
 
   document.querySelectorAll("[data-open]").forEach((button) => {
