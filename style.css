@@ -40,8 +40,7 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
   pointer-events: none;
 }
 .status-right { display: flex; align-items: center; gap: 5px; font-size: 10px; }
-.wifi-icon { display: block; width: 19px; height: 17px; flex-shrink: 0; color: currentColor; }
-.signal-icon { display: block; width: 24px; height: 18px; flex-shrink: 0; color: currentColor; }
+.signal { letter-spacing: -2px; font-size: 12px; }
 .battery { width: 19px; height: 10px; border: 1px solid currentColor; border-radius: 3px; display: inline-flex; padding: 1px; position: relative; margin-left: 1px; }
 .battery::after { content: ""; width: 2px; height: 4px; background: currentColor; position: absolute; right: -3px; top: 2px; border-radius: 0 2px 2px 0; }
 .battery span { background: currentColor; width: 100%; border-radius: 1px; }
@@ -49,9 +48,11 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .hidden { display: none !important; }
 .lock-screen {
   color: white; text-align: center;
-  background: linear-gradient(rgba(8, 15, 22, 0.06), rgba(8, 15, 22, 0.20)), url("lockscreen.jpg") center center / cover no-repeat;
+  background: linear-gradient(160deg, #a8b8c9 0%, #d5dce1 24%, #829ca9 46%, #455d6a 70%, #1c2936 100%);
 }
-.lock-screen::before, .lock-screen::after { display: none; }
+.lock-screen::before, .lock-screen::after { content: ""; position: absolute; border-radius: 50%; filter: blur(2px); }
+.lock-screen::before { width: 430px; height: 430px; left: -170px; top: 150px; background: linear-gradient(130deg, #e5e1d8aa, #788e9b30); }
+.lock-screen::after { width: 380px; height: 540px; right: -200px; top: 270px; background: linear-gradient(150deg, #d1d8d2a0, #23384770); }
 .lock-date { position: relative; z-index: 1; margin-top: 111px; font-size: 17px; font-weight: 500; text-shadow: 0 1px 8px #18232c40; }
 .lock-clock { position: relative; z-index: 1; font-size: clamp(68px, 19vw, 90px); line-height: 1.05; letter-spacing: -4px; font-weight: 300; text-shadow: 0 2px 12px #18232c20; }
 .lock-message { position: relative; z-index: 1; margin-top: 13px; font-size: 13px; color: #ffffffd9; }
@@ -169,42 +170,38 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 
 
 .passcode-modal {
-  position: absolute;
-  z-index: 25;
-  inset: 0;
-  background: rgba(20, 28, 40, 0.32);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 54px 30px 38px;
-  color: white;
+  position: absolute; z-index: 25; inset: 0; background: #f5f5f7f7;
+  backdrop-filter: blur(24px); display: flex; flex-direction: column; align-items: center;
+  padding: 54px 30px 38px; color: #1b1c20;
 }
-.passcode-close { position: absolute; right: 20px; top: 48px; border: 0; background: transparent; color: white; font-size: 13px; z-index: 1; }
+.passcode-close { position: absolute; right: 20px; top: 48px; border: 0; background: transparent; color: var(--blue); font-size: 13px; }
 .passcode-title { margin-top: 32px; font-size: 19px; font-weight: 700; }
 .passcode-dots { display: flex; gap: 15px; margin-top: 23px; }
-.passcode-dots span { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.9); background: transparent; }
-.passcode-dots span.filled { background: white; }
-.passcode-error { min-height: 28px; margin-top: 15px; color: rgba(255,255,255,.8); font-size: 11px; text-align: center; }
+.passcode-dots span { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #45464b; background: transparent; }
+.passcode-dots span.filled { background: #24252a; }
+.passcode-error { min-height: 28px; margin-top: 15px; color: #8a8c93; font-size: 11px; text-align: center; }
 .keypad { margin-top: auto; display: grid; grid-template-columns: repeat(3, 68px); gap: 12px 18px; padding-bottom: 10px; }
-.keypad button {
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.38);
-  background: rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: white;
-  font-size: 25px;
-  font-weight: 400;
-  position: relative;
-  z-index: 1;
-  touch-action: manipulation;
-}
-.keypad button:active { background: rgba(255, 255, 255, 0.32); }
-.keypad .keypad-delete { background: transparent; border-color: transparent; color: white; font-size: 22px; }
+.keypad button { width: 68px; height: 68px; border-radius: 50%; border: 0; background: #e1e2e7; color: #24252a; font-size: 25px; font-weight: 400; }
+.keypad button:active { background: #c8cad1; }
+.keypad .keypad-delete { background: transparent; font-size: 22px; }
 @media (max-width: 430px) {
   .passcode-modal { padding-bottom: max(38px, env(safe-area-inset-bottom)); }
 }
+
+
+/* Additional social apps replace the home-screen widget. */
+.extra-app-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 28px; row-gap: 20px; }
+.kakao-art { background: #fee500; }
+.kakao-art::before { content: ""; width: 26px; height: 22px; border-radius: 50%; background: #241f20; position: absolute; }
+.kakao-art::after { content: ""; position: absolute; left: 15px; top: 30px; border-top: 7px solid #241f20; border-right: 6px solid transparent; transform: rotate(15deg); }
+.kakao-art > span { position: relative; z-index: 1; width: 14px; height: 2px; border-radius: 2px; background: #fee500; box-shadow: 0 5px 0 #fee500; }
+.instagram-art { background: radial-gradient(circle at 30% 105%, #ffd776 0 18%, #ff7a45 38%, #d6249f 62%, #285aeb 100%); }
+.instagram-art::before { content: ""; position: absolute; width: 27px; height: 27px; border: 2.5px solid white; border-radius: 8px; }
+.instagram-art::after { content: ""; position: absolute; width: 10px; height: 10px; border: 2.5px solid white; border-radius: 50%; }
+.instagram-art > span { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: white; top: 15px; right: 15px; }
+.social-demo { padding: 18px; }
+.social-banner { border-radius: 16px; background: white; padding: 18px; margin-bottom: 14px; box-shadow: 0 1px 5px #0000000a; }
+.social-banner strong { display: block; font-size: 16px; margin-bottom: 7px; }
+.social-banner p { margin: 0; color: #747780; font-size: 12px; line-height: 1.6; }
+.social-action { border: 0; border-radius: 12px; padding: 11px 14px; background: #fee500; color: #282322; font-weight: 700; width: 100%; margin-top: 10px; }
+.social-action.instagram { background: #d62976; color: white; }
