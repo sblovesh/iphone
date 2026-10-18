@@ -351,3 +351,23 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .ig-dm-compose { display:flex; gap:8px; padding:10px; border:1px solid #eee; border-radius:24px; margin:8px 10px 14px; }
 .ig-dm-compose input { border:0; outline:0; flex:1; min-width:0; font-size:13px; }
 .ig-dm-compose button { border:0; background:transparent; color:#5367d9; font-size:20px; }
+/* Detailed actor-project updates */
+.kakao-avatar-img { width:49px; height:49px; flex:0 0 49px; object-fit:cover; border-radius:15px; display:block; }
+.kakao-avatar-img.small { width:30px; height:30px; flex:0 0 30px; border-radius:10px; }
+.kakao-chat-info { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 12px 12px; }
+.kakao-chat-info strong { color:#222; font-size:12px; font-weight:600; }
+.kakao-chat-info span { font-size:10px; color:#81909a; }
+.kakao-chat-log { gap:9px; }
+.kakao-message-wrap { display:flex; align-items:flex-end; gap:6px; max-width:95%; }
+.kakao-message-wrap.outgoing { align-self:flex-end; }
+.kakao-message-wrap.incoming { align-self:flex-start; }
+.kakao-message { white-space:pre-wrap; overflow-wrap:anywhere; }
+.kakao-message small { display:block; font-size:9px; color:#7b7b7b; margin-top:4px; text-align:right; }
+.kakao-message-photo { max-width:64%; margin:2px 0 6px 36px; align-self:flex-start; }
+.kakao-message-photo.outgoing { align-self:flex-end; margin-left:0; margin-right:3px; }
+.kakao-message-photo img { display:block; width:150px; aspect-ratio:1/1; object-fit:cover; border-radius:12px; }
+.kakao-date { align-self:center; background:#d9e0e5; color:#fff; border-radius:20px; padding:5px 12px; font-size:10px; margin:8px 0; }
+.ig-actor-photo { padding:0; height:min(54vh,470px); min-height:310px; background:#e9e9e9; }
+.ig-actor-photo:before,.ig-actor-photo:after { display:none; }
+.ig-actor-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+.ig-dm-row[data-dm]:not([data-dm="서빈"]) { cursor:default; }
