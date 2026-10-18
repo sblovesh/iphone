@@ -138,6 +138,7 @@
   }
 
   function openApp(app) {
+    if (app === "bubble") bubbleChatOpen = false;
     state.app = app;
     state.activeChat = null;
     state.activePhoto = null;
@@ -222,11 +223,38 @@
       <div class="sms-footer">알 수 없는 발신자의 링크는 열지 마세요.</div>`;
   }
 
-  const BUBBLE_STORAGE_KEY = "virtual-iphone-bubble-seobin-v1";
+  const BUBBLE_STORAGE_KEY = "virtual-iphone-bubble-seobin-v2";
+  let bubbleChatOpen = false;
   const bubbleInitialMessages = [
-    { from: "artist", text: "안녕! 버블에서 보니까 또 새롭다 ㅎㅎ", time: "오후 8:12" },
-    { from: "artist", text: "오늘 하루는 어땠어? 나는 연습하고 이제 쉬는 중이야", time: "오후 8:13" },
-    { from: "artist", text: "밥도 꼭 챙겨 먹기 약속 🤙", time: "오후 8:13" }
+    {from:"artist",day:"2025년 4월 5일",text:"안녀엉",time:"오전 9:11"},
+    {from:"artist",day:"2025년 4월 5일",text:"좋은 아침",time:"오전 9:11"},
+    {from:"artist",day:"2025년 4월 5일",text:"다들 오늘 하루도 화이띵",time:"오전 9:12"},
+    {from:"artist",day:"2025년 4월 5일",text:"오랜만에 기타를 들어따",time:"오후 3:04"},
+    {from:"artist",day:"2025년 4월 5일",image:"bubble-guitar.jpg",time:"오후 3:05"},
+    {from:"artist",day:"2025년 4월 5일",text:"사진 누가 찍어줬냐구??",time:"오후 3:06"},
+    {from:"artist",day:"2025년 4월 5일",text:"시현이가 찍어줬는뎅...",time:"오후 3:06"},
+    {from:"artist",day:"2025년 4월 5일",text:"시현이 사진 짱 잘 찍음",time:"오후 3:07"},
+    {from:"artist",day:"2025년 4월 5일",text:"만난 지 한 달...? 두 달 됐을 때",time:"오후 3:07"},
+    {from:"artist",day:"2025년 4월 5일",text:"시현이한테 셀카 강의 많이 받아써",time:"오후 3:08"},
+    {from:"artist",day:"2025년 4월 5일",text:"셀카 달라구?",time:"오후 3:08"},
+    {from:"artist",day:"2025년 4월 5일",image:"bubble-selfie.jpg",time:"오후 3:09"},
+    {from:"artist",day:"2025년 4월 5일",text:"자 요기",time:"오후 3:09"},
+    {from:"artist",day:"2025년 4월 5일",text:"어때?? 이제 셀카 쫌 잘 찍지??",time:"오후 3:10"},
+    {from:"fan",day:"2025년 4월 5일",text:"완전",time:"오후 3:11"},
+    {from:"fan",day:"2025년 4월 5일",text:"가르쳐준 보람이 나네 막",time:"오후 3:11"},
+    {from:"artist",day:"2025년 4월 5일",text:"조만간 기타 커버곡 하나 올릴게ㅔ",time:"오후 3:12"},
+    {from:"artist",day:"2025년 4월 5일",text:"신청곡 같은 거 받아야 하나??",time:"오후 3:12"},
+    {from:"artist",day:"2025년 4월 5일",text:"여기다 여러 개 적어바 하나 골라서 연습할게",time:"오후 3:13"},
+    {from:"artist",day:"2025년 4월 5일",text:"아무튼 난 다시 간다ㅏ",time:"오후 3:14"},
+    {from:"artist",day:"2025년 4월 6일",text:"오늘도 조은 아침",time:"오전 8:07"},
+    {from:"artist",day:"2025년 4월 6일",text:"요즘 바쁘다 바빠",time:"오전 8:09"},
+    {from:"artist",day:"2025년 4월 6일",text:"왜 바쁘냐고?",time:"오전 8:10"},
+    {from:"artist",day:"2025년 4월 6일",text:"그건 비밀",time:"오전 8:10"},
+    {from:"artist",day:"2025년 4월 8일",text:"컴백 소식을 봤는감",time:"오후 2:48"},
+    {from:"artist",day:"2025년 4월 8일",text:"춤은 많이 췄으니 다시 기타 잡구 노래 부를 예정",time:"오후 2:49"},
+    {from:"artist",day:"2025년 4월 8일",text:"이걸로 눈도장 찍었으니까 ㅎㅎ",time:"오후 2:50"},
+    {from:"artist",day:"2025년 4월 8일",text:"한 번은 다시 해보구 싶었당",time:"오후 2:51"},
+    {from:"fan",day:"2025년 4월 8일",text:"최고",time:"오후 2:52"}
   ];
   let bubbleMessages = bubbleInitialMessages.map(message => ({ ...message }));
   try {
@@ -238,38 +266,30 @@
   }
   function renderBubble() {
     const content = $("#app-content");
-    $("#app-title").textContent = "bubble";
-    $("#header-action").textContent = "⋯";
-    $("#header-action").setAttribute("aria-label", "버블 설정");
-    content.innerHTML = `
-      <div class="bubble-app">
-        <div class="bubble-artist-card">
-          <img src="avatar-seobin.jpg" alt="서빈 프로필" class="bubble-artist-avatar">
-          <div class="bubble-artist-copy"><strong>서빈</strong><span>구독 중인 아티스트</span></div>
-          <span class="bubble-subscribed">구독 중</span>
-        </div>
-        <div class="bubble-intro"><span class="bubble-intro-heart">♥</span><strong>서빈과 함께하는 공간</strong><span>아티스트가 보낸 메시지를 여기에서 확인할 수 있어요.</span></div>
-        <div class="bubble-chat-log" id="bubble-chat-log">
-          <div class="bubble-day-divider"><span>오늘</span></div>
-          ${bubbleMessages.map(message => `<div class="bubble-line ${message.from}">${message.from === "artist" ? `<img class="bubble-mini-avatar" src="avatar-seobin.jpg" alt="서빈">` : ""}<div class="bubble-message-group">${message.from === "artist" ? `<span class="bubble-sender">서빈</span>` : ""}<div class="bubble-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div></div><time>${escapeHTML(message.time)}</time></div>`).join("")}
-        </div>
-        <form class="bubble-compose" id="bubble-form"><button type="button" class="bubble-plus" aria-label="첨부">＋</button><input id="bubble-input" maxlength="300" placeholder="서빈에게 메시지 보내기" autocomplete="off"><button type="submit" class="bubble-send" aria-label="보내기">↑</button></form>
-        <div class="bubble-disclaimer">가상의 팬 소통 화면 · 메시지는 이 기기에만 저장됩니다.</div>
-      </div>`;
+    $("#app-title").textContent = bubbleChatOpen ? "서빈" : "CHATS";
+    $("#header-action").textContent = bubbleChatOpen ? "" : "⌕　♧";
+    $("#header-action").setAttribute("aria-label", "버블 메뉴");
+    if (!bubbleChatOpen) {
+      const latest = bubbleMessages[bubbleMessages.length - 1] || bubbleInitialMessages[bubbleInitialMessages.length - 1];
+      const preview = latest.image ? "사진" : latest.text;
+      content.innerHTML = `<div class="bubble-inbox"><div class="bubble-inbox-subtitle">최근 채팅방</div><button class="bubble-room-row" id="bubble-open-room"><img src="bubble-cat.jpg" alt="서빈 프로필"><span class="bubble-room-main"><strong>서빈</strong><span>${escapeHTML(preview)}</span></span><span class="bubble-room-trailing"><time>오전 9:11</time><b>105</b></span></button></div>`;
+      $("#bubble-open-room").addEventListener("click", () => { bubbleChatOpen = true; renderBubble(); });
+      return;
+    }
+    const lines = bubbleMessages.map((message, index) => {
+      const previous = bubbleMessages[index - 1];
+      const divider = !previous || previous.day !== message.day ? `<div class="bubble-day-divider"><span>${escapeHTML(message.day || "2025년 4월 8일")}</span></div>` : "";
+      const body = message.image ? `<img class="bubble-photo-message" src="${message.image}" alt="서빈이 보낸 사진">` : `<div class="bubble-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div>`;
+      return `${divider}<div class="bubble-line ${message.from}">${message.from === "artist" ? `<img class="bubble-mini-avatar" src="bubble-cat.jpg" alt="서빈">` : ""}<div class="bubble-message-group">${message.from === "artist" ? `<span class="bubble-sender">서빈</span>` : ""}${body}</div><time>${escapeHTML(message.time)}</time></div>`;
+    }).join("");
+    content.innerHTML = `<div class="bubble-app"><div class="bubble-chat-log" id="bubble-chat-log">${lines}</div><form class="bubble-compose" id="bubble-form"><input id="bubble-input" maxlength="300" placeholder="메시지 보내기" autocomplete="off"><button type="submit" class="bubble-send" aria-label="보내기">↑</button></form></div>`;
     const log = $("#bubble-chat-log");
     log.scrollTop = log.scrollHeight;
     $("#bubble-form").addEventListener("submit", event => {
-      event.preventDefault();
-      const input = $("#bubble-input");
-      const value = input.value.trim();
-      if (!value) return;
-      bubbleMessages.push({ from: "fan", text: value, time: currentChatTime() });
-      saveBubbleMessages();
-      renderBubble();
-      const nextInput = $("#bubble-input");
-      nextInput.focus();
+      event.preventDefault(); const input = $("#bubble-input"); const value = input.value.trim(); if (!value) return;
+      bubbleMessages.push({ from: "fan", day: "2025년 4월 8일", text: value, time: currentChatTime() });
+      saveBubbleMessages(); renderBubble(); $("#bubble-input").focus();
     });
-    $("#header-action").onclick = () => showToast("서빈 버블 구독 중 💗");
   }
 
   function kakaoAvatar(chat, small = false) { return chat.photo ? `<img class="kakao-avatar-img ${small ? "small" : ""}" src="${chat.photo}" alt="${escapeHTML(chat.name)} 프로필">` : `<img class="kakao-avatar-img ${small ? "small" : ""}" src="avatar-default.jpg" alt="${escapeHTML(chat.name)} 프로필">`; }
