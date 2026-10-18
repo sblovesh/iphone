@@ -166,73 +166,61 @@
     else if (state.app === "instagram") renderInstagram();
   }
 
+  const smsPreviews = [
+    {name:"매니저 민지", avatar:"민", color:"pink", time:"오후 8:42", preview:"내일 콜타임 06:30이에요! 차는 5:50에 도착합니다."},
+    {name:"[광고] 프리미엄 대출", avatar:"광", color:"gold", time:"오후 8:17", preview:"고객님만을 위한 한도 조회, 지금 바로 확인하세요."},
+    {name:"제작팀 조연출", avatar:"조", color:"blue", time:"오후 7:56", preview:"내일 32씬 대본 수정본 전달드립니다. 확인 부탁드려요."},
+    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 7:31", preview:"시현 배우님 맞으시죠? 저 진짜 오래전부터 팬이었어요."},
+    {name:"소속사 홍보팀", avatar:"홍", color:"pink", time:"오후 6:48", preview:"인터뷰 기사 초안 보내드렸습니다. 인용문만 체크해주세요."},
+    {name:"스타일리스트 수연", avatar:"수", color:"green", time:"오후 6:15", preview:"내일 제작발표회 착장 최종안 공유드려요!"},
+    {name:"[국제발신] 당첨 안내", avatar:"당", color:"gold", time:"오후 5:59", preview:"축하합니다! 경품 수령을 위해 링크를 확인하세요."},
+    {name:"캐스팅 디렉터", avatar:"캐", color:"blue", time:"오후 5:26", preview:"차기작 미팅 일정 관련해 연락드렸습니다."},
+    {name:"팬", avatar:"♡", color:"pink", time:"오후 5:02", preview:"오늘 촬영장 근처에서 봤어요… 너무 잘생기셨어요."},
+    {name:"광고대행사 윤 담당자", avatar:"윤", color:"green", time:"오후 4:41", preview:"브랜드 캠페인 제안서와 촬영 가이드 전달드립니다."},
+    {name:"[Web발신] 택배", avatar:"택", color:"blue", time:"오후 4:12", preview:"배송 완료: 문 앞에 상품을 두었습니다."},
+    {name:"매니저 민지", avatar:"민", color:"pink", time:"오후 3:50", preview:"차량 번호 32가 8124예요. 끝나면 연락 주세요."},
+    {name:"영화제 사무국", avatar:"영", color:"gold", time:"오후 3:14", preview:"초청 및 레드카펫 참석 여부 회신 부탁드립니다."},
+    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 2:58", preview:"집이 여기 맞죠? 오늘도 기다리고 있을게요."},
+    {name:"보이스피싱 의심", avatar:"금", color:"blue", time:"오후 2:23", preview:"[금융기관] 계좌 보호를 위해 본인 인증이 필요합니다."},
+    {name:"드라마 제작사", avatar:"제", color:"green", time:"오후 1:46", preview:"대본 리딩은 금요일 오후 2시, 3층 회의실입니다."},
+    {name:"팬카페 운영진", avatar:"팬", color:"pink", time:"오후 1:12", preview:"생일 서포트 관련해 소속사 확인을 요청드립니다."},
+    {name:"[광고] 휴대폰 결제", avatar:"광", color:"gold", time:"오후 12:54", preview:"미납 요금이 있습니다. 즉시 납부하지 않으면 제한됩니다."},
+    {name:"사진작가 도현", avatar:"도", color:"blue", time:"오전 11:38", preview:"어제 화보 셀렉본 업로드했습니다. 마음에 드는 컷 골라주세요."},
+    {name:"팬", avatar:"♡", color:"pink", time:"오전 10:52", preview:"배우님이 자주 가는 카페 알아냈어요. 또 갈게요!"},
+    {name:"매니저 민지", avatar:"민", color:"pink", time:"오전 10:15", preview:"오늘 인터뷰 예상 질문 정리해뒀어요. 차에서 같이 봐요."},
+    {name:"오디션 안내", avatar:"오", color:"green", time:"오전 9:44", preview:"오디션 지정 대사와 캐릭터 설명을 첨부해드립니다."},
+    {name:"[Web발신] 카드", avatar:"카", color:"gold", time:"오전 9:03", preview:"해외 승인 1,280,000원. 본인 사용이 아니라면 문의 바랍니다."},
+    {name:"매니지먼트 팀장", avatar:"팀", color:"blue", time:"어제", preview:"계약서 수정 사항 표시해 두었으니 확인 부탁합니다."},
+    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"어제", preview:"어제 집에 들어가는 것까지 봤어요. 답장 한 번만 해줘요."},
+    {name:"뷰티 브랜드", avatar:"뷰", color:"green", time:"어제", preview:"신제품 협찬 관련 콘텐츠 업로드 일정 확인 부탁드립니다."},
+    {name:"방송국 작가님", avatar:"작", color:"pink", time:"어제", preview:"예능 출연 관련 사전 질문지를 보내드립니다."},
+    {name:"[광고] 투자 리딩방", avatar:"투", color:"gold", time:"어제", preview:"연예인도 참여하는 비공개 급등주 정보방에 초대합니다."},
+    {name:"팬", avatar:"♡", color:"pink", time:"월요일", preview:"선물 보냈어요! 숙소 주소로 보냈으니 꼭 받아주세요."},
+    {name:"세무 담당자", avatar:"세", color:"blue", time:"월요일", preview:"종합소득세 자료 중 누락된 영수증이 있어 연락드립니다."}
+  ];
+
   function renderMessages() {
     const content = $("#app-content");
-    if (state.activeChat) {
-      const chat = state.messages.find((item) => item.id === state.activeChat);
-      if (!chat) { state.activeChat = null; renderMessages(); return; }
-      $("#app-title").textContent = chat.name;
-      $("#header-action").textContent = "";
-      content.innerHTML = `
-        <div class="chat-view">
-          <div class="chat-person">
-            <div class="avatar ${chat.color}">${escapeHTML(chat.avatar)}</div>
-            <strong>${escapeHTML(chat.name)}</strong>
-            <p>메시지 · 데모 대화</p>
-          </div>
-          <div class="chat-log" id="chat-log">
-            <div class="chat-date">오늘</div>
-            ${chat.messages.map((message) => `<div class="bubble ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div>`).join("")}
-          </div>
-          <form class="chat-compose" id="chat-form">
-            <input id="chat-input" type="text" maxlength="300" placeholder="메시지 입력" aria-label="메시지 입력" autocomplete="off">
-            <button class="send-button" type="submit" aria-label="보내기">↑</button>
-          </form>
-        </div>`;
-      const log = $("#chat-log");
-      log.scrollTop = log.scrollHeight;
-      $("#chat-form").addEventListener("submit", (event) => {
-        event.preventDefault();
-        const input = $("#chat-input");
-        const value = input.value.trim();
-        if (!value) return;
-        chat.messages.push({ from: "outgoing", text: value });
-        chat.preview = value;
-        chat.time = "방금";
-        renderMessages();
-        const newLog = $("#chat-log");
-        newLog.scrollTop = newLog.scrollHeight;
-      });
-      return;
-    }
-
+    // Messages is a read-only preview inbox. It never opens a conversation or shares data with KakaoTalk.
+    state.activeChat = null;
     $("#app-title").textContent = "메시지";
     $("#header-action").textContent = "";
     content.innerHTML = `
-      <div class="section-label">고정된 대화</div>
-      <div class="list-card">
-        ${state.messages.map((chat) => `
-          <button class="list-row" data-chat="${chat.id}">
-            <span class="avatar ${chat.color}">${escapeHTML(chat.avatar)}</span>
+      <div class="sms-note"><strong>메시지 미리보기</strong><span>문자는 목록으로만 확인할 수 있어요.</span></div>
+      <div class="section-label">최근 메시지 · ${smsPreviews.length}</div>
+      <div class="list-card sms-list">
+        ${smsPreviews.map((item) => `
+          <div class="list-row sms-row">
+            <span class="avatar ${item.color}">${escapeHTML(item.avatar)}</span>
             <span class="row-main">
-              <span class="row-title">${escapeHTML(chat.name)}</span>
-              <span class="row-subtitle">${escapeHTML(chat.preview)}</span>
+              <span class="row-title">${escapeHTML(item.name)}</span>
+              <span class="row-subtitle">${escapeHTML(item.preview)}</span>
             </span>
-            <span class="row-trailing">${escapeHTML(chat.time)}　›</span>
-          </button>`).join("")}
+            <span class="row-trailing">${escapeHTML(item.time)}</span>
+          </div>`).join("")}
       </div>
-      <div class="section-label">안내</div>
-      <div class="empty-state">대화를 선택해 내용을 확인하거나<br>직접 메시지를 입력해 보세요.</div>`;
-    content.querySelectorAll("[data-chat]").forEach((button) => {
-      button.addEventListener("click", () => {
-        state.activeChat = button.dataset.chat;
-        state.unread = false;
-        $("#unread-dot").classList.add("hidden");
-        renderMessages();
-      });
-    });
+      <div class="sms-footer">알 수 없는 발신자의 링크는 열지 마세요.</div>`;
   }
-
 
   function kakaoAvatar(chat, small = false) { return chat.photo ? `<img class="kakao-avatar-img ${small ? "small" : ""}" src="${chat.photo}" alt="${escapeHTML(chat.name)} 프로필">` : `<img class="kakao-avatar-img ${small ? "small" : ""}" src="avatar-default.jpg" alt="${escapeHTML(chat.name)} 프로필">`; }
 
