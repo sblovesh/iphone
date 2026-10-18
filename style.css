@@ -466,3 +466,40 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .sms-row .row-title { display: block; }
 .sms-row .row-subtitle { max-width: 100%; }
 .sms-footer { margin: 16px 18px; color: #999ca4; font-size: 11px; text-align: center; }
+
+/* Bubble app: independent fan-subscription chat for Seobin */
+.bubble-art { background: linear-gradient(145deg, #ff8db6, #ff4f8c 62%, #e83f7b); font-size: 31px; font-weight: 800; text-shadow: 0 2px 3px #9e174b30; }
+.bubble-art span { transform: translateY(-1px); }
+.app-screen:has(.bubble-app) { background: #fff8fb; }
+.app-screen:has(.bubble-app) .app-header { background: #fff8fb; border-bottom-color: #f5dce6; }
+.app-screen:has(.bubble-app) .app-header h1 { color: #ec4b86; font-size: 20px; letter-spacing: -.5px; }
+.app-screen:has(.bubble-app) .back-button { color: #e84c85; }
+.bubble-app { height: 100%; min-height: 0; display: flex; flex-direction: column; background: #fff8fb; color: #29232a; }
+.bubble-artist-card { display:flex; align-items:center; gap:11px; padding:13px 16px; background:#fff; border-bottom:1px solid #f4e5eb; flex:0 0 auto; }
+.bubble-artist-avatar { width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid #ffd4e3; }
+.bubble-artist-copy { display:flex; flex-direction:column; gap:4px; flex:1; min-width:0; }
+.bubble-artist-copy strong { font-size:14px; }
+.bubble-artist-copy span { color:#a08a94; font-size:10px; }
+.bubble-subscribed { padding:6px 9px; border-radius:14px; background:#fff0f6; color:#e64b84; font-size:10px; font-weight:700; }
+.bubble-intro { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:5px; padding:15px 12px 12px; text-align:center; }
+.bubble-intro-heart { display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:#ffe7f0; color:#ee5b91; font-size:13px; }
+.bubble-intro strong { font-size:12px; }
+.bubble-intro span:last-child { color:#a08e97; font-size:10px; }
+.bubble-chat-log { flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:11px; padding:10px 12px 15px; overscroll-behavior:contain; }
+.bubble-day-divider { display:flex; align-items:center; justify-content:center; margin:2px 0 7px; }
+.bubble-day-divider span { background:#f5e7ed; color:#a68d98; border-radius:15px; padding:5px 11px; font-size:10px; }
+.bubble-line { display:flex; align-items:flex-end; gap:6px; max-width:100%; }
+.bubble-line.artist { align-self:flex-start; }
+.bubble-line.fan { align-self:flex-end; }
+.bubble-mini-avatar { width:25px; height:25px; border-radius:50%; object-fit:cover; flex:0 0 25px; margin-bottom:2px; }
+.bubble-message-group { display:flex; flex-direction:column; gap:3px; max-width:min(70vw,270px); min-width:0; }
+.bubble-sender { font-size:10px; color:#a48b96; padding-left:3px; }
+.bubble-message { font-size:12px; line-height:1.48; padding:10px 12px; border-radius:16px; overflow-wrap:anywhere; white-space:normal; }
+.bubble-message.artist { background:#fff; border:1px solid #f4e1e9; border-bottom-left-radius:5px; color:#33262d; }
+.bubble-message.fan { background:#f46d9c; color:#fff; border-bottom-right-radius:5px; }
+.bubble-line time { color:#b7a5ad; font-size:9px; white-space:nowrap; padding-bottom:3px; }
+.bubble-compose { display:flex; align-items:center; gap:8px; margin:5px 10px 6px; padding:7px 8px; border:1px solid #f0dbe4; border-radius:24px; background:#fff; flex:0 0 auto; }
+.bubble-plus { border:0; background:transparent; color:#e86a98; font-size:23px; width:25px; padding:0; }
+.bubble-compose input { border:0; outline:none; min-width:0; flex:1; background:transparent; font-size:11px; color:#33262d; }
+.bubble-send { width:29px; height:29px; border:0; border-radius:50%; background:#f46d9c; color:#fff; font-size:19px; line-height:1; }
+.bubble-disclaimer { flex:0 0 auto; text-align:center; color:#b7a3ad; font-size:9px; padding:0 8px 8px; }

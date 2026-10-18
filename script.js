@@ -86,7 +86,7 @@
     setTimeout(() => addSeobinIncoming("", true), 2200);
     setTimeout(() => { addSeobinIncoming("나 다시 쫌 잘겡 촬영 열시미 해ㅐㅐ"); saveSeobinScenario("finished"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 3600);
   }
-  const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모", kakao: "카카오톡", instagram: "Instagram" };
+  const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모", kakao: "카카오톡", instagram: "Instagram", bubble: "bubble" };
   let toastTimer;
   let enteredPasscode = "";
   const demoPasscode = "0711";
@@ -164,6 +164,7 @@
     else if (state.app === "notes") renderNotes();
     else if (state.app === "kakao") renderKakao();
     else if (state.app === "instagram") renderInstagram();
+    else if (state.app === "bubble") renderBubble();
   }
 
   const smsPreviews = [
@@ -219,6 +220,56 @@
           </div>`).join("")}
       </div>
       <div class="sms-footer">알 수 없는 발신자의 링크는 열지 마세요.</div>`;
+  }
+
+  const BUBBLE_STORAGE_KEY = "virtual-iphone-bubble-seobin-v1";
+  const bubbleInitialMessages = [
+    { from: "artist", text: "안녕! 버블에서 보니까 또 새롭다 ㅎㅎ", time: "오후 8:12" },
+    { from: "artist", text: "오늘 하루는 어땠어? 나는 연습하고 이제 쉬는 중이야", time: "오후 8:13" },
+    { from: "artist", text: "밥도 꼭 챙겨 먹기 약속 🤙", time: "오후 8:13" }
+  ];
+  let bubbleMessages = bubbleInitialMessages.map(message => ({ ...message }));
+  try {
+    const savedBubble = JSON.parse(localStorage.getItem(BUBBLE_STORAGE_KEY) || "null");
+    if (Array.isArray(savedBubble) && savedBubble.every(m => m && ["artist", "fan"].includes(m.from) && typeof m.text === "string" && typeof m.time === "string")) bubbleMessages = savedBubble;
+  } catch (_) {}
+  function saveBubbleMessages() {
+    try { localStorage.setItem(BUBBLE_STORAGE_KEY, JSON.stringify(bubbleMessages)); } catch (_) {}
+  }
+  function renderBubble() {
+    const content = $("#app-content");
+    $("#app-title").textContent = "bubble";
+    $("#header-action").textContent = "⋯";
+    $("#header-action").setAttribute("aria-label", "버블 설정");
+    content.innerHTML = `
+      <div class="bubble-app">
+        <div class="bubble-artist-card">
+          <img src="avatar-seobin.jpg" alt="서빈 프로필" class="bubble-artist-avatar">
+          <div class="bubble-artist-copy"><strong>서빈</strong><span>구독 중인 아티스트</span></div>
+          <span class="bubble-subscribed">구독 중</span>
+        </div>
+        <div class="bubble-intro"><span class="bubble-intro-heart">♥</span><strong>서빈과 함께하는 공간</strong><span>아티스트가 보낸 메시지를 여기에서 확인할 수 있어요.</span></div>
+        <div class="bubble-chat-log" id="bubble-chat-log">
+          <div class="bubble-day-divider"><span>오늘</span></div>
+          ${bubbleMessages.map(message => `<div class="bubble-line ${message.from}">${message.from === "artist" ? `<img class="bubble-mini-avatar" src="avatar-seobin.jpg" alt="서빈">` : ""}<div class="bubble-message-group">${message.from === "artist" ? `<span class="bubble-sender">서빈</span>` : ""}<div class="bubble-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div></div><time>${escapeHTML(message.time)}</time></div>`).join("")}
+        </div>
+        <form class="bubble-compose" id="bubble-form"><button type="button" class="bubble-plus" aria-label="첨부">＋</button><input id="bubble-input" maxlength="300" placeholder="서빈에게 메시지 보내기" autocomplete="off"><button type="submit" class="bubble-send" aria-label="보내기">↑</button></form>
+        <div class="bubble-disclaimer">가상의 팬 소통 화면 · 메시지는 이 기기에만 저장됩니다.</div>
+      </div>`;
+    const log = $("#bubble-chat-log");
+    log.scrollTop = log.scrollHeight;
+    $("#bubble-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const input = $("#bubble-input");
+      const value = input.value.trim();
+      if (!value) return;
+      bubbleMessages.push({ from: "fan", text: value, time: currentChatTime() });
+      saveBubbleMessages();
+      renderBubble();
+      const nextInput = $("#bubble-input");
+      nextInput.focus();
+    });
+    $("#header-action").onclick = () => showToast("서빈 버블 구독 중 💗");
   }
 
   function kakaoAvatar(chat, small = false) { return chat.photo ? `<img class="kakao-avatar-img ${small ? "small" : ""}" src="${chat.photo}" alt="${escapeHTML(chat.name)} 프로필">` : `<img class="kakao-avatar-img ${small ? "small" : ""}" src="avatar-default.jpg" alt="${escapeHTML(chat.name)} 프로필">`; }
