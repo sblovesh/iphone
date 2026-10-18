@@ -50,11 +50,9 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .hidden { display: none !important; }
 .lock-screen {
   color: white; text-align: center;
-  background: linear-gradient(160deg, #a8b8c9 0%, #d5dce1 24%, #829ca9 46%, #455d6a 70%, #1c2936 100%);
+  background: linear-gradient(rgba(8, 15, 22, 0.06), rgba(8, 15, 22, 0.20)), url("lockscreen.jpg") center center / cover no-repeat;
 }
-.lock-screen::before, .lock-screen::after { content: ""; position: absolute; border-radius: 50%; filter: blur(2px); }
-.lock-screen::before { width: 430px; height: 430px; left: -170px; top: 150px; background: linear-gradient(130deg, #e5e1d8aa, #788e9b30); }
-.lock-screen::after { width: 380px; height: 540px; right: -200px; top: 270px; background: linear-gradient(150deg, #d1d8d2a0, #23384770); }
+.lock-screen::before, .lock-screen::after { display: none; }
 .lock-date { position: relative; z-index: 1; margin-top: 111px; font-size: 17px; font-weight: 500; text-shadow: 0 1px 8px #18232c40; }
 .lock-clock { position: relative; z-index: 1; font-size: clamp(68px, 19vw, 90px); line-height: 1.05; letter-spacing: -4px; font-weight: 300; text-shadow: 0 2px 12px #18232c20; }
 .lock-message { position: relative; z-index: 1; margin-top: 13px; font-size: 13px; color: #ffffffd9; }
