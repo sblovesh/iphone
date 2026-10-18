@@ -79,7 +79,7 @@
   const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모" };
   let toastTimer;
   let enteredPasscode = "";
-  const demoPasscode = "1234";
+  const demoPasscode = "0711";
 
   function updatePasscodeDots() {
     $("#passcode-dots").querySelectorAll("span").forEach((dot, index) => {
