@@ -76,7 +76,7 @@
     nextNoteId: 3
   };
 
-  const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모" };
+  const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모", kakao: "카카오톡", instagram: "Instagram" };
   let toastTimer;
   let enteredPasscode = "";
   const demoPasscode = "0711";
@@ -152,6 +152,8 @@
     else if (state.app === "photos") renderPhotos();
     else if (state.app === "calls") renderCalls();
     else if (state.app === "notes") renderNotes();
+    else if (state.app === "kakao") renderKakao();
+    else if (state.app === "instagram") renderInstagram();
   }
 
   function renderMessages() {
@@ -219,6 +221,68 @@
         renderMessages();
       });
     });
+  }
+
+
+  function renderKakao() {
+    const content = $("#app-content");
+    $("#app-title").textContent = state.activeChat ? (state.messages.find((item) => item.id === state.activeChat)?.name || "채팅") : "카카오톡";
+    $("#header-action").textContent = state.activeChat ? "" : "＋";
+    if (state.activeChat) {
+      const chat = state.messages.find((item) => item.id === state.activeChat);
+      if (!chat) { state.activeChat = null; renderKakao(); return; }
+      content.innerHTML = `
+        <div class="kakao-chat-screen">
+          <div class="kakao-chat-info">${escapeHTML(chat.name)} · 온라인</div>
+          <div class="kakao-chat-log" id="kakao-chat-log">
+            <div class="kakao-date">오늘</div>
+            ${chat.messages.map((message) => `<div class="kakao-message ${message.from}">${escapeHTML(message.text)}</div>`).join("")}
+          </div>
+          <form class="kakao-compose" id="kakao-form"><button type="button" aria-label="첨부">＋</button><input id="kakao-input" maxlength="300" placeholder="메시지 입력" autocomplete="off"><button type="submit" aria-label="보내기">➤</button></form>
+        </div>`;
+      const log = $("#kakao-chat-log"); log.scrollTop = log.scrollHeight;
+      $("#kakao-form").addEventListener("submit", (event) => {
+        event.preventDefault(); const input = $("#kakao-input"); const value = input.value.trim(); if (!value) return;
+        chat.messages.push({ from: "outgoing", text: value }); chat.preview = value; chat.time = "방금"; renderKakao();
+      });
+      return;
+    }
+    content.innerHTML = `
+      <div class="kakao-tools"><span>친구</span><span>채팅</span><span>오픈채팅</span><span>쇼핑</span></div>
+      <div class="kakao-search">⌕　이름 또는 채팅방 검색</div>
+      <div class="kakao-list-label">채팅 ${state.messages.length}</div>
+      <div class="kakao-list">
+        ${state.messages.map((chat) => `<button class="kakao-row" data-kakao-chat="${chat.id}"><span class="kakao-avatar ${chat.color}">${escapeHTML(chat.avatar)}</span><span class="kakao-row-main"><strong>${escapeHTML(chat.name)}</strong><span>${escapeHTML(chat.preview)}</span></span><span class="kakao-row-meta">${escapeHTML(chat.time)}<i>1</i></span></button>`).join("")}
+      </div>
+      <div class="kakao-bottom-tabs"><span>♙<small>친구</small></span><span class="selected">▤<small>채팅</small></span><span>◉<small>오픈채팅</small></span><span>◷<small>쇼핑</small></span><span>•••<small>더보기</small></span></div>`;
+    content.querySelectorAll("[data-kakao-chat]").forEach((button) => button.addEventListener("click", () => { state.activeChat = button.dataset.kakaoChat; renderKakao(); }));
+  }
+
+  function renderInstagram() {
+    const content = $("#app-content");
+    $("#app-title").textContent = "Instagram";
+    $("#header-action").textContent = "♡";
+    content.innerHTML = `
+      <div class="ig-topbar"><strong>Instagram</strong><span>＋　♡　➤</span></div>
+      <div class="ig-stories">
+        ${[{n:"내 스토리",c:"mine"},{n:"minji_day",c:"pink"},{n:"daily.j",c:"orange"},{n:"summer_lee",c:"blue"},{n:"coffee.zip",c:"green"}].map((x,i)=>`<button class="ig-story" data-story="${x.n}"><span class="ig-story-ring ${x.c}"><i>${["＋","민","J","S","☕"][i]}</i></span><small>${x.n}</small></button>`).join("")}
+      </div>
+      <article class="ig-post">
+        <div class="ig-post-user"><span class="ig-mini-avatar pink">민</span><strong>minji_day</strong><span class="ig-more">•••</span></div>
+        <div class="ig-photo ig-photo-sunset" role="img" aria-label="노을이 지는 바다 사진"><span class="ig-sun"></span><span class="ig-water"></span><span class="ig-horizon"></span></div>
+        <div class="ig-actions"><button data-like="post1" aria-label="좋아요">♡</button><button data-comment="post1" aria-label="댓글">♧</button><button aria-label="공유">➤</button><button class="ig-save" aria-label="저장">♧</button></div>
+        <div class="ig-post-copy"><strong id="ig-likes">좋아요 128개</strong><p><strong>minji_day</strong> 오늘 하늘 색이 너무 예뻤다 🌅</p><p class="ig-comments" id="ig-comment-count">댓글 12개 모두 보기</p><small>2시간 전</small></div>
+      </article>
+      <article class="ig-post">
+        <div class="ig-post-user"><span class="ig-mini-avatar orange">J</span><strong>daily.j</strong><span class="ig-more">•••</span></div>
+        <div class="ig-photo ig-photo-cafe" role="img" aria-label="따뜻한 커피와 카페 테이블 사진"><div class="ig-cup"><span></span></div><div class="ig-plate"></div><div class="ig-table-line"></div></div>
+        <div class="ig-actions"><button data-like="post2" aria-label="좋아요">♡</button><button data-comment="post2" aria-label="댓글">♧</button><button aria-label="공유">➤</button><button class="ig-save" aria-label="저장">♧</button></div>
+        <div class="ig-post-copy"><strong>좋아요 86개</strong><p><strong>daily.j</strong> 느긋한 주말 오후 ☕</p><small>5시간 전</small></div>
+      </article>
+      <div class="ig-bottom-tabs"><span>⌂</span><span>⌕</span><span>＋</span><span>▣</span><span class="ig-profile-dot">예</span></div>`;
+    content.querySelectorAll("[data-like]").forEach((button) => button.addEventListener("click", () => { const liked = button.classList.toggle("liked"); button.textContent = liked ? "♥" : "♡"; const likes = $("#ig-likes"); if (likes) likes.textContent = liked ? "좋아요 129개" : "좋아요 128개"; }));
+    content.querySelectorAll("[data-comment]").forEach((button) => button.addEventListener("click", () => showToast("댓글 기능은 다음 단계에서 추가할 수 있어요.")));
+    content.querySelectorAll("[data-story]").forEach((button) => button.addEventListener("click", () => showToast(`${button.dataset.story} 스토리 · 데모`)));
   }
 
   function renderPhotos() {
@@ -365,9 +429,9 @@
   });
 
   $("#back-button").addEventListener("click", () => {
-    if (state.app === "messages" && state.activeChat) {
+    if ((state.app === "messages" || state.app === "kakao") && state.activeChat) {
       state.activeChat = null;
-      renderMessages();
+      if (state.app === "kakao") renderKakao(); else renderMessages();
     } else if (state.app === "photos" && state.activePhoto) {
       state.activePhoto = null;
       renderPhotos();
