@@ -76,7 +76,7 @@
     nextNoteId: 3
   };
 
-  const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모", kakao: "카카오톡", instagram: "Instagram" };
+  const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모" };
   let toastTimer;
   let enteredPasscode = "";
   const demoPasscode = "0711";
@@ -89,6 +89,7 @@
 
   function closePasscode() {
     $("#passcode-modal").classList.add("hidden");
+    $("#passcode-modal").setAttribute("aria-hidden", "true");
     enteredPasscode = "";
     updatePasscodeDots();
     $("#passcode-error").textContent = "암호를 입력하세요.";
@@ -151,30 +152,6 @@
     else if (state.app === "photos") renderPhotos();
     else if (state.app === "calls") renderCalls();
     else if (state.app === "notes") renderNotes();
-    else if (state.app === "kakao") renderSocialApp("kakao");
-    else if (state.app === "instagram") renderSocialApp("instagram");
-  }
-
-  function renderSocialApp(app) {
-    const content = $("#app-content");
-    const isKakao = app === "kakao";
-    $("#app-title").textContent = isKakao ? "카카오톡" : "Instagram";
-    $("#header-action").textContent = "";
-    content.innerHTML = isKakao ? `
-      <div class="social-demo">
-        <div class="section-label" style="margin:0 0 10px">채팅</div>
-        <div class="list-card">
-          <div class="list-row"><span class="avatar gold">민</span><span class="row-main"><span class="row-title">김민지</span><span class="row-subtitle">오늘 뭐 해?</span></span><span class="row-trailing">오후 8:12</span></div>
-          <div class="list-row"><span class="avatar green">엄</span><span class="row-main"><span class="row-title">엄마</span><span class="row-subtitle">집에 오면 연락해</span></span><span class="row-trailing">오후 7:46</span></div>
-        </div>
-        <div class="social-banner" style="margin-top:14px"><strong>카카오톡 데모</strong><p>실제 계정과 연결되지 않은 가상 화면이에요.</p><button class="social-action" id="social-action">메시지 보내기</button></div>
-      </div>` : `
-      <div class="social-demo">
-        <div class="social-banner"><strong>📷 오늘의 순간</strong><p>사진과 일상을 공유해 보세요.</p><div style="height:180px;border-radius:12px;margin-top:14px;background:linear-gradient(145deg,#fbd6a4,#ed9bb4 48%,#8c9ce8)"></div><button class="social-action instagram" id="social-action">♡ 좋아요</button></div>
-        <div class="social-banner"><strong>Instagram 데모</strong><p>실제 Instagram 계정이나 피드와 연결되지 않은 가상 화면이에요.</p></div>
-      </div>`;
-    const action = $("#social-action");
-    if (action) action.addEventListener("click", () => showToast(isKakao ? "가상 메시지 기능입니다." : "좋아요를 눌렀어요."));
   }
 
   function renderMessages() {
@@ -349,6 +326,7 @@
     updatePasscodeDots();
     $("#passcode-error").textContent = "암호를 입력하세요.";
     $("#passcode-modal").classList.remove("hidden");
+    $("#passcode-modal").setAttribute("aria-hidden", "false");
   });
 
   $("#passcode-close").addEventListener("click", closePasscode);
