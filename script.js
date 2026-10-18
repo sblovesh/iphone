@@ -211,7 +211,7 @@
       content.innerHTML = `
         <div class="kakao-chat-screen">
           <div class="kakao-chat-log" id="kakao-chat-log">
-            ${chat.messages.map((message) => message.from === "date" ? `<div class="kakao-date">${escapeHTML(message.text)}</div>` : message.from === "photo" ? `<div class="kakao-message-photo incoming">${kakaoAvatar(chat, true)}<img src="${message.text}" alt="서빈 님이 보낸 사진"></div>` : `<div class="kakao-message-wrap ${message.from}">${message.from === "incoming" ? kakaoAvatar(chat, true) : ""}<div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}${message.time ? `<small>${escapeHTML(message.time)}</small>` : ""}</div></div>`).join("")}
+            ${chat.messages.map((message) => message.from === "date" ? `<div class="kakao-date">${escapeHTML(message.text)}</div>` : message.from === "photo" ? `<div class="kakao-message-photo incoming">${kakaoAvatar(chat, true)}<img src="${message.text}" alt="서빈 님이 보낸 사진"></div>` : `<div class="kakao-message-wrap ${message.from}">${message.from === "incoming" ? kakaoAvatar(chat, true) : ""}${message.from === "incoming" ? `<div class="kakao-message-body"><strong class="kakao-sender-name">${escapeHTML(chat.name.replace(/ 님$/, ""))}</strong><div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div></div>` : `<div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div>`}${message.time ? `<small class="kakao-message-time">${escapeHTML(message.time)}</small>` : ""}</div>`).join("")}
           </div>
           <form class="kakao-compose" id="kakao-form"><button type="button" aria-label="첨부">＋</button><input id="kakao-input" maxlength="300" placeholder="메시지 입력" autocomplete="off"><button type="submit" aria-label="보내기">➤</button></form>
         </div>`;
@@ -323,11 +323,14 @@
       ["outgoing","실수는 맞는데"],
       ["outgoing","피해 드린 건 맞으니..."],
       ["incoming","괜찮아요"],
-      ["incoming","알림을 아예 꺼놔서"]
+      ["incoming","알림을 아예 꺼놔서..."],
+      ["outgoing","아무튼 늦었는데"],
+      ["outgoing","얼른 주무세요!!"],
+      ["incoming","배우님도요"]
     ];
     if (state.instagramScreen === "dm-chat") {
       $("#app-title").textContent = "seo_BBini"; $("#header-action").textContent = "⋯";
-      content.innerHTML = `<div class="ig-dm-chat"><div class="ig-dm-person">${seobinAvatar}<div class="ig-dm-name"><strong>서빈</strong><small>seo_BBini</small></div><span class="ig-dm-head-actions">☎　▢</span></div><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우하지 않음</small></div><div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-date">2024년 7월 12일</div>${dmConversation.map(([from,text])=>`<div class="ig-dm-line ${from}">${from === "incoming" ? seobinAvatar : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div><form class="ig-dm-compose" id="ig-dm-form"><button type="button" class="ig-camera" aria-label="카메라">◎</button><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300"><button type="submit" aria-label="보내기">➤</button></form></div>`;
+      content.innerHTML = `<div class="ig-dm-chat"><div class="ig-dm-person">${seobinAvatar}<div class="ig-dm-name"><strong>서빈</strong><small>seo_BBini</small></div><span class="ig-dm-head-actions">⌕　▢</span></div><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우하지 않음</small></div><div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-date">2024년 7월 12일 · 오전 4:00–5:00</div>${dmConversation.map(([from,text])=>`<div class="ig-dm-line ${from}">${from === "incoming" ? seobinAvatar : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div><form class="ig-dm-compose" id="ig-dm-form"><button type="button" class="ig-camera" aria-label="카메라">◎</button><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300"><button type="submit" aria-label="보내기">➤</button></form></div>`;
       const history = $("#ig-dm-history"); history.scrollTop = history.scrollHeight;
       $("#ig-dm-form").addEventListener("submit", e => { e.preventDefault(); const input=$("#ig-dm-input"); if(input.value.trim()){ const line=document.createElement("div"); line.className="ig-dm-line outgoing"; const bubble=document.createElement("div"); bubble.className="ig-dm-bubble outgoing"; bubble.textContent=input.value.trim(); line.appendChild(bubble); history.appendChild(line); input.value=""; history.scrollTop=history.scrollHeight; }}); return;
     }

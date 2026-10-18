@@ -60,7 +60,7 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .primary-button:active { transform: scale(.97); }
 .unlock-area p { margin: 0; font-size: 11px; color: #ffffffb5; }
 .lock-bottom { position: absolute; z-index: 2; bottom: 32px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 33px; font-size: 21px; }
-.home-screen { padding: 70px 20px 16px; background: linear-gradient(160deg, #c6d8e6 0%, #e9e9e5 47%, #b8c8d4 100%); }
+.home-screen { padding: 70px 20px 16px; background: linear-gradient(rgba(255,255,255,.10), rgba(255,255,255,.10)), url("home-wallpaper.jpg") center center / cover no-repeat; }
 .home-date { margin: 10px 2px 25px; color: #26323e; }
 #home-greeting { font-size: 13px; font-weight: 500; opacity: .8; }
 .home-date-large { font-size: 26px; font-weight: 700; letter-spacing: -.7px; margin-top: 1px; }
@@ -424,3 +424,21 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .ig-dm-compose { flex:0 0 auto; align-items:center; margin:8px 10px calc(10px + env(safe-area-inset-bottom)); padding:7px 11px; border:1px solid #ddd; border-radius:25px; gap:8px; }
 .ig-dm-compose .ig-camera { color:#555; font-size:21px; }
 .ig-dm-compose input { font-size:12px; }
+
+
+/* Refinements: KakaoTalk-style sender labels/timestamps and natural Instagram DM alignment */
+.kakao-message-wrap { display:flex; align-items:flex-end; gap:7px; max-width:100%; width:fit-content; }
+.kakao-message-wrap.incoming { align-self:flex-start; }
+.kakao-message-wrap.outgoing { align-self:flex-end; }
+.kakao-message-body { display:flex; flex-direction:column; align-items:flex-start; gap:4px; min-width:0; max-width:min(70vw, 280px); }
+.kakao-sender-name { font-size:11px; font-weight:500; color:#314653; margin-left:2px; }
+.kakao-message { margin:0; max-width:100%; width:fit-content; white-space:pre-wrap; overflow-wrap:anywhere; }
+.kakao-message-time { display:block; flex:0 0 auto; color:#6f7d84; font-size:10px; line-height:1.2; white-space:nowrap; padding-bottom:2px; }
+.kakao-message-wrap.outgoing .kakao-message-time { order:-1; }
+.kakao-message small { display:none; }
+.ig-dm-line { display:flex; align-items:flex-end; gap:6px; width:100%; max-width:100%; }
+.ig-dm-line.incoming { align-self:flex-start; justify-content:flex-start; }
+.ig-dm-line.outgoing { align-self:flex-end; justify-content:flex-end; }
+.ig-dm-bubble { display:block; flex:0 1 auto; width:fit-content; max-width:min(78%, 285px); min-width:0; white-space:normal; overflow-wrap:break-word; word-break:normal; }
+.ig-dm-line.outgoing .ig-dm-bubble { margin-left:auto; }
+.ig-dm-head-actions { font-size:18px; color:#262626; }
