@@ -57,21 +57,18 @@
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.every(m => m && ["date","incoming","outgoing","photo"].includes(m.from) && typeof m.text === "string")) {
-        seobinChat.messages = parsed;
-        // 기존 브라우저에 저장된 대화도 새 대화 시작일을 2025년 1월 5일로 분리
-        const greetingIndex = seobinChat.messages.findIndex(m => m.from === "incoming" && m.text === "시혀나ㅏㅏ 뭐 해ㅐㅐㅐ");
-        const hasNewDate = seobinChat.messages.some(m => m.from === "date" && m.text === "2025년 1월 5일");
-        if (greetingIndex >= 0 && !hasNewDate) {
-          seobinChat.messages.splice(greetingIndex, 0, {from:"date", text:"2025년 1월 5일"});
-          localStorage.setItem(SEOBIN_STORAGE_KEY, JSON.stringify(seobinChat.messages));
-        }
+        // 저장된 이전 테스트의 스토리 메시지를 제거해, 방문할 때마다 새 시나리오로 시작
+        const savedDateIndex = parsed.findIndex(m => m.from === "date" && m.text === "2025년 1월 5일");
+        seobinChat.messages = savedDateIndex >= 0 ? parsed.slice(0, savedDateIndex) : parsed;
+        localStorage.setItem(SEOBIN_STORAGE_KEY, JSON.stringify(seobinChat.messages));
       }
     }
   } catch (_) {}
   function saveSeobinChat() { try { localStorage.setItem(SEOBIN_STORAGE_KEY, JSON.stringify(seobinChat.messages)); } catch (_) {} }
   const SEOBIN_SCENARIO_KEY = "virtual-iphone-seobin-sleep-story-v1";
+  // 시나리오 상태는 페이지 방문마다 초기화해, 이전 테스트 진행 상태를 이어받지 않음
   let seobinScenario = "new";
-  try { seobinScenario = localStorage.getItem(SEOBIN_SCENARIO_KEY) || "new"; } catch (_) {}
+  try { localStorage.setItem(SEOBIN_SCENARIO_KEY, "new"); } catch (_) {}
   function saveSeobinScenario(value) { seobinScenario = value; try { localStorage.setItem(SEOBIN_SCENARIO_KEY, value); } catch (_) {} }
   function currentChatTime() { return new Date().toLocaleTimeString("ko-KR", {hour:"2-digit",minute:"2-digit",hour12:true}); }
   function addSeobinIncoming(text, photo=false) {
@@ -566,7 +563,7 @@
     }
   });
 
-  try { if (seobinScenario === "new" && !sessionStorage.getItem("virtual-iphone-seobin-sleep-story-greeting")) { sessionStorage.setItem("virtual-iphone-seobin-sleep-story-greeting","1"); setTimeout(() => { if (!seobinChat.messages.some(m => m.from === "date" && m.text === "2025년 1월 5일")) seobinChat.messages.push({from:"date",text:"2025년 1월 5일"}); addSeobinIncoming("시혀나ㅏㅏ 뭐 해ㅐㅐㅐ"); saveSeobinScenario("received"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 6500); } } catch (_) {}
+  try { if (seobinScenario === "new") { setTimeout(() => { if (!seobinChat.messages.some(m => m.from === "date" && m.text === "2025년 1월 5일")) seobinChat.messages.push({from:"date",text:"2025년 1월 5일"}); saveSeobinChat(); addSeobinIncoming("시혀나ㅏㅏ 뭐 해ㅐㅐㅐ"); saveSeobinScenario("received"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 6500); } } catch (_) {}
   updateClock();
   setInterval(updateClock, 30000);
   $("#unread-dot").classList.toggle("hidden", !state.unread);
