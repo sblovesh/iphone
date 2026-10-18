@@ -54,6 +54,26 @@
   const seobinChat = state.messages.find((chat) => chat.id === "seobin");
   try { const saved = localStorage.getItem(SEOBIN_STORAGE_KEY); if (saved) { const parsed = JSON.parse(saved); if (Array.isArray(parsed) && parsed.every(m => m && ["date","incoming","outgoing","photo"].includes(m.from) && typeof m.text === "string")) seobinChat.messages = parsed; } } catch (_) {}
   function saveSeobinChat() { try { localStorage.setItem(SEOBIN_STORAGE_KEY, JSON.stringify(seobinChat.messages)); } catch (_) {} }
+  const SEOBIN_SCENARIO_KEY = "virtual-iphone-seobin-sleep-story-v1";
+  let seobinScenario = "new";
+  try { seobinScenario = localStorage.getItem(SEOBIN_SCENARIO_KEY) || "new"; } catch (_) {}
+  function saveSeobinScenario(value) { seobinScenario = value; try { localStorage.setItem(SEOBIN_SCENARIO_KEY, value); } catch (_) {} }
+  function currentChatTime() { return new Date().toLocaleTimeString("ko-KR", {hour:"2-digit",minute:"2-digit",hour12:true}); }
+  function addSeobinIncoming(text, photo=false) {
+    seobinChat.messages.push({from: photo ? "photo" : "incoming", text: photo ? "seobin-bed-photo.jpg" : text, time: currentChatTime()});
+    seobinChat.preview = photo ? "사진" : text; seobinChat.time = "방금"; saveSeobinChat();
+    if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao();
+    else { showToast(photo ? "카카오톡 · 서빈 님이 사진을 보냈어요" : "카카오톡 · 서빈 님: " + text); const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); }
+  }
+  function startSeobinSleepStory() {
+    if (seobinScenario !== "received") return;
+    saveSeobinScenario("replied");
+    seobinChat.messages.push({from:"outgoing", text:"저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?", time:currentChatTime()});
+    seobinChat.preview = "저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?"; seobinChat.time="방금"; saveSeobinChat(); renderKakao();
+    setTimeout(() => addSeobinIncoming("나는 침대랑 한 몸이야...."), 900);
+    setTimeout(() => addSeobinIncoming("", true), 2200);
+    setTimeout(() => { addSeobinIncoming("나 다시 쫌 잘겡 촬영 열시미 해ㅐㅐ"); saveSeobinScenario("finished"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 3600);
+  }
   const seobinReplies = [
     [/안녕|하이|ㅎㅇ|반가/, ["안녕하세요 ㅎㅎ", "시현님 안녕!!", "오 뭐야 반가워요 😳"]],
     [/뭐 해|뭐해|뭐하|머해/, ["저 그냥 쉬고 있었어요 ㅎㅎ 시현님은요?", "방금 집에 왔어요!", "시현님 생각… 은 아니고요 ㅋㅋ"]],
@@ -228,12 +248,14 @@
           <div class="kakao-chat-log" id="kakao-chat-log">
             ${chat.messages.map((message) => message.from === "date" ? `<div class="kakao-date">${escapeHTML(message.text)}</div>` : message.from === "photo" ? `<div class="kakao-message-photo incoming">${kakaoAvatar(chat, true)}<img src="${message.text}" alt="서빈 님이 보낸 사진"></div>` : `<div class="kakao-message-wrap ${message.from}">${message.from === "incoming" ? kakaoAvatar(chat, true) : ""}${message.from === "incoming" ? `<div class="kakao-message-body"><strong class="kakao-sender-name">${escapeHTML(chat.name.replace(/ 님$/, ""))}</strong><div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div></div>` : `<div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div>`}${message.time ? `<small class="kakao-message-time">${escapeHTML(message.time)}</small>` : ""}</div>`).join("")}
           </div>
-          <form class="kakao-compose" id="kakao-form"><button type="button" aria-label="첨부">＋</button><input id="kakao-input" maxlength="300" placeholder="메시지 입력" autocomplete="off"><button type="submit" aria-label="보내기">➤</button></form>
+          ${chat.id === "seobin" && seobinScenario === "received" ? `<div class="seobin-quick-replies"><button type="button" id="seobin-quick-reply">저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?</button></div>` : ""}
+          <form class="kakao-compose" id="kakao-form"><button type="button" aria-label="첨부">＋</button><input id="kakao-input" maxlength="300" placeholder="메시지 입력" autocomplete="off" ${chat.id === "seobin" && seobinScenario === "finished" ? 'disabled placeholder="서빈 님은 자고 있어요…"' : ""}><button type="submit" aria-label="보내기" ${chat.id === "seobin" && seobinScenario === "finished" ? "disabled" : ""}>➤</button></form>
         </div>`;
       const log = $("#kakao-chat-log"); log.scrollTop = log.scrollHeight;
+      const quickReply = $("#seobin-quick-reply"); if (quickReply) quickReply.addEventListener("click", startSeobinSleepStory);
       $("#kakao-form").addEventListener("submit", (event) => {
-        event.preventDefault(); const input = $("#kakao-input"); const value = input.value.trim(); if (!value) return;
-        chat.messages.push({ from: "outgoing", text: value, time: new Date().toLocaleTimeString("ko-KR", {hour:"2-digit",minute:"2-digit",hour12:true}) }); chat.preview = value; chat.time = "방금"; if(chat.id === "seobin") saveSeobinChat(); renderKakao(); if(chat.id === "seobin") scheduleSeobinReply(value);
+        event.preventDefault(); const input = $("#kakao-input"); const value = input.value.trim(); if (!value || (chat.id === "seobin" && seobinScenario === "finished")) return;
+        chat.messages.push({ from: "outgoing", text: value, time: currentChatTime() }); chat.preview = value; chat.time = "방금"; if(chat.id === "seobin") saveSeobinChat(); renderKakao(); if(chat.id === "seobin" && seobinScenario !== "replied" && seobinScenario !== "finished") scheduleSeobinReply(value);
       });
       return;
     }
@@ -540,7 +562,7 @@
     }
   });
 
-  try { if (!sessionStorage.getItem("virtual-iphone-seobin-greeting")) { sessionStorage.setItem("virtual-iphone-seobin-greeting","1"); setTimeout(() => showToast("카카오톡 · 서빈 님: 시현님, 지금 뭐 해요? 😊"), 6500); } } catch (_) {}
+  try { if (seobinScenario === "new" && !sessionStorage.getItem("virtual-iphone-seobin-sleep-story-greeting")) { sessionStorage.setItem("virtual-iphone-seobin-sleep-story-greeting","1"); setTimeout(() => { addSeobinIncoming("시혀나ㅏㅏ 뭐 해ㅐㅐㅐ"); saveSeobinScenario("received"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 6500); } } catch (_) {}
   updateClock();
   setInterval(updateClock, 30000);
   $("#unread-dot").classList.toggle("hidden", !state.unread);

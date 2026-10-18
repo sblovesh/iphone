@@ -148,8 +148,12 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .note-body-input { width: 100%; min-height: 260px; resize: vertical; border: 0; outline: none; background: transparent; font-size: 15px; line-height: 1.65; color: #34363a; }
 .note-save { background: #1684ff; color: white; border: 0; border-radius: 11px; padding: 10px 16px; font-size: 13px; font-weight: 600; }
 .empty-state { text-align: center; color: #8b8d95; padding: 40px 24px; font-size: 13px; line-height: 1.6; }
-.toast { position: fixed; z-index: 100; left: 50%; bottom: 25px; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; padding: 11px 16px; border-radius: 20px; background: #222e; color: white; font-size: 12px; transition: .22s ease; max-width: calc(100vw - 30px); text-align: center; }
+.toast { position: fixed; z-index: 1000; left: 50%; top: max(12px, env(safe-area-inset-top)); bottom: auto; transform: translate(-50%, -18px); opacity: 0; pointer-events: none; padding: 13px 16px; border-radius: 18px; background: rgba(35,35,38,.94); color: white; font-size: 12px; line-height: 1.4; transition: .22s ease; width: min(350px, calc(100vw - 30px)); box-sizing: border-box; text-align: left; box-shadow: 0 5px 22px #0003; backdrop-filter: blur(16px); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
+.seobin-quick-replies { flex: 0 0 auto; padding: 8px 12px 3px; background: #f8f8f8; }
+.seobin-quick-replies button { width: 100%; border: 1px solid #e7d35a; border-radius: 12px; background: #fff9c9; color: #3e3920; padding: 10px 12px; font-size: 12px; line-height: 1.4; text-align: left; cursor: pointer; }
+.kakao-compose input:disabled { background: #eee; color: #888; }
+.kakao-compose button:disabled { opacity: .35; }
 .home-indicator { position: absolute; z-index: 30; bottom: 8px; left: 50%; transform: translateX(-50%); width: 112px; height: 4px; border: 0; border-radius: 5px; background: #171717; opacity: .8; }
 .app-screen:not(.hidden) ~ .home-indicator { background: #222; }
 .stage-caption { margin: 0; font-size: 11px; color: #858b95; letter-spacing: .4px; }
