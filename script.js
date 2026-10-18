@@ -264,6 +264,75 @@
   function saveBubbleMessages() {
     try { localStorage.setItem(BUBBLE_STORAGE_KEY, JSON.stringify(bubbleMessages)); } catch (_) {}
   }
+
+  // 방문 30초 후 서빈의 버블 알림 시나리오: 누르면 알림을 멈추고 대화창에서 순차 공개
+  const bubbleRevealMessages = [
+    "시혀나",
+    "나 너 휴대폰 봣는데",
+    "너 왜 내 버블 구독하구 있냐",
+    "딱 들켯어 너"
+  ];
+  let bubbleRevealStarted = false;
+  let bubbleRevealOpened = false;
+  let bubbleRevealIndex = 0;
+  let bubbleNoticeTimer = null;
+  let bubbleNoticeHideTimer = null;
+  const bubbleNoticeIntervals = [0, 2000, 5000, 10000];
+
+  function ensureBubbleNotice() {
+    let notice = document.getElementById("bubble-push-notice");
+    if (!notice) {
+      notice = document.createElement("button");
+      notice.type = "button";
+      notice.id = "bubble-push-notice";
+      notice.className = "bubble-push-notice";
+      notice.innerHTML = '<img src="bubble-cat.jpg" alt=""><span class="bubble-push-copy"><strong>버블 · 서빈</strong><span id="bubble-push-text"></span></span><time>지금</time>';
+      document.body.appendChild(notice);
+      notice.addEventListener("click", () => {
+        bubbleRevealOpened = true;
+        clearTimeout(bubbleNoticeTimer);
+        clearTimeout(bubbleNoticeHideTimer);
+        notice.classList.remove("show");
+        bubbleNoticeIndexStop();
+        openApp("bubble");
+        bubbleChatOpen = true;
+        renderBubble();
+        revealBubbleMessagesSequentially();
+      });
+    }
+    return notice;
+  }
+  function bubbleNoticeIndexStop() {
+    bubbleRevealIndex = bubbleRevealMessages.length;
+  }
+  function revealBubbleMessagesSequentially() {
+    let index = 0;
+    const reveal = () => {
+      if (index >= bubbleRevealMessages.length) return;
+      bubbleMessages.push({ from: "artist", day: "2025년 4월 8일", text: bubbleRevealMessages[index], time: currentChatTime() });
+      saveBubbleMessages();
+      if (state.app === "bubble" && state.view === "app" && bubbleChatOpen) renderBubble();
+      index++;
+      if (index < bubbleRevealMessages.length) setTimeout(reveal, 950);
+    };
+    setTimeout(reveal, 450);
+  }
+  function showBubblePush(index) {
+    if (bubbleRevealOpened || index >= bubbleRevealMessages.length) return;
+    bubbleRevealIndex = index;
+    const notice = ensureBubbleNotice();
+    const text = document.getElementById("bubble-push-text");
+    if (text) text.textContent = bubbleRevealMessages[index];
+    notice.classList.add("show");
+    clearTimeout(bubbleNoticeHideTimer);
+    bubbleNoticeHideTimer = setTimeout(() => notice.classList.remove("show"), 4500);
+    if (index < bubbleRevealMessages.length - 1) {
+      bubbleNoticeTimer = setTimeout(() => showBubblePush(index + 1), bubbleNoticeIntervals[index + 1]);
+    }
+  }
+  setTimeout(() => {
+    if (!bubbleRevealStarted) { bubbleRevealStarted = true; showBubblePush(0); }
+  }, 30000);
   function renderBubble() {
     const content = $("#app-content");
     $("#app-title").textContent = bubbleChatOpen ? "서빈" : "CHATS";

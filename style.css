@@ -529,3 +529,13 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .bubble-photo-message { display:block; width:min(58vw,230px); max-height:300px; object-fit:cover; border-radius:13px; border:1px solid #eee; }
 .bubble-compose { margin:7px 12px 10px; border-color:#e7e7e7; }
 .bubble-compose input { font-size:13px; }
+
+
+/* iOS-style tappable Bubble push notification */
+.bubble-push-notice { position: fixed; z-index: 2000; top: max(12px, env(safe-area-inset-top)); left: 12px; right: 12px; width: calc(100% - 24px); display: flex; align-items: center; gap: 11px; padding: 12px 14px; border: 1px solid #ffffffa8; border-radius: 20px; background: rgba(250,248,248,.94); color: #222; box-shadow: 0 8px 28px #0002; text-align: left; font: inherit; opacity: 0; transform: translateY(-140%); pointer-events: none; transition: transform .32s ease, opacity .32s ease; backdrop-filter: blur(20px); }
+.bubble-push-notice.show { opacity: 1; transform: translateY(0); pointer-events: auto; cursor: pointer; }
+.bubble-push-notice > img { width: 42px; height: 42px; border-radius: 13px; object-fit: cover; flex: 0 0 auto; }
+.bubble-push-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 4px; }
+.bubble-push-copy strong { font-size: 12px; font-weight: 750; }
+.bubble-push-copy span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 14px; }
+.bubble-push-notice time { align-self: flex-start; color: #8b8989; font-size: 11px; white-space: nowrap; }
