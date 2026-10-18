@@ -442,3 +442,14 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .ig-dm-bubble { display:block; flex:0 1 auto; width:fit-content; max-width:min(78%, 285px); min-width:0; white-space:normal; overflow-wrap:break-word; word-break:normal; }
 .ig-dm-line.outgoing .ig-dm-bubble { margin-left:auto; }
 .ig-dm-head-actions { font-size:18px; color:#262626; }
+
+/* Instagram DM: show the sender avatar only on the first message in a consecutive group. */
+.ig-dm-avatar-spacer {
+  display: block;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 1px;
+}
+.ig-dm-line.ig-dm-continuation {
+  margin-top: -6px;
+}
