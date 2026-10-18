@@ -50,6 +50,21 @@
     nextNoteId: 3
   };
 
+  const SEOBIN_STORAGE_KEY = "virtual-iphone-seobin-chat-v1";
+  const seobinChat = state.messages.find((chat) => chat.id === "seobin");
+  try { const saved = localStorage.getItem(SEOBIN_STORAGE_KEY); if (saved) { const parsed = JSON.parse(saved); if (Array.isArray(parsed) && parsed.every(m => m && ["date","incoming","outgoing","photo"].includes(m.from) && typeof m.text === "string")) seobinChat.messages = parsed; } } catch (_) {}
+  function saveSeobinChat() { try { localStorage.setItem(SEOBIN_STORAGE_KEY, JSON.stringify(seobinChat.messages)); } catch (_) {} }
+  const seobinReplies = [
+    [/안녕|하이|ㅎㅇ|반가/, ["안녕하세요 ㅎㅎ", "시현님 안녕!!", "오 뭐야 반가워요 😳"]],
+    [/뭐 해|뭐해|뭐하|머해/, ["저 그냥 쉬고 있었어요 ㅎㅎ 시현님은요?", "방금 집에 왔어요!", "시현님 생각… 은 아니고요 ㅋㅋ"]],
+    [/보고 싶|보고싶|그리워/, ["갑자기요? ㅎㅎ 저도 조금 보고 싶네요", "우리 조만간 봐요!!", "그런 말 갑자기 하면 부끄럽잖아요 😳"]],
+    [/사랑|좋아해|좋아하/, ["ㅋㅋㅋㅋ 갑자기 고백이에요?", "저도 시현님 좋아하죠 ㅎㅎ", "그 말 캡처해도 돼요? 😏"]],
+    [/밥|먹었|저녁|점심|치킨/, ["아직 못 먹었어요 ㅠ 시현님은 드셨어요?", "저는 방금 먹었어요!", "그럼 다음에 같이 먹어요 ㅎㅎ"]],
+    [/사진|인스타|셀카/, ["사진이요?? 저도 보여줘요 👀", "괜찮은데요? 시현님 감각 좋잖아요 ㅎㅎ", "올려도 좋을 것 같은데요!!"]],
+    [/고마|감사/, ["뭘요 ㅎㅎ 제가 더 고맙죠", "별말씀을요!!", "시현님한테는 이 정도야 뭐 😊"]]
+  ]; let replyTurn = 0;
+  function chooseSeobinReply(text) { const match = seobinReplies.find(([test]) => test.test(text)); const options = match ? match[1] : ["헐 진짜요?? 좀 더 얘기해줘요 ㅎㅎ", "시현님은 어떻게 생각해요?", "ㅋㅋㅋㅋ 그건 조금 더 들어봐야겠는데요", "오 그런 일이 있었구나! 그래서 어떻게 됐어요?", "저도 비슷한 생각 했어요 ㅎㅎ"]; return options[replyTurn++ % options.length]; }
+  function scheduleSeobinReply(text) { setTimeout(() => { const answer = chooseSeobinReply(text); const time = new Date().toLocaleTimeString("ko-KR", {hour:"2-digit",minute:"2-digit",hour12:true}); seobinChat.messages.push({from:"incoming",text:answer,time}); seobinChat.preview=answer; seobinChat.time="방금"; saveSeobinChat(); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); else { showToast("카카오톡 · 서빈 님: " + answer); const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); } }, 1000 + Math.min(text.length*20,1200)); }
   const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모", kakao: "카카오톡", instagram: "Instagram" };
   let toastTimer;
   let enteredPasscode = "";
@@ -218,7 +233,7 @@
       const log = $("#kakao-chat-log"); log.scrollTop = log.scrollHeight;
       $("#kakao-form").addEventListener("submit", (event) => {
         event.preventDefault(); const input = $("#kakao-input"); const value = input.value.trim(); if (!value) return;
-        chat.messages.push({ from: "outgoing", text: value }); chat.preview = value; chat.time = "방금"; renderKakao();
+        chat.messages.push({ from: "outgoing", text: value, time: new Date().toLocaleTimeString("ko-KR", {hour:"2-digit",minute:"2-digit",hour12:true}) }); chat.preview = value; chat.time = "방금"; if(chat.id === "seobin") saveSeobinChat(); renderKakao(); if(chat.id === "seobin") scheduleSeobinReply(value);
       });
       return;
     }
@@ -525,6 +540,7 @@
     }
   });
 
+  try { if (!sessionStorage.getItem("virtual-iphone-seobin-greeting")) { sessionStorage.setItem("virtual-iphone-seobin-greeting","1"); setTimeout(() => showToast("카카오톡 · 서빈 님: 시현님, 지금 뭐 해요? 😊"), 6500); } } catch (_) {}
   updateClock();
   setInterval(updateClock, 30000);
   $("#unread-dot").classList.toggle("hidden", !state.unread);
