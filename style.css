@@ -77,10 +77,59 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .calls-art { background: linear-gradient(145deg, #5ee878, #17b94d); font-size: 26px; }
 .notes-art { background: linear-gradient(#ffe67b 0 24%, #fff 24%); color: #a8a8aa; font-size: 27px; align-items: flex-end; padding-bottom: 7px; }
 .unread-dot { position: absolute; width: 7px; height: 7px; background: #ff453a; border: 1px solid #fff; border-radius: 50%; right: 16px; top: -2px; }
-.widget { margin-top: 28px; padding: 17px; border-radius: 23px; background: #ffffffad; border: 1px solid #ffffffb5; backdrop-filter: blur(18px); box-shadow: 0 8px 20px #53657512; color: #27313a; }
-.widget-top { display: flex; justify-content: space-between; font-size: 11px; color: #6c747b; font-weight: 600; }
-.widget-title { font-size: 18px; line-height: 1.45; font-weight: 700; margin-top: 12px; letter-spacing: -.4px; }
-.widget-foot { font-size: 10px; color: #77818a; margin-top: 10px; }
+.social-apps {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+  margin-top: 28px;
+  padding: 10px 8px;
+}
+
+.app-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 64px;
+  gap: 7px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px #00000018;
+  transition: transform 0.15s ease;
+}
+
+.app-item:active .app-icon {
+  transform: scale(0.92);
+}
+
+.kakao-icon {
+  background: #FEE500;
+  color: #191919;
+  font-size: 31px;
+}
+
+.instagram-icon {
+  background: linear-gradient(135deg, #833AB4, #E1306C, #FCAF45);
+  color: white;
+  font-size: 43px;
+  font-weight: 300;
+}
+
+.app-label {
+  font-size: 11px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 1px 4px #00000070;
+  white-space: nowrap;
+}
 .dock { position: absolute; bottom: 21px; left: 17px; right: 17px; height: 78px; display: flex; align-items: center; justify-content: space-evenly; border: 1px solid #ffffff80; border-radius: 25px; background: #ffffff69; backdrop-filter: blur(20px); }
 .dock-icon { width: 48px; height: 48px; border: 0; border-radius: 14px; }
 .dock-icon.app-art { box-shadow: none; }
