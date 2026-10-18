@@ -167,7 +167,7 @@
   }
 
   const smsPreviews = [
-    {name:"매니저 민지", avatar:"민", color:"pink", time:"오후 8:42", preview:"내일 콜타임 06:30이에요! 차는 5:50에 도착합니다."},
+    {name:"매니저 우연 형", avatar:"우", color:"blue", time:"오후 8:42", preview:"내일 콜타임 06:30. 차는 5:50에 도착할게. 늦지 말고 자."},
     {name:"[광고] 프리미엄 대출", avatar:"광", color:"gold", time:"오후 8:17", preview:"고객님만을 위한 한도 조회, 지금 바로 확인하세요."},
     {name:"제작팀 조연출", avatar:"조", color:"blue", time:"오후 7:56", preview:"내일 32씬 대본 수정본 전달드립니다. 확인 부탁드려요."},
     {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 7:31", preview:"시현 배우님 맞으시죠? 저 진짜 오래전부터 팬이었어요."},
@@ -175,27 +175,27 @@
     {name:"스타일리스트 수연", avatar:"수", color:"green", time:"오후 6:15", preview:"내일 제작발표회 착장 최종안 공유드려요!"},
     {name:"[국제발신] 당첨 안내", avatar:"당", color:"gold", time:"오후 5:59", preview:"축하합니다! 경품 수령을 위해 링크를 확인하세요."},
     {name:"캐스팅 디렉터", avatar:"캐", color:"blue", time:"오후 5:26", preview:"차기작 미팅 일정 관련해 연락드렸습니다."},
-    {name:"팬", avatar:"♡", color:"pink", time:"오후 5:02", preview:"오늘 촬영장 근처에서 봤어요… 너무 잘생기셨어요."},
+    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 5:02", preview:"오늘 촬영장 뒤편에서 기다린 거 봤죠? 모른 척하지 마요. 나만큼 오래 좋아한 사람 없잖아."},
     {name:"광고대행사 윤 담당자", avatar:"윤", color:"green", time:"오후 4:41", preview:"브랜드 캠페인 제안서와 촬영 가이드 전달드립니다."},
     {name:"[Web발신] 택배", avatar:"택", color:"blue", time:"오후 4:12", preview:"배송 완료: 문 앞에 상품을 두었습니다."},
-    {name:"매니저 민지", avatar:"민", color:"pink", time:"오후 3:50", preview:"차량 번호 32가 8124예요. 끝나면 연락 주세요."},
+    {name:"매니저 우연 형", avatar:"우", color:"blue", time:"오후 3:50", preview:"차량 번호 32가 8124야. 끝나면 바로 연락해."},
     {name:"영화제 사무국", avatar:"영", color:"gold", time:"오후 3:14", preview:"초청 및 레드카펫 참석 여부 회신 부탁드립니다."},
-    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 2:58", preview:"집이 여기 맞죠? 오늘도 기다리고 있을게요."},
+    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 2:58", preview:"집 여기 맞네. 불 켜지는 거 확인했어. 오늘은 왜 이렇게 늦게 들어왔어?"},
     {name:"보이스피싱 의심", avatar:"금", color:"blue", time:"오후 2:23", preview:"[금융기관] 계좌 보호를 위해 본인 인증이 필요합니다."},
     {name:"드라마 제작사", avatar:"제", color:"green", time:"오후 1:46", preview:"대본 리딩은 금요일 오후 2시, 3층 회의실입니다."},
     {name:"팬카페 운영진", avatar:"팬", color:"pink", time:"오후 1:12", preview:"생일 서포트 관련해 소속사 확인을 요청드립니다."},
     {name:"[광고] 휴대폰 결제", avatar:"광", color:"gold", time:"오후 12:54", preview:"미납 요금이 있습니다. 즉시 납부하지 않으면 제한됩니다."},
     {name:"사진작가 도현", avatar:"도", color:"blue", time:"오전 11:38", preview:"어제 화보 셀렉본 업로드했습니다. 마음에 드는 컷 골라주세요."},
-    {name:"팬", avatar:"♡", color:"pink", time:"오전 10:52", preview:"배우님이 자주 가는 카페 알아냈어요. 또 갈게요!"},
-    {name:"매니저 민지", avatar:"민", color:"pink", time:"오전 10:15", preview:"오늘 인터뷰 예상 질문 정리해뒀어요. 차에서 같이 봐요."},
+    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오전 10:52", preview:"단골 카페 바꿨더라. 피해 다녀도 소용없어요. 어디 가는지 다 알고 있으니까."},
+    {name:"매니저 우연 형", avatar:"우", color:"blue", time:"오전 10:15", preview:"인터뷰 예상 질문 정리해 뒀어. 차에서 같이 보자."},
     {name:"오디션 안내", avatar:"오", color:"green", time:"오전 9:44", preview:"오디션 지정 대사와 캐릭터 설명을 첨부해드립니다."},
     {name:"[Web발신] 카드", avatar:"카", color:"gold", time:"오전 9:03", preview:"해외 승인 1,280,000원. 본인 사용이 아니라면 문의 바랍니다."},
     {name:"매니지먼트 팀장", avatar:"팀", color:"blue", time:"어제", preview:"계약서 수정 사항 표시해 두었으니 확인 부탁합니다."},
-    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"어제", preview:"어제 집에 들어가는 것까지 봤어요. 답장 한 번만 해줘요."},
+    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"어제", preview:"어제 집 앞에서 두 시간 기다렸어. 커튼 사이로 보이던데 왜 연락 안 받아? 나 이렇게까지 만들지 마."},
     {name:"뷰티 브랜드", avatar:"뷰", color:"green", time:"어제", preview:"신제품 협찬 관련 콘텐츠 업로드 일정 확인 부탁드립니다."},
     {name:"방송국 작가님", avatar:"작", color:"pink", time:"어제", preview:"예능 출연 관련 사전 질문지를 보내드립니다."},
     {name:"[광고] 투자 리딩방", avatar:"투", color:"gold", time:"어제", preview:"연예인도 참여하는 비공개 급등주 정보방에 초대합니다."},
-    {name:"팬", avatar:"♡", color:"pink", time:"월요일", preview:"선물 보냈어요! 숙소 주소로 보냈으니 꼭 받아주세요."},
+    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"월요일", preview:"숙소 주소 알아냈어요. 선물 보냈으니까 꼭 받아요. 계속 무시하면 직접 찾아갈 수밖에 없잖아."},
     {name:"세무 담당자", avatar:"세", color:"blue", time:"월요일", preview:"종합소득세 자료 중 누락된 영수증이 있어 연락드립니다."}
   ];
 
