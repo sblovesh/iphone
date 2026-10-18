@@ -196,8 +196,8 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 }
 .wifi-icon {
   display: block;
-  width: 17px;
-  height: 14px;
+  width: 20px;
+  height: 17px;
   flex-shrink: 0;
   color: inherit;
 }
