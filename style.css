@@ -588,7 +588,6 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .app-screen.photos-mode .app-header { display:none; }
 .app-screen.photos-mode .app-content { padding:0; background:#fff; color:#090909; overflow-y:auto; }
 .photos-library { min-height:100%; background:#fff; padding-bottom:86px; position:relative; }
-.photos-status { height:52px; padding:18px 22px 0; display:flex; justify-content:space-between; align-items:flex-start; font-size:15px; font-weight:700; letter-spacing:-.3px; }
 .photos-library-heading { padding:6px 18px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .photos-library-heading h2 { font-size:36px; line-height:1.05; margin:0 0 8px; font-weight:750; letter-spacing:-1.6px; }
 .photos-library-heading strong { font-size:19px; letter-spacing:-.5px; }
@@ -596,17 +595,44 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .photos-heading-actions button { border:0; border-radius:30px; height:48px; min-width:48px; padding:0 17px; background:#f5f5f7; color:#111; font-size:15px; box-shadow:0 1px 4px #0000000a; }
 .photos-heading-actions #photos-select { background:#f4f4f6; min-width:80px; font-size:16px; }
 .photos-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:2px; }
-.photos-image-tile { padding:0; margin:0; border:0; aspect-ratio:1 / 1; overflow:hidden; background:#e7e7e7; min-width:0; }
+.photos-image-tile { position:relative; padding:0; margin:0; border:0; aspect-ratio:1 / 1; overflow:hidden; background:#e7e7e7; min-width:0; }
 .photos-image-tile img { display:block; width:100%; height:100%; object-fit:cover; }
 .photos-bottom-tabs { position:sticky; bottom:0; z-index:5; display:flex; align-items:center; gap:8px; padding:10px 12px calc(12px + env(safe-area-inset-bottom)); min-height:78px; background:#ffffffed; backdrop-filter:blur(18px); }
 .photos-tab { flex:1; height:58px; border:0; border-radius:32px; background:transparent; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; font-size:12px; color:#111; }
 .photos-tab span { font-size:25px; line-height:27px; }
 .photos-tab.active { background:#f0f0f2; color:#1680ff; font-weight:600; }
 .photos-search { width:58px; height:58px; margin-left:auto; border:0; border-radius:50%; background:#f8f8fa; font-size:34px; font-weight:300; color:#111; }
-.photos-detail-screen { min-height:calc(100% - 78px); display:flex; flex-direction:column; background:#fff; }
-.photos-detail-nav { height:52px; display:flex; justify-content:space-between; align-items:center; padding:0 14px; font-size:13px; }
-.photos-detail-nav button { border:0; background:transparent; color:#1680ff; font-size:14px; }
-.photos-detail-image { width:100%; max-height:65%; object-fit:contain; flex:1; min-height:220px; background:#111; }
-.photos-detail-meta { padding:14px 18px; display:flex; flex-direction:column; gap:4px; font-size:13px; }
-.photos-detail-meta span { color:#777; font-size:11px; }
 .photos-selecting .photos-image-tile { outline:2px solid #1680ff; outline-offset:-3px; }
+
+.photos-library { padding-top:52px; }
+.photos-image-tile.fav::after { content:"♥"; position:absolute; left:6px; bottom:4px; color:#fff; font-size:13px; text-shadow:0 1px 3px #0009; }
+
+/* v25: iOS-style photo viewer */
+.app-screen.photo-viewing .app-content { position:relative; overflow:hidden; background:#fff; }
+.photo-viewer { position:absolute; inset:0; background:#fff; overflow:hidden; transition:background .22s ease; }
+.photo-viewer.fs { background:#000; }
+.photo-track { position:absolute; inset:0; display:flex; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain; cursor:grab; -webkit-overflow-scrolling:touch; }
+.photo-track::-webkit-scrollbar { display:none; }
+.photo-slide { flex:0 0 100%; scroll-snap-align:center; scroll-snap-stop:always; display:flex; align-items:center; justify-content:center; }
+.photo-slide img { display:block; width:100%; max-height:100%; object-fit:contain; user-select:none; -webkit-user-drag:none; }
+.photo-chrome { position:absolute; left:0; right:0; z-index:3; transition:opacity .2s ease; pointer-events:none; }
+.photo-chrome button { pointer-events:auto; }
+.photo-viewer.fs .photo-chrome { opacity:0; }
+.photo-viewer.fs .photo-chrome button { pointer-events:none; }
+.photo-top { top:0; padding:46px 14px 14px; display:grid; grid-template-columns:44px 1fr 44px; align-items:center; background:linear-gradient(#fff 62%, rgba(255,255,255,0)); }
+.photo-title { text-align:center; display:flex; flex-direction:column; gap:2px; }
+.photo-title strong { font-size:15px; font-weight:700; color:#111; }
+.photo-title span { font-size:12px; color:#777; }
+.photo-circle-btn { width:44px; height:44px; padding:0; border:0; border-radius:50%; background:rgba(242,242,247,.94); color:#111; display:grid; place-items:center; box-shadow:0 1px 6px #0001; }
+.photo-circle-btn svg, .photo-toolbar svg { width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.photo-bottom { bottom:0; padding:22px 0 26px; background:linear-gradient(rgba(255,255,255,0), #fff 34%); }
+.photo-strip { position:relative; display:flex; align-items:center; gap:2px; height:46px; overflow-x:auto; padding:0 calc(50% - 19px); scrollbar-width:none; pointer-events:auto; }
+.photo-strip::-webkit-scrollbar { display:none; }
+.photo-strip-item { flex:0 0 22px; height:34px; padding:0; border:0; background:#ddd; overflow:hidden; transition:flex-basis .15s ease, height .15s ease, margin .15s ease; }
+.photo-strip-item.current { flex-basis:38px; height:44px; margin:0 3px; }
+.photo-strip-item img { display:block; width:100%; height:100%; object-fit:cover; }
+.photo-toolbar { display:flex; justify-content:space-between; padding:8px 30px 0; }
+.photo-toolbar button { width:44px; height:44px; padding:0; border:0; background:transparent; color:#111; display:grid; place-items:center; }
+#photo-fav.on svg { fill:currentColor; }
+.screen:has(.photo-viewer.fs) .status-bar { opacity:0; }
+.phone:has(.photo-viewer.fs) .home-indicator { background:#fff !important; }

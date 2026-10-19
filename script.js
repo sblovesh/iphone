@@ -151,7 +151,7 @@
     state.activeChat = null;
     state.activePhoto = null;
     state.activeNote = null;
-    $("#app-screen").classList.remove("photos-mode", "kakao-mode");
+    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "photo-viewing");
     $("#header-action").onclick = null;
     $("#app-title").textContent = appTitles[app] || "앱";
     $("#header-action").textContent = app === "notes" ? "+" : "";
@@ -514,22 +514,79 @@
     content.querySelectorAll("[data-ig-nav]").forEach(button=>button.addEventListener("click",()=>{state.instagramScreen=button.dataset.igNav;renderInstagram();}));
   }
 
+  const photoFavs = new Set();
+  function photoTimeLabel(id) {
+    const t = 12 * 60 + id * 21, h = Math.floor(t / 60);
+    return `${h < 12 ? "오전" : "오후"} ${h % 12 === 0 ? 12 : h % 12}:${String(t % 60).padStart(2, "0")}`;
+  }
+  const PHOTO_ICON = {
+    back: '<svg viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>',
+    more: '<svg viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg>',
+    share: '<svg viewBox="0 0 24 24"><path d="M12 14.5V3.5M8.2 7.2 12 3.5l3.8 3.7M7 10H6a2 2 0 0 0-2 2v6.5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-1"/></svg>',
+    heart: '<svg viewBox="0 0 24 24"><path d="M12 20.3s-7.6-4.6-9.2-9.5C1.7 7.4 3.6 4.4 6.8 4.4c2 0 3.6 1.1 5.2 3.1 1.6-2 3.2-3.1 5.2-3.1 3.2 0 5.1 3 4 6.4-1.6 4.9-9.2 9.5-9.2 9.5z"/></svg>',
+    info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.2"/><circle cx="12" cy="7.8" r=".5" fill="currentColor"/></svg>',
+    trash: '<svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12.5h9.4L17.5 7M10 11v5.5M14 11v5.5"/></svg>'
+  };
   function renderPhotos() {
     const content = $("#app-content");
     const screen = $("#app-screen");
     screen.classList.add("photos-mode");
+    screen.classList.toggle("photo-viewing", !!state.activePhoto);
     $("#app-title").textContent = "사진";
     $("#header-action").textContent = "";
     const galleryPhotos = Array.from({length:19}, (_,i) => ({id:i+1, src:`photo-${String(i+1).padStart(2,"0")}.jpg`, title:`사진 ${i+1}`, date:"2026년 10월 19일"}));
     if (state.activePhoto) {
-      const photo = galleryPhotos.find(p => p.id === state.activePhoto);
-      content.innerHTML = `<div class="photos-detail-screen"><div class="photos-detail-nav"><button id="photos-detail-back">‹ 보관함</button><span>사진 ${state.activePhoto} / 711</span><button id="photos-detail-more">•••</button></div><img class="photos-detail-image" src="${photo.src}" alt="${photo.title}"><div class="photos-detail-meta"><strong>${photo.title}</strong><span>${photo.date}</span></div></div><div class="photos-bottom-tabs"><button class="photos-tab active" data-photos-tab="library"><span>▧</span>보관함</button><button class="photos-tab" data-photos-tab="albums"><span>▤</span>모음</button><button class="photos-search" aria-label="검색">⌕</button></div>`;
-      $("#photos-detail-back").addEventListener("click",()=>{state.activePhoto=null;renderPhotos();});
-      $("#photos-detail-more").addEventListener("click",()=>showToast("사진 옵션"));
-      content.querySelectorAll("[data-photos-tab]").forEach(b=>b.addEventListener("click",()=>{state.activePhoto=null;renderPhotos();}));
+      let cur = Math.max(0, galleryPhotos.findIndex(p => p.id === state.activePhoto));
+      content.innerHTML = `<div class="photo-viewer" id="photo-viewer">
+        <div class="photo-track" id="photo-track">${galleryPhotos.map(p => `<div class="photo-slide"><img src="${p.src}" alt="${p.title}" draggable="false"></div>`).join("")}</div>
+        <div class="photo-top photo-chrome">
+          <button type="button" class="photo-circle-btn" id="photo-back" aria-label="보관함">${PHOTO_ICON.back}</button>
+          <div class="photo-title"><strong>오늘</strong><span id="photo-title-time"></span></div>
+          <button type="button" class="photo-circle-btn" id="photo-more" aria-label="더 보기">${PHOTO_ICON.more}</button>
+        </div>
+        <div class="photo-bottom photo-chrome">
+          <div class="photo-strip" id="photo-strip">${galleryPhotos.map((p, i) => `<button type="button" class="photo-strip-item" data-strip="${i}" aria-label="사진 ${i + 1}"><img src="${p.src}" alt="" draggable="false"></button>`).join("")}</div>
+          <div class="photo-toolbar">
+            <button type="button" id="photo-share" aria-label="공유">${PHOTO_ICON.share}</button>
+            <button type="button" id="photo-fav" aria-label="즐겨찾기">${PHOTO_ICON.heart}</button>
+            <button type="button" id="photo-info" aria-label="정보">${PHOTO_ICON.info}</button>
+            <button type="button" id="photo-trash" aria-label="삭제">${PHOTO_ICON.trash}</button>
+          </div>
+        </div>
+      </div>`;
+      const viewer = $("#photo-viewer"), track = $("#photo-track"), strip = $("#photo-strip");
+      const updateMeta = () => {
+        const p = galleryPhotos[cur];
+        state.activePhoto = p.id;
+        $("#photo-title-time").textContent = photoTimeLabel(p.id);
+        $("#photo-fav").classList.toggle("on", photoFavs.has(p.id));
+        strip.querySelectorAll(".photo-strip-item").forEach((el, i) => el.classList.toggle("current", i === cur));
+        const el = strip.children[cur];
+        strip.scrollLeft = el.offsetLeft - strip.clientWidth / 2 + el.offsetWidth / 2;
+      };
+      updateMeta();
+      track.scrollLeft = cur * track.clientWidth;
+      track.addEventListener("scroll", () => {
+        const i = Math.max(0, Math.min(galleryPhotos.length - 1, Math.round(track.scrollLeft / (track.clientWidth || 1))));
+        if (i !== cur) { cur = i; updateMeta(); }
+      });
+      // 마우스 드래그로도 넘길 수 있게 (터치는 기본 스크롤 스냅 사용)
+      let dragX = null, startLeft = 0, moved = false;
+      track.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse") return; dragX = e.clientX; startLeft = track.scrollLeft; moved = false; track.style.scrollSnapType = "none"; });
+      track.addEventListener("pointermove", e => { if (dragX === null) return; const dx = e.clientX - dragX; if (Math.abs(dx) > 4) moved = true; track.scrollLeft = startLeft - dx; });
+      const endDrag = () => { if (dragX === null) return; dragX = null; track.style.scrollSnapType = ""; const w = track.clientWidth; track.scrollTo({ left: Math.round(track.scrollLeft / w) * w, behavior: "smooth" }); };
+      track.addEventListener("pointerup", endDrag); track.addEventListener("pointerleave", endDrag); track.addEventListener("pointercancel", endDrag);
+      track.addEventListener("click", () => { if (moved) { moved = false; return; } viewer.classList.toggle("fs"); });
+      strip.querySelectorAll("[data-strip]").forEach(b => b.addEventListener("click", () => track.scrollTo({ left: Number(b.dataset.strip) * track.clientWidth, behavior: "smooth" })));
+      $("#photo-back").addEventListener("click", () => { state.activePhoto = null; renderPhotos(); });
+      $("#photo-more").addEventListener("click", () => showToast("사진 옵션"));
+      $("#photo-share").addEventListener("click", () => showToast("공유는 데모에서 지원하지 않아요."));
+      $("#photo-info").addEventListener("click", () => showToast("사진 정보"));
+      $("#photo-trash").addEventListener("click", () => showToast("삭제는 데모에서 지원하지 않아요."));
+      $("#photo-fav").addEventListener("click", () => { const id = galleryPhotos[cur].id; if (photoFavs.has(id)) photoFavs.delete(id); else photoFavs.add(id); updateMeta(); });
       return;
     }
-    content.innerHTML = `<div class="photos-library"><div class="photos-status"><span>7:35 ◩</span><span>▮▮ 5G ▰</span></div><div class="photos-library-heading"><div><h2>보관함</h2><strong>711개의 항목</strong></div><div class="photos-heading-actions"><button aria-label="정렬" id="photos-filter">☰</button><button id="photos-select">선택</button></div></div><div class="photos-grid">${galleryPhotos.map(p=>`<button class="photos-image-tile" data-photo="${p.id}" aria-label="${p.title}"><img src="${p.src}" loading="lazy" alt="${p.title}"></button>`).join("")}</div><div class="photos-bottom-tabs"><button class="photos-tab active" data-photos-tab="library"><span>▧</span>보관함</button><button class="photos-tab" data-photos-tab="albums"><span>▤</span>모음</button><button class="photos-search" aria-label="검색">⌕</button></div></div>`;
+    content.innerHTML = `<div class="photos-library"><div class="photos-library-heading"><div><h2>보관함</h2><strong>711개의 항목</strong></div><div class="photos-heading-actions"><button aria-label="정렬" id="photos-filter">☰</button><button id="photos-select">선택</button></div></div><div class="photos-grid">${galleryPhotos.map(p=>`<button class="photos-image-tile${photoFavs.has(p.id) ? " fav" : ""}" data-photo="${p.id}" aria-label="${p.title}"><img src="${p.src}" loading="lazy" alt="${p.title}"></button>`).join("")}</div><div class="photos-bottom-tabs"><button class="photos-tab active" data-photos-tab="library"><span>▧</span>보관함</button><button class="photos-tab" data-photos-tab="albums"><span>▤</span>모음</button><button class="photos-search" aria-label="검색">⌕</button></div></div>`;
     content.querySelectorAll("[data-photo]").forEach(button=>button.addEventListener("click",()=>{state.activePhoto=Number(button.dataset.photo);renderPhotos();}));
     content.querySelectorAll("[data-photos-tab]").forEach(button=>button.addEventListener("click",()=>{if(button.dataset.photosTab==="albums"){showToast("모음 화면은 다음 단계에서 추가할 수 있어요.");}else showToast("보관함");}));
     $("#photos-select").addEventListener("click",()=>{const grid=content.querySelector(".photos-grid");grid.classList.toggle("photos-selecting");$("#photos-select").textContent=grid.classList.contains("photos-selecting")?"완료":"선택";});
@@ -688,6 +745,13 @@
   });
 
   try { if (seobinScenario === "new") { setTimeout(() => { if (!seobinChat.messages.some(m => m.from === "date" && m.text === "2025년 1월 5일")) seobinChat.messages.push({from:"date",text:"2025년 1월 5일"}); saveSeobinChat(); addSeobinIncoming("시혀나ㅏㅏ 뭐 해ㅐㅐㅐ"); saveSeobinScenario("received"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 6500); } } catch (_) {}
+  document.addEventListener("keydown", (e) => {
+    if (state.view !== "app" || state.app !== "photos" || !state.activePhoto) return;
+    const t = $("#photo-track"); if (!t) return;
+    if (e.key === "ArrowLeft") t.scrollBy({ left: -t.clientWidth, behavior: "smooth" });
+    else if (e.key === "ArrowRight") t.scrollBy({ left: t.clientWidth, behavior: "smooth" });
+    else if (e.key === "Escape") { state.activePhoto = null; renderPhotos(); }
+  });
   updateClock();
   setInterval(updateClock, 30000);
   $("#unread-dot").classList.toggle("hidden", !state.unread);
