@@ -15,6 +15,7 @@
   <main class="stage">
     <section class="phone" aria-label="인터랙티브 스마트폰">
       <div class="screen">
+        <div class="dynamic-island" id="dynamic-island" aria-hidden="true"></div>
         <div class="status-bar">
           <span id="status-time">9:41</span>
           <div class="status-right" aria-label="상태 표시줄">
@@ -39,9 +40,12 @@
           <div class="lock-clock" id="lock-clock">9:41</div>
           <div class="unlock-area">
             <button type="button" class="primary-button" id="unlock-button">잠금 해제</button>
-            <p>눌러서 휴대폰 열기</p>
+            <p>위로 쓸어올려서 열기</p>
           </div>
-          <div class="lock-bottom"><span>◉</span><span>⌁</span></div>
+          <div class="lock-bottom" aria-hidden="true">
+            <span class="lock-quick"><svg viewBox="0 0 24 24"><path d="M8 2h8v4l-1.5 2.5V10H9.5V8.5L8 6V2zm1.5 9h5v10a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V11z" fill="currentColor"/></svg></span>
+            <span class="lock-quick"><svg viewBox="0 0 24 24"><path d="M9 4.5 7.6 6.5H5a2 2 0 0 0-2 2V18a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2h-2.6L15 4.5H9zm3 4.2a4.3 4.3 0 1 1 0 8.6 4.3 4.3 0 0 1 0-8.6zm0 1.8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" fill="currentColor"/></svg></span>
+          </div>
         </section>
 
         <section id="home-screen" class="home-screen screen-view hidden">

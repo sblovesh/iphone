@@ -125,16 +125,84 @@
     } else {
       toast.classList.remove("kakao-notification"); toast.textContent = message; toast.onclick = null; toast.style.pointerEvents = "none";
     }
+    pulseIsland();
     toast.classList.add("show"); clearTimeout(toastTimer);
     toastTimer = setTimeout(() => { toast.classList.remove("show"); toast.style.pointerEvents = "none"; }, kind === "kakao" ? 2000 : 2200);
   }
 
   function setView(view) {
     state.view = view;
+    if (view !== "lock") views.lock.style.transform = "";
     Object.entries(views).forEach(([key, element]) => element.classList.toggle("hidden", key !== view));
     $("#home-indicator").style.background = view === "lock" ? "#fff" : "#222";
     $("#home-indicator").style.opacity = view === "lock" ? ".85" : ".8";
   }
+
+  // ===== v30: iOS 스타일 전환 애니메이션 =====
+  const screenEl = $(".screen");
+  const reduceMotion = () => window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let motionGen = 0;
+  let motionAnims = [];
+  function stopMotion() { motionGen++; motionAnims.forEach((a) => { try { a.cancel(); } catch (e) {} }); motionAnims = []; return motionGen; }
+  function runAnim(el, frames, opts) { const a = el.animate(frames, Object.assign({ fill: "both" }, opts)); motionAnims.push(a); return a.finished.catch(() => {}); }
+  function iconGeometry(app) {
+    const el = document.querySelector('.app-grid [data-open="' + app + '"] .app-art') || document.querySelector('.dock [data-open="' + app + '"]');
+    if (!el) return null;
+    const ir = el.getBoundingClientRect(), sr = screenEl.getBoundingClientRect();
+    if (!ir.width || !sr.width) return null;
+    const s = ir.width / sr.width;
+    return { dx: (ir.left + ir.width / 2) - (sr.left + sr.width / 2), dy: (ir.top + ir.height / 2) - (sr.top + sr.height / 2), s, r: 14 / s };
+  }
+  function playOpen(app) {
+    const g = iconGeometry(app);
+    if (!g || reduceMotion()) return;
+    const gen = stopMotion();
+    const home = views.home, appEl = views.app;
+    home.classList.remove("hidden");
+    const g2 = iconGeometry(app); if (!g2) { home.classList.add("hidden"); return; }
+    const ease = "cubic-bezier(.22,.9,.26,1)";
+    runAnim(home, [{ transform: "scale(1)", opacity: 1 }, { transform: "scale(1.1)", opacity: .55 }], { duration: 420, easing: ease });
+    runAnim(appEl, [
+      { transform: "translate(" + g2.dx + "px," + g2.dy + "px) scale(" + g2.s + ")", borderRadius: g2.r + "px", opacity: 0 },
+      { opacity: 1, offset: .22 },
+      { transform: "none", borderRadius: "0px", opacity: 1 }
+    ], { duration: 420, easing: ease }).then(() => {
+      if (gen !== motionGen) return;
+      home.classList.add("hidden"); motionAnims.forEach((a) => { try { a.cancel(); } catch (e) {} }); motionAnims = [];
+    });
+  }
+  function playClose(app, fromTransform, fromRadius) {
+    const gen = stopMotion();
+    const home = views.home, appEl = views.app;
+    state.view = "home";
+    $("#home-indicator").style.background = "#222";
+    home.classList.remove("hidden"); views.lock.classList.add("hidden"); appEl.classList.remove("hidden");
+    const g = iconGeometry(app) || { dx: 0, dy: 0, s: .2, r: 60 };
+    const ease = "cubic-bezier(.3,.8,.3,1)";
+    runAnim(home, [{ transform: "scale(1.1)", opacity: .55 }, { transform: "scale(1)", opacity: 1 }], { duration: 360, easing: ease });
+    runAnim(appEl, [
+      { transform: fromTransform || "none", borderRadius: fromRadius || "0px", opacity: 1 },
+      { opacity: 1, offset: .7 },
+      { transform: "translate(" + g.dx + "px," + g.dy + "px) scale(" + g.s + ")", borderRadius: g.r + "px", opacity: 0 }
+    ], { duration: 360, easing: ease }).then(() => {
+      if (gen !== motionGen) return;
+      appEl.classList.add("hidden"); appEl.classList.remove("phone-mode", "ig-mode");
+      motionAnims.forEach((a) => { try { a.cancel(); } catch (e) {} }); motionAnims = [];
+    });
+  }
+  function playUnlock() {
+    if (reduceMotion()) { setView("home"); return; }
+    const gen = stopMotion();
+    const lock = views.lock, home = views.home;
+    setView("home"); lock.classList.remove("hidden"); lock.style.zIndex = 5;
+    runAnim(home, [{ transform: "scale(1.12)", opacity: .6 }, { transform: "scale(1)", opacity: 1 }], { duration: 420, easing: "cubic-bezier(.22,.9,.26,1)" });
+    runAnim(lock, [{ transform: "translateY(0)", opacity: 1 }, { transform: "translateY(-18%)", opacity: 0 }], { duration: 380, easing: "cubic-bezier(.4,.1,.3,1)" }).then(() => {
+      lock.style.zIndex = "";
+      if (gen !== motionGen) return;
+      lock.classList.add("hidden"); motionAnims.forEach((a) => { try { a.cancel(); } catch (e) {} }); motionAnims = [];
+    });
+  }
+  function pulseIsland() { const i = $("#dynamic-island"); if (!i) return; i.classList.add("alert"); clearTimeout(pulseIsland.t); pulseIsland.t = setTimeout(() => i.classList.remove("alert"), 2200); }
 
   function openApp(app) {
     if (app === "bubble") bubbleChatOpen = false;
@@ -148,17 +216,24 @@
     $("#app-title").textContent = appTitles[app] || "앱";
     $("#header-action").textContent = app === "notes" ? "+" : "";
     $("#header-action").setAttribute("aria-label", app === "notes" ? "새 메모" : "추가 작업");
+    const fromHome = state.view === "home";
+    stopMotion();
+    views.app.style.transform = ""; views.app.style.borderRadius = "";
     setView("app");
     renderApp();
+    if (fromHome) playOpen(app);
   }
 
-  function goHome() {
+  function goHome(fromTransform, fromRadius) {
     const co = document.getElementById("call-overlay"); if (co) co.remove();
-    $("#app-screen").classList.remove("phone-mode", "ig-mode");
+    const prevApp = state.app, wasApp = state.view === "app";
     state.app = null;
     state.activeChat = null;
     state.activePhoto = null;
     state.activeNote = null;
+    if (wasApp && prevApp && !reduceMotion()) { playClose(prevApp, fromTransform, fromRadius); return; }
+    stopMotion();
+    $("#app-screen").classList.remove("phone-mode", "ig-mode");
     setView("home");
   }
 
@@ -956,13 +1031,38 @@
     });
   }
 
-  $("#unlock-button").addEventListener("click", () => {
+  function openPasscode() {
     enteredPasscode = "";
     updatePasscodeDots();
     $("#passcode-error").textContent = "암호를 입력하세요.";
     $("#passcode-modal").classList.remove("hidden");
     $("#passcode-modal").setAttribute("aria-hidden", "false");
-  });
+  }
+  let lockDragged = false;
+  $("#unlock-button").addEventListener("click", () => { if (lockDragged) { lockDragged = false; return; } openPasscode(); });
+
+  // 잠금화면 위로 쓸어올려서 암호 입력 열기
+  (() => {
+    const lock = views.lock; let startY = null, id = null, dy = 0;
+    lock.addEventListener("pointerdown", (e) => { if (state.view !== "lock" || !$("#passcode-modal").classList.contains("hidden")) return; startY = e.clientY; id = e.pointerId; dy = 0; lockDragged = false; });
+    lock.addEventListener("pointermove", (e) => {
+      if (startY === null || e.pointerId !== id) return;
+      dy = Math.max(0, startY - e.clientY);
+      if (dy > 8) { lockDragged = true; try { lock.setPointerCapture(id); } catch (err) {} }
+      if (lockDragged) { lock.style.transform = "translateY(" + (-dy * .7) + "px)"; lock.style.opacity = String(Math.max(.4, 1 - dy / 500)); }
+    });
+    const end = (e) => {
+      if (startY === null || e.pointerId !== id) return;
+      const done = dy > 70; startY = null;
+      if (lockDragged) {
+        const from = lock.style.transform || "none"; lock.style.transform = ""; lock.style.opacity = "";
+        if (!reduceMotion()) lock.animate([{ transform: from }, { transform: "none" }], { duration: 300, easing: "cubic-bezier(.2,.9,.3,1)" });
+        if (done) openPasscode();
+        setTimeout(() => { lockDragged = false; }, 50);
+      }
+    };
+    lock.addEventListener("pointerup", end); lock.addEventListener("pointercancel", end);
+  })();
 
   $("#passcode-close").addEventListener("click", closePasscode);
 
@@ -974,7 +1074,7 @@
       if (enteredPasscode.length === 4) {
         if (enteredPasscode === demoPasscode) {
           closePasscode();
-          setView("home");
+          playUnlock();
           showToast("잠금이 해제되었습니다.");
         } else {
           $("#passcode-error").textContent = "암호가 올바르지 않습니다. 다시 입력해 주세요.";
@@ -1016,15 +1116,38 @@
     }
   });
 
-  let swipeY = null;
-  $("#home-indicator").addEventListener("pointerdown", (e) => { swipeY = e.clientY; });
-  $("#home-indicator").addEventListener("pointerup", (e) => {
-    if (swipeY !== null && swipeY - e.clientY > 24 && state.view === "app") { e.preventDefault(); goHome(); swipeY = "done"; }
-  });
+  // 홈 인디케이터: 탭 = 홈, 위로 드래그 = 앱이 손가락을 따라오다 홈으로
+  let swipeSuppressClick = false;
+  (() => {
+    const bar = $("#home-indicator"); let startY = null, id = null, dy = 0;
+    const appEl = views.app;
+    const tf = () => "translateY(" + (-dy * .55) + "px) scale(" + Math.max(.78, 1 - dy / 900) + ")";
+    const rad = () => Math.min(43, dy / 4) + "px";
+    bar.addEventListener("pointerdown", (e) => { startY = e.clientY; id = e.pointerId; dy = 0; swipeSuppressClick = false; try { bar.setPointerCapture(id); } catch (err) {} });
+    bar.addEventListener("pointermove", (e) => {
+      if (startY === null || e.pointerId !== id) return;
+      dy = Math.max(0, startY - e.clientY);
+      if (dy > 6) swipeSuppressClick = true;
+      if (state.view === "app" && dy > 6) { stopMotion(); appEl.style.transform = tf(); appEl.style.borderRadius = rad(); }
+    });
+    const end = (e) => {
+      if (startY === null || e.pointerId !== id) return;
+      startY = null;
+      if (!swipeSuppressClick) return;
+      if (state.view === "app") {
+        const from = tf(), fromR = rad();
+        appEl.style.transform = ""; appEl.style.borderRadius = "";
+        if (dy > 70) goHome(from, fromR);
+        else if (!reduceMotion()) appEl.animate([{ transform: from, borderRadius: fromR }, { transform: "none", borderRadius: "0px" }], { duration: 280, easing: "cubic-bezier(.2,.9,.3,1)" });
+      } else if (state.view === "lock" && dy > 70) { openPasscode(); }
+      setTimeout(() => { swipeSuppressClick = false; }, 50);
+    };
+    bar.addEventListener("pointerup", end); bar.addEventListener("pointercancel", end);
+  })();
   $("#home-indicator").addEventListener("click", () => {
-    if (swipeY === "done") { swipeY = null; return; }
+    if (swipeSuppressClick) return;
     if (state.view === "lock") {
-      setView("home");
+      playUnlock();
       showToast("잠금이 해제되었습니다.");
     } else if (state.view === "app") {
       goHome();
