@@ -524,7 +524,7 @@
     screen.classList.add("photos-mode");
     $("#app-title").textContent = "사진";
     $("#header-action").textContent = "";
-    const galleryPhotos = Array.from({length:19}, (_,i) => ({id:i+1, src:`gallery/photo-${String(i+1).padStart(2,"0")}.jpg`, title:`사진 ${i+1}`, date:"2026년 10월 19일"}));
+    const galleryPhotos = Array.from({length:19}, (_,i) => ({id:i+1, src:`photo-${String(i+1).padStart(2,"0")}.jpg`, title:`사진 ${i+1}`, date:"2026년 10월 19일"}));
     if (state.activePhoto) {
       const photo = galleryPhotos.find(p => p.id === state.activePhoto);
       content.innerHTML = `<div class="photos-detail-screen"><div class="photos-detail-nav"><button id="photos-detail-back">‹ 보관함</button><span>사진 ${state.activePhoto} / 711</span><button id="photos-detail-more">•••</button></div><img class="photos-detail-image" src="${photo.src}" alt="${photo.title}"><div class="photos-detail-meta"><strong>${photo.title}</strong><span>${photo.date}</span></div></div><div class="photos-bottom-tabs"><button class="photos-tab active" data-photos-tab="library"><span>▧</span>보관함</button><button class="photos-tab" data-photos-tab="albums"><span>▤</span>모음</button><button class="photos-search" aria-label="검색">⌕</button></div>`;
