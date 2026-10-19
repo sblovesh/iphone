@@ -533,7 +533,7 @@
     if (state.instagramScreen === "dm-chat") {
       content.innerHTML = `<div class="igx-app"><div class="igx-chat">
         <div class="igx-chat-top"><button type="button" class="igx-ic-btn" id="ig-chat-back" aria-label="뒤로">${IG.back}</button>${personAvatar("instagram-seobin.jpg", "s36")}<div class="igx-chat-name"><strong>서빈</strong><small>seo_BBini</small></div><span class="igx-chat-actions"><button type="button" class="igx-ic-btn" aria-label="음성 통화">${IG.call}</button><button type="button" class="igx-ic-btn" aria-label="영상 통화">${IG.video}</button></span></div>
-        <div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우하지 않음</small></div><div class="ig-dm-date">2024년 7월 12일 오전 4:00</div>${dmAll.map(([from,text],i)=>`<div class="ig-dm-line ${from} ${from === "incoming" && i > 0 && dmAll[i-1][0] === "incoming" ? "ig-dm-continuation" : ""}">${from === "incoming" && (i === 0 || dmAll[i-1][0] !== "incoming") ? seobinAvatar : from === "incoming" ? '<span class="ig-dm-avatar-spacer" aria-hidden="true"></span>' : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div>
+        <div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우 중</small></div><div class="ig-dm-date">2024년 7월 12일 오전 4:00</div>${dmAll.map(([from,text],i)=>`<div class="ig-dm-line ${from} ${from === "incoming" && i > 0 && dmAll[i-1][0] === "incoming" ? "ig-dm-continuation" : ""}">${from === "incoming" && (i === 0 || dmAll[i-1][0] !== "incoming") ? seobinAvatar : from === "incoming" ? '<span class="ig-dm-avatar-spacer" aria-hidden="true"></span>' : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div>
         <form class="igx-compose" id="ig-dm-form"><span class="igx-cam" aria-hidden="true">${IG.camera}</span><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300" autocomplete="off"><span class="igx-compose-icons" id="ig-compose-icons">${IG.mic}${IG.image}${IG.sticker}</span><button type="submit" class="igx-send-text" id="ig-send-text">보내기</button></form>
       </div></div>`;
       const history = $("#ig-dm-history"); history.scrollTop = history.scrollHeight;
@@ -553,7 +553,7 @@
       content.querySelectorAll("[data-dm]").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.dm !== "서빈") return; state.instagramScreen="dm-chat";renderInstagram();}));
       bindNav(); return;
     }
-    const stories = [["내 스토리","avatar-default.jpg",true],["seo_BBini","instagram-seobin.jpg"],["tvn_drama","TVING.jpg"],["minseo_fan","avatar-default.jpg"],["jiwoo_actor","avatar-default.jpg"],["sihyeon_fan","avatar-default.jpg"]];
+    const stories = [["내 스토리","avatar-default.jpg",true],["seo_BBini","instagram-seobin.jpg"]];
     content.innerHTML = `<div class="igx-app"><div class="igx-body">
       <div class="igx-top"><button type="button" class="igx-ic-btn" aria-label="만들기">${IG.plus}</button><strong class="igx-logo">Instagram</strong><button type="button" class="igx-ic-btn" aria-label="알림">${IG.heart}</button></div>
       <div class="igx-stories">${stories.map(([n,src,mine]) => `<div class="igx-story"><span class="igx-ring${mine ? " mine" : ""}"><img src="${src}" alt="">${mine ? `<i>${IG.miniPlus}</i>` : ""}</span><small>${n}</small></div>`).join("")}</div>
