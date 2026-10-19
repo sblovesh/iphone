@@ -577,3 +577,9 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .kakao-notify-copy strong { font-size:12px; font-weight:750; }
 .kakao-notify-copy span { font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .toast.kakao-notification time { color:#85858b; font-size:10px; align-self:flex-start; }
+
+/* v22: consistent image-based home screen icons */
+.app-art { overflow:hidden; padding:0 !important; border:0 !important; background:transparent !important; }
+.app-art > img { display:block; width:100%; height:100%; object-fit:cover; border-radius:inherit; position:relative; z-index:2; }
+.dock-icon.app-art { padding:0; }
+.dock-icon.app-art > img { width:100%; height:100%; }
