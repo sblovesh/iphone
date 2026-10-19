@@ -757,3 +757,99 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .call-end svg { width:34px; height:34px; transform:rotate(135deg); }
 .screen:has(.ph-app) .status-bar { color:#000; }
 .screen:has(.call-overlay) .status-bar { color:#fff; }
+
+/* v28: 홈 인디케이터 터치 영역 확대 (사진/전화/인스타에서 홈으로 가기) */
+.home-indicator { width:150px; height:30px; bottom:2px; background:transparent !important; opacity:1 !important; }
+.home-indicator::after { content:""; position:absolute; left:19px; right:19px; top:16px; height:5px; border-radius:5px; background:var(--hi, #222); opacity:.85; }
+.phone:has(.lock-screen:not(.hidden)) .home-indicator, .phone:has(.call-overlay) .home-indicator, .phone:has(.photo-viewer.fs) .home-indicator { --hi:#fff; }
+.phone:has(.photo-viewer.fs) .home-indicator::after { background:#fff; }
+/* 키패드 추천 목록 */
+.ph-keypad { padding-top:8px; }
+.ph-suggest { height:58px; width:100%; display:flex; gap:8px; overflow-x:auto; justify-content:center; align-items:center; margin-top:8px; scrollbar-width:none; }
+.ph-suggest button { border:0; background:#f1f1f4; border-radius:10px; padding:7px 14px; text-align:left; display:flex; flex-direction:column; gap:1px; min-width:128px; }
+.ph-suggest strong { font-size:15px; font-weight:600; }
+.ph-suggest span { font-size:13px; color:#087cff; }
+.ph-dialed { margin-top:6px; }
+.call-overlay.failed .call-top p { color:#ff6b61; opacity:1; }
+.call-overlay.failed .call-grid { opacity:.35; }
+
+/* v28: Instagram — 아이콘 통일 */
+.app-screen.ig-mode .app-header { display:none; }
+.app-screen.ig-mode .app-content { padding:0; background:#fff; overflow:hidden; display:flex; flex-direction:column; color:#000; }
+.igx-app { flex:1; min-height:0; display:flex; flex-direction:column; background:#fff; }
+.igx-body { flex:1; min-height:0; overflow-y:auto; padding-top:44px; scrollbar-width:none; }
+.igx-body::-webkit-scrollbar { display:none; }
+.ig-ic { width:24px; height:24px; display:block; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.ig-ic .pf { fill:currentColor; stroke:none; }
+.ig-ic.fill { fill:currentColor; }
+.ig-ic.red { fill:#ff3040; stroke:#ff3040; }
+.ig-ic.thin { stroke-width:0; }
+.ig-ic.sm { width:14px; height:14px; stroke-width:2.6; }
+.ig-ic.mini { width:11px; height:11px; stroke-width:3.2; stroke:#fff; }
+.igx-ic-btn { border:0; background:transparent; color:#000; padding:0; width:40px; height:40px; display:grid; place-items:center; }
+.igx-top { display:flex; align-items:center; justify-content:space-between; padding:2px 8px 4px; height:46px; }
+.igx-logo { font-family:"Snell Roundhand","Brush Script MT","Segoe Script",cursive; font-size:29px; font-weight:700; letter-spacing:-.5px; }
+.igx-stories { display:flex; gap:13px; padding:8px 12px 12px; overflow-x:auto; scrollbar-width:none; }
+.igx-stories::-webkit-scrollbar { display:none; }
+.igx-story { display:flex; flex-direction:column; align-items:center; gap:5px; flex:0 0 68px; }
+.igx-story small { font-size:11.5px; color:#262626; max-width:68px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.igx-ring { position:relative; width:64px; height:64px; border-radius:50%; padding:3px; background:conic-gradient(from 210deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75); display:block; }
+.igx-ring img { width:100%; height:100%; border-radius:50%; object-fit:cover; border:2.5px solid #fff; display:block; background:#eee; }
+.igx-ring.mine { background:transparent; }
+.igx-ring.mine i { position:absolute; right:-1px; bottom:-1px; width:21px; height:21px; border-radius:50%; background:#0095f6; border:2.5px solid #fff; display:grid; place-items:center; }
+.igx-post-head { display:flex; align-items:center; gap:10px; padding:6px 4px 9px 12px; }
+.igx-post-head div { flex:1; display:flex; flex-direction:column; gap:1px; min-width:0; }
+.igx-post-head strong { font-size:13.5px; font-weight:600; }
+.igx-post-head small { font-size:12px; color:#737373; }
+.igx-av { border-radius:50%; object-fit:cover; display:block; flex:0 0 auto; background:#eee; }
+.igx-av.s32 { width:32px; height:32px; } .igx-av.s36 { width:36px; height:36px; } .igx-av.s56 { width:56px; height:56px; }
+.igx-actions { display:flex; align-items:center; gap:16px; padding:10px 14px 6px; }
+.igx-actions button { border:0; background:transparent; color:#000; padding:0; display:flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; }
+.igx-actions button .ig-ic { width:24px; height:24px; }
+.igx-actions .igx-save { margin-left:auto; }
+.igx-actions .igx-save .ig-ic { width:24px; height:24px; }
+.igx-copy { padding:0 14px 16px; font-size:13.5px; line-height:1.45; }
+.igx-copy p { margin:4px 0; }
+.igx-copy small { color:#737373; font-size:11.5px; }
+.igx-copy .ig-comments { color:#737373; }
+.igx-tabs { flex:0 0 auto; display:flex; justify-content:space-around; align-items:center; padding:10px 6px 28px; background:#fff; border-top:.5px solid #dbdbdb; }
+.igx-tabs button { position:relative; border:0; background:transparent; color:#000; padding:0; width:48px; height:30px; display:grid; place-items:center; }
+.igx-tabs .ig-ic { width:26px; height:26px; }
+.igx-dm-tab b { position:absolute; top:-5px; right:6px; min-width:17px; height:17px; padding:0 4px; border-radius:9px; background:#ff3040; color:#fff; font-size:11px; font-weight:700; display:grid; place-items:center; }
+.igx-me { width:26px; height:26px; border-radius:50%; object-fit:cover; display:block; }
+.igx-me.on { outline:2px solid #000; outline-offset:1.5px; }
+/* DM 목록 */
+.igx-dm-top { display:grid; grid-template-columns:44px 1fr 44px; align-items:center; padding:2px 8px; }
+.igx-dm-account { text-align:center; font-size:20px; font-weight:700; display:flex; align-items:center; justify-content:center; gap:5px; }
+.igx-search { display:flex; align-items:center; gap:8px; margin:6px 16px 10px; background:#efefef; border-radius:12px; height:38px; padding:0 12px; color:#737373; }
+.igx-search .ig-ic { width:18px; height:18px; }
+.igx-search input { flex:1; border:0; background:transparent; outline:0; font-size:15px; min-width:0; }
+.igx-dm-title { display:flex; justify-content:space-between; padding:6px 16px 8px; }
+.igx-dm-title strong { font-size:16px; font-weight:700; }
+.igx-dm-title span { font-size:14px; font-weight:600; color:#0095f6; }
+.igx-dm-row { width:100%; border:0; background:#fff; display:flex; align-items:center; gap:12px; text-align:left; padding:8px 16px; }
+.igx-dm-text { flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.igx-dm-text strong { font-size:14.5px; font-weight:400; }
+.igx-dm-text small { font-size:13.5px; color:#737373; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.igx-dm-cam { color:#737373; }
+.igx-dm-cam .ig-ic { width:24px; height:24px; stroke-width:1.7; }
+/* DM 채팅 */
+.igx-chat { flex:1; min-height:0; display:flex; flex-direction:column; padding-top:44px; background:#fff; }
+.igx-chat .ig-dm-history { flex:1; min-height:0; overflow-y:auto; }
+.igx-chat-top { display:flex; align-items:center; gap:10px; padding:2px 8px 8px 2px; border-bottom:.5px solid #eee; }
+.igx-chat-name { flex:1; display:flex; flex-direction:column; gap:1px; min-width:0; }
+.igx-chat-name strong { font-size:15px; font-weight:600; }
+.igx-chat-name small { font-size:12px; color:#737373; }
+.igx-chat-actions { display:flex; }
+.igx-chat-actions .ig-ic { stroke-width:1.8; }
+.igx-compose { flex:0 0 auto; display:flex; align-items:center; gap:10px; margin:6px 12px 30px; padding:5px 14px 5px 5px; border:1px solid #dbdbdb; border-radius:24px; background:#fff; }
+.igx-cam { width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#0095f6,#7a45e8); color:#fff; display:grid; place-items:center; flex:0 0 34px; }
+.igx-cam .ig-ic { width:19px; height:19px; stroke-width:2; }
+.igx-compose input { flex:1; min-width:0; border:0; outline:0; font-size:15px; background:transparent; }
+.igx-compose-icons { display:flex; gap:12px; color:#000; }
+.igx-compose-icons .ig-ic { width:24px; height:24px; stroke-width:1.7; }
+.igx-send-text { display:none; border:0; background:transparent; color:#0095f6; font-size:15px; font-weight:600; padding:0; }
+.igx-compose.typing .igx-compose-icons { display:none; }
+.igx-compose.typing .igx-send-text { display:block; }
+.igx-top { position:sticky; top:0; z-index:3; background:#fff; padding-top:44px; height:92px; align-items:center; }
+.igx-body:has(.igx-top) { padding-top:0; }

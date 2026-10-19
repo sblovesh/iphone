@@ -28,10 +28,7 @@
       { id: "college", name: "동기 배우들", avatar: "동", color: "pink", preview: "다 같이 밥 먹자!", time: "어제", messages: [{from:"incoming",text:"이번 주에 다 같이 밥 먹자!"}] },
       { id: "brand", name: "브랜드 협찬 담당자", avatar: "브", color: "blue", preview: "캠페인 제안서 보내드립니다.", time: "어제", messages: [{from:"incoming",text:"신규 캠페인 제안서 보내드립니다. 검토 부탁드립니다."}] }
     ],
-    notes: [
-      { id: 1, title: "오늘 할 일", body: "□ 장보기\n□ 민지에게 답장하기\n□ 사진 정리하기", updated: Date.now() - 100000 },
-      { id: 2, title: "메모", body: "잊지 말고 우산 챙기기.", updated: Date.now() - 200000 }
-    ],
+    notes: [],
     nextNoteId: 3
   };
 
@@ -145,7 +142,7 @@
     state.activeChat = null;
     state.activePhoto = null;
     state.activeNote = null;
-    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "photo-viewing", "phone-mode");
+    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "photo-viewing", "phone-mode", "ig-mode");
     if (app === "calls") { phoneState.tab = "recents"; phoneState.filter = "all"; phoneState.detail = null; phoneState.query = ""; }
     $("#header-action").onclick = null;
     $("#app-title").textContent = appTitles[app] || "앱";
@@ -157,7 +154,7 @@
 
   function goHome() {
     const co = document.getElementById("call-overlay"); if (co) co.remove();
-    $("#app-screen").classList.remove("phone-mode");
+    $("#app-screen").classList.remove("phone-mode", "ig-mode");
     state.app = null;
     state.activeChat = null;
     state.activePhoto = null;
@@ -396,6 +393,36 @@
     content.querySelectorAll("[data-kakao-chat]").forEach((button) => button.addEventListener("click", () => { if (!["seobin", "uyeon"].includes(button.dataset.kakaoChat)) return; state.activeChat = button.dataset.kakaoChat; renderKakao(); }));
   }
 
+  // Instagram 아이콘 세트 (모든 아이콘을 같은 선 굵기/스타일로 통일)
+  const igSvg = (inner, cls = "") => `<svg class="ig-ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${inner}</svg>`;
+  const IG_HEART = "M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938Z";
+  const IG_HOME = "M9.005 16.545a2.997 2.997 0 0 1 2.997-2.997A2.997 2.997 0 0 1 15 16.545V22h7V11.543L12 2 2 11.543V22h7.005Z";
+  const IG_SQUARE = "M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.546 2 5.703 2 8.552Z";
+  const IG = {
+    heart: igSvg(`<path d="${IG_HEART}"/>`),
+    heartFill: igSvg(`<path d="${IG_HEART}"/>`, "red"),
+    comment: igSvg('<path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"/>'),
+    send: igSvg('<line x1="22" y1="3" x2="9.218" y2="10.083"/><polygon points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"/>'),
+    sendFill: igSvg('<line x1="22" y1="3" x2="9.218" y2="10.083"/><polygon points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"/>', "fill"),
+    save: igSvg('<polygon points="20 21 12 13.44 4 21 4 3 20 3 20 21"/>'),
+    saveFill: igSvg('<polygon points="20 21 12 13.44 4 21 4 3 20 3 20 21"/>', "fill"),
+    home: igSvg(`<path d="${IG_HOME}"/>`),
+    homeFill: igSvg(`<path d="${IG_HOME}"/>`, "fill"),
+    reels: igSvg('<line x1="2.049" y1="7.002" x2="21.95" y2="7.002"/><line x1="13.504" y1="2.001" x2="16.362" y2="7.002"/><line x1="7.207" y1="2.11" x2="10.002" y2="7.002"/><path d="M2 12.001v3.449c0 2.849.698 4.006 1.606 4.945.94.908 2.098 1.607 4.946 1.607h6.896c2.848 0 4.006-.699 4.946-1.607.908-.939 1.606-2.096 1.606-4.945V8.552c0-2.848-.698-4.006-1.606-4.945C19.454 2.699 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.546 2 5.704 2 8.552Z"/><path class="pf" d="M9.763 17.664a.908.908 0 0 1-.454-.787V11.63a.909.909 0 0 1 1.364-.788l4.545 2.624a.909.909 0 0 1 0 1.575l-4.545 2.624a.91.91 0 0 1-.91 0Z"/>'),
+    search: igSvg('<path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z"/><line x1="16.511" y1="16.511" x2="22" y2="22"/>'),
+    plus: igSvg(`<path d="${IG_SQUARE}"/><line x1="6.545" y1="12.001" x2="17.455" y2="12.001"/><line x1="12.003" y1="6.545" x2="12.003" y2="17.455"/>`),
+    more: igSvg('<circle class="pf" cx="12" cy="12" r="1.5"/><circle class="pf" cx="6" cy="12" r="1.5"/><circle class="pf" cx="18" cy="12" r="1.5"/>', "thin"),
+    back: igSvg('<path d="M15.500 4.500 8 12l7.500 7.500"/>'),
+    chevDown: igSvg('<path d="m6 9.500 6 6 6-6"/>', "sm"),
+    compose: igSvg('<path d="M12.202 3.203H5.250a3 3 0 0 0-3 3V18.750a3 3 0 0 0 3 3h12.547a3 3 0 0 0 3-3v-6.952"/><path d="M10.002 17.226H6.774v-3.228L18.607 2.165a1.417 1.417 0 0 1 2.004 0l1.224 1.225a1.417 1.417 0 0 1 0 2.004Z"/><line x1="16.848" y1="3.924" x2="20.076" y2="7.153"/>'),
+    camera: igSvg('<path d="M4 8.500A2.500 2.500 0 0 1 6.500 6h1.200l1.100-1.800A1.500 1.500 0 0 1 10.100 3.500h3.800a1.500 1.500 0 0 1 1.300.700L16.300 6h1.200A2.500 2.500 0 0 1 20 8.500v8a2.500 2.500 0 0 1-2.500 2.500h-11A2.500 2.500 0 0 1 4 16.500Z"/><circle cx="12" cy="12.500" r="3.500"/>'),
+    call: igSvg('<path d="M5.500 3.500h3l1.500 4-2 1.500a11 11 0 0 0 5.500 5.500l1.500-2 4 1.500v3a2 2 0 0 1-2 2A15.500 15.500 0 0 1 3.500 5.500a2 2 0 0 1 2-2Z"/>'),
+    video: igSvg('<rect x="2.500" y="6" width="13" height="12" rx="3"/><path d="m15.500 10.500 5-2.500v8l-5-2.500"/>'),
+    mic: igSvg('<rect x="9" y="2.500" width="6" height="11" rx="3"/><path d="M5.500 11.500a6.500 6.500 0 0 0 13 0M12 18v3.500"/>'),
+    image: igSvg('<rect x="3" y="3" width="18" height="18" rx="3.500"/><circle cx="9" cy="9" r="1.800"/><path d="m3.500 17 4.500-4.500 3.500 3.500 3-3 6 5"/>'),
+    sticker: igSvg('<path d="M20.500 12A8.500 8.500 0 1 1 12 3.500h3.500A5 5 0 0 1 20.500 8.500Z"/><path d="M20.500 12H18a3 3 0 0 0-3 3v5"/><circle class="pf" cx="9" cy="11" r="1"/><circle class="pf" cx="13" cy="11" r="1"/><path d="M8.800 14.800q1.500 1.500 3.200 1"/>'),
+    miniPlus: igSvg('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>', "mini")
+  };
   const igDmSent = [];
   function renderInstagram() {
     const content = $("#app-content");
@@ -492,23 +519,55 @@
       ["incoming","배우님도요"]
     ];
     const dmAll = dmConversation.concat(igDmSent);
+    const screen = $("#app-screen");
+    screen.classList.add("ig-mode");
+    const tabs = (active) => `<nav class="igx-tabs">
+      <button type="button" data-ig-nav="feed" aria-label="홈">${active === "feed" ? IG.homeFill : IG.home}</button>
+      <button type="button" aria-label="릴스">${IG.reels}</button>
+      <button type="button" data-ig-nav="dm" aria-label="메시지" class="igx-dm-tab">${active === "dm" ? IG.sendFill : IG.send}<b>1</b></button>
+      <button type="button" aria-label="검색">${IG.search}</button>
+      <button type="button" aria-label="프로필"><img class="igx-me${active === "me" ? " on" : ""}" src="avatar-default.jpg" alt=""></button>
+    </nav>`;
+    const bindNav = () => content.querySelectorAll("[data-ig-nav]").forEach(b => b.addEventListener("click", () => { state.instagramScreen = b.dataset.igNav; renderInstagram(); }));
+    const personAvatar = (src, cls = "") => `<img class="igx-av ${cls}" src="${src}" alt="">`;
     if (state.instagramScreen === "dm-chat") {
-      $("#app-title").textContent = "seo_BBini"; $("#header-action").textContent = "⋯";
-      content.innerHTML = `<div class="ig-dm-chat"><div class="ig-dm-person">${seobinAvatar}<div class="ig-dm-name"><strong>서빈</strong><small>seo_BBini</small></div><span class="ig-dm-head-actions">⌕　▢</span></div><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우하지 않음</small></div><div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-date">2024년 7월 12일 · 오전 4:00–5:00</div>${dmAll.map(([from,text],i)=>`<div class="ig-dm-line ${from} ${from === "incoming" && i > 0 && dmAll[i-1][0] === "incoming" ? "ig-dm-continuation" : ""}">${from === "incoming" && (i === 0 || dmAll[i-1][0] !== "incoming") ? seobinAvatar : from === "incoming" ? '<span class="ig-dm-avatar-spacer" aria-hidden="true"></span>' : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div><form class="ig-dm-compose" id="ig-dm-form"><button type="button" class="ig-camera" aria-label="카메라">◎</button><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300"><button type="submit" aria-label="보내기">➤</button></form></div>`;
+      content.innerHTML = `<div class="igx-app"><div class="igx-chat">
+        <div class="igx-chat-top"><button type="button" class="igx-ic-btn" id="ig-chat-back" aria-label="뒤로">${IG.back}</button>${personAvatar("instagram-seobin.jpg", "s36")}<div class="igx-chat-name"><strong>서빈</strong><small>seo_BBini</small></div><span class="igx-chat-actions"><button type="button" class="igx-ic-btn" aria-label="음성 통화">${IG.call}</button><button type="button" class="igx-ic-btn" aria-label="영상 통화">${IG.video}</button></span></div>
+        <div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우하지 않음</small></div><div class="ig-dm-date">2024년 7월 12일 오전 4:00</div>${dmAll.map(([from,text],i)=>`<div class="ig-dm-line ${from} ${from === "incoming" && i > 0 && dmAll[i-1][0] === "incoming" ? "ig-dm-continuation" : ""}">${from === "incoming" && (i === 0 || dmAll[i-1][0] !== "incoming") ? seobinAvatar : from === "incoming" ? '<span class="ig-dm-avatar-spacer" aria-hidden="true"></span>' : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div>
+        <form class="igx-compose" id="ig-dm-form"><span class="igx-cam" aria-hidden="true">${IG.camera}</span><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300" autocomplete="off"><span class="igx-compose-icons" id="ig-compose-icons">${IG.mic}${IG.image}${IG.sticker}</span><button type="submit" class="igx-send-text" id="ig-send-text">보내기</button></form>
+      </div></div>`;
       const history = $("#ig-dm-history"); history.scrollTop = history.scrollHeight;
-      $("#ig-dm-form").addEventListener("submit", e => { e.preventDefault(); const input=$("#ig-dm-input"); if(input.value.trim()){ igDmSent.push(["outgoing", input.value.trim()]); const line=document.createElement("div"); line.className="ig-dm-line outgoing"; const bubble=document.createElement("div"); bubble.className="ig-dm-bubble outgoing"; bubble.textContent=input.value.trim(); line.appendChild(bubble); history.appendChild(line); input.value=""; history.scrollTop=history.scrollHeight; }}); return;
+      $("#ig-chat-back").addEventListener("click", () => { state.instagramScreen = "dm"; renderInstagram(); });
+      const input = $("#ig-dm-input"), form = $("#ig-dm-form");
+      input.addEventListener("input", () => form.classList.toggle("typing", !!input.value.trim()));
+      form.addEventListener("submit", e => { e.preventDefault(); const v = input.value.trim(); if (!v) return; igDmSent.push(["outgoing", v]); const line=document.createElement("div"); line.className="ig-dm-line outgoing"; const bubble=document.createElement("div"); bubble.className="ig-dm-bubble outgoing"; bubble.textContent=v; line.appendChild(bubble); history.appendChild(line); input.value=""; form.classList.remove("typing"); history.scrollTop=history.scrollHeight; });
+      return;
     }
     if (state.instagramScreen === "dm") {
-      $("#app-title").textContent = "sihye0n_an"; $("#header-action").textContent = "✎";
-      content.innerHTML = `<div class="ig-dm-top"><div class="ig-dm-account">sihye0n_an <span>⌄</span></div><div class="ig-dm-search">⌕　검색</div></div><div class="ig-dm-list-title">메시지 <span>요청</span></div><div class="ig-dm-list">${dmItems.map(x=>`<button class="ig-dm-row" data-dm="${x.name}">${x.avatar}<span><strong>${x.name}</strong><small>${x.preview}</small></span><time>${x.time}</time></button>`).join("")}</div><div class="ig-bottom-tabs"><button data-ig-nav="feed">⌂</button><button>▣</button><button data-ig-nav="dm" class="ig-nav-active">➤</button><button>⌕</button><button>●</button></div>`;
+      content.innerHTML = `<div class="igx-app"><div class="igx-body">
+        <div class="igx-dm-top"><button type="button" class="igx-ic-btn" data-ig-nav="feed" aria-label="뒤로">${IG.back}</button><div class="igx-dm-account">sihye0n_an ${IG.chevDown}</div><button type="button" class="igx-ic-btn" aria-label="새 메시지">${IG.compose}</button></div>
+        <label class="igx-search">${IG.search}<input placeholder="검색" autocomplete="off"></label>
+        <div class="igx-dm-title"><strong>메시지</strong><span>요청</span></div>
+        <div class="igx-dm-list">${dmItems.map(x=>`<button type="button" class="igx-dm-row" data-dm="${x.name}">${x.avatar.replace('ig-avatar-photo','igx-av s56')}<span class="igx-dm-text"><strong>${x.name}</strong><small>${x.preview} · ${x.time}</small></span><span class="igx-dm-cam">${IG.camera}</span></button>`).join("")}</div>
+      </div>${tabs("dm")}</div>`;
       content.querySelectorAll("[data-dm]").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.dm !== "서빈") return; state.instagramScreen="dm-chat";renderInstagram();}));
-      content.querySelectorAll("[data-ig-nav]").forEach(b=>b.addEventListener("click",()=>{state.instagramScreen=b.dataset.igNav;renderInstagram();})); return;
+      bindNav(); return;
     }
-    $("#app-title").textContent = "Instagram"; $("#header-action").textContent = "♡";
-    content.innerHTML = `<div class="ig-topbar"><span>＋</span><strong>Instagram</strong><span>▣　♡</span></div><div class="ig-post"><div class="ig-post-user"><img class="ig-brand-avatar" src="TVING.jpg" alt="tvN 드라마 프로필"><div><strong>tvn_drama</strong><small>추천 게시물</small></div><span class="ig-more">•••</span></div><div class="ig-drama-ad ig-actor-photo"><img class="ig-blurred-bg" src="actor-feed.jpg" alt="청춘 실종 사건 드라마 홍보 이미지"><div class="ig-promo-overlay"><span>tvN 새 드라마</span><strong>청춘 실종 사건</strong><b>배우 안시현<br>남자 주인공 캐스팅</b><small>COMING SOON · 2026</small></div></div><div class="ig-actions"><button data-like="drama" aria-label="좋아요">♡</button><button data-comment="drama" aria-label="댓글">♧</button><button aria-label="공유">➤</button><button class="ig-save" aria-label="저장">♧</button></div><div class="ig-post-copy"><strong id="ig-likes">좋아요 24,681개</strong><p><strong>tvn_drama</strong> 배우 안시현, 드라마 '청춘 실종 사건' 남자 주인공으로 캐스팅 🎬<br>올겨울, 청춘의 비밀을 추적할 새로운 얼굴을 만나보세요.<br><span class="ig-hashtags">#안시현 #청춘실종사건 #캐스팅 #tvN드라마</span></p><p class="ig-comments">댓글 318개 모두 보기</p><small>홍보 · 2시간 전</small></div></div><div class="ig-bottom-tabs"><button data-ig-nav="feed" class="ig-nav-active">⌂</button><button>▣</button><button data-ig-nav="dm">➤</button><button>⌕</button><button>●</button></div>`;
-    content.querySelectorAll("[data-like]").forEach(button=>button.addEventListener("click",()=>{button.classList.toggle("liked");button.textContent=button.classList.contains("liked")?"♥":"♡";}));
+    const stories = [["내 스토리","avatar-default.jpg",true],["seo_BBini","instagram-seobin.jpg"],["tvn_drama","TVING.jpg"],["minseo_fan","avatar-default.jpg"],["jiwoo_actor","avatar-default.jpg"],["sihyeon_fan","avatar-default.jpg"]];
+    content.innerHTML = `<div class="igx-app"><div class="igx-body">
+      <div class="igx-top"><button type="button" class="igx-ic-btn" aria-label="만들기">${IG.plus}</button><strong class="igx-logo">Instagram</strong><button type="button" class="igx-ic-btn" aria-label="알림">${IG.heart}</button></div>
+      <div class="igx-stories">${stories.map(([n,src,mine]) => `<div class="igx-story"><span class="igx-ring${mine ? " mine" : ""}"><img src="${src}" alt="">${mine ? `<i>${IG.miniPlus}</i>` : ""}</span><small>${n}</small></div>`).join("")}</div>
+      <article class="igx-post">
+        <div class="igx-post-head"><img class="igx-av s32" src="TVING.jpg" alt="tvN 드라마 프로필"><div><strong>tvn_drama</strong><small>광고</small></div><button type="button" class="igx-ic-btn" aria-label="더 보기">${IG.more}</button></div>
+        <div class="ig-drama-ad ig-actor-photo"><img class="ig-blurred-bg" src="actor-feed.jpg" alt="청춘 실종 사건 드라마 홍보 이미지"><div class="ig-promo-overlay"><span>tvN 새 드라마</span><strong>청춘 실종 사건</strong><b>배우 안시현<br>남자 주인공 캐스팅</b><small>COMING SOON · 2026</small></div></div>
+        <div class="igx-actions"><button type="button" data-like="drama" aria-label="좋아요">${IG.heart}<span id="ig-likes">2.4만</span></button><button type="button" data-comment="drama" aria-label="댓글">${IG.comment}<span>318</span></button><button type="button" data-share="drama" aria-label="공유">${IG.send}<span>1,203</span></button><button type="button" class="igx-save" data-save="drama" aria-label="저장">${IG.save}</button></div>
+        <div class="igx-copy"><p><strong>tvn_drama</strong> 배우 안시현, 드라마 '청춘 실종 사건' 남자 주인공으로 캐스팅 🎬<br>올겨울, 청춘의 비밀을 추적할 새로운 얼굴을 만나보세요.<br><span class="ig-hashtags">#안시현 #청춘실종사건 #캐스팅 #tvN드라마</span></p><p class="ig-comments">댓글 318개 모두 보기</p><small>2시간 전 · 광고</small></div>
+      </article></div>${tabs("feed")}</div>`;
+    content.querySelectorAll("[data-like]").forEach(button=>button.addEventListener("click",()=>{const on=button.classList.toggle("liked");button.querySelector("svg").outerHTML=on?IG.heartFill:IG.heart;}));
+    content.querySelectorAll("[data-save]").forEach(button=>button.addEventListener("click",()=>{const on=button.classList.toggle("saved");button.querySelector("svg").outerHTML=on?IG.saveFill:IG.save;}));
     content.querySelectorAll("[data-comment]").forEach(button=>button.addEventListener("click",()=>showToast("댓글 기능은 다음 단계에서 추가할 수 있어요.")));
-    content.querySelectorAll("[data-ig-nav]").forEach(button=>button.addEventListener("click",()=>{state.instagramScreen=button.dataset.igNav;renderInstagram();}));
+    content.querySelectorAll("[data-share]").forEach(button=>button.addEventListener("click",()=>showToast("공유는 데모에서 지원하지 않아요.")));
+    bindNav();
   }
 
   const photoFavs = new Set();
@@ -632,6 +691,7 @@
     {name:"Ryan 트레이너", phone:"010-9507-3318", note:"헬스"},
     {name:"Jenny 어학원", phone:"02-515-4472", note:"영어 회화"}
   ];
+  const CALLABLE = ["서빈 형", "우연 형"]; // 이 두 사람에게만 전화가 연결됨
   const STALKER = ["010-4827-3391", "010-2095-7746", "010-6613-0584"];
   // kind: out(발신) / in(수신) / missed(부재중). who: 연락처 이름 또는 번호. count: 연속 통화 수
   const RECENT_CALLS = [
@@ -701,8 +761,18 @@
       <div class="call-grid">${[["mute","소리 끔"],["keypad","키패드"],["speaker","스피커"],["add","통화 추가"],["video","FaceTime"],["contacts","연락처"]].map(([k,l]) => `<button type="button"><i></i><span>${l}</span></button>`).join("")}</div>
       <button type="button" class="call-end" id="call-end" aria-label="통화 종료">${PH_ICON.phone}</button>`;
     $(".screen").appendChild(overlay);
-    let timer = setTimeout(() => { const st = $("#call-status"); if (st) st.textContent = "연결 중..."; }, 1600);
-    $("#call-end").addEventListener("click", () => { clearTimeout(timer); overlay.remove(); phoneState.calling = null; });
+    const canConnect = CALLABLE.includes(contactByName(name)?.name);
+    const status = () => $("#call-status");
+    const timers = [];
+    const close = () => { timers.forEach(clearTimeout); overlay.remove(); phoneState.calling = null; };
+    if (canConnect) {
+      timers.push(setTimeout(() => { if (status()) status().textContent = "연결 중..."; }, 1600));
+    } else {
+      // 서빈 형, 우연 형 외에는 연결되지 않음
+      timers.push(setTimeout(() => { if (status()) status().textContent = "통화 실패"; overlay.classList.add("failed"); }, 1800));
+      timers.push(setTimeout(close, 3200));
+    }
+    $("#call-end").addEventListener("click", close);
   }
 
   function renderCalls() {
@@ -766,8 +836,8 @@
 
   function phoneKeypadHTML() {
     const keys = [["1",""],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]];
-    return `<div class="ph-keypad"><div class="ph-dialed" id="ph-dialed">${escapeHTML(formatDial(phoneState.dialed))}</div>
-      <div class="ph-dial-name" id="ph-dial-name"></div>
+    return `<div class="ph-keypad"><div class="ph-suggest" id="ph-suggest"></div>
+      <div class="ph-dialed" id="ph-dialed">${escapeHTML(formatDial(phoneState.dialed))}</div>
       <div class="ph-keys">${keys.map(([k,l]) => `<button type="button" data-ph-key="${k}"><b>${k}</b><small>${l}</small></button>`).join("")}</div>
       <div class="ph-dial-actions"><span></span><button type="button" class="ph-dial-call" id="ph-dial-call" aria-label="통화">${PH_ICON.phone}</button><button type="button" class="ph-dial-del" id="ph-dial-del" aria-label="지우기">${PH_ICON.del}</button></div></div>`;
   }
@@ -828,8 +898,11 @@
     if (dialed) {
       const sync = () => {
         dialed.textContent = formatDial(phoneState.dialed);
-        const match = CONTACTS.find(c => phoneState.dialed.length >= 4 && c.phone.replace(/-/g, "") === phoneState.dialed);
-        $("#ph-dial-name").textContent = match ? match.name : "";
+        const q = phoneState.dialed;
+        const matches = q ? CONTACTS.filter(c => CALLABLE.includes(c.name) && c.phone.replace(/-/g, "").includes(q)) : [];
+        const box = $("#ph-suggest");
+        box.innerHTML = matches.map(c => `<button type="button" data-ph-suggest="${escapeHTML(c.name)}"><strong>${escapeHTML(c.name)}</strong><span>${escapeHTML(c.phone)}</span></button>`).join("");
+        box.querySelectorAll("[data-ph-suggest]").forEach(b => b.addEventListener("click", () => { phoneState.dialed = contactByName(b.dataset.phSuggest).phone.replace(/-/g, ""); sync(); }));
         $("#ph-dial-del").style.visibility = phoneState.dialed ? "visible" : "hidden";
         dialed.classList.toggle("long", phoneState.dialed.length > 11);
       };
@@ -943,7 +1016,13 @@
     }
   });
 
+  let swipeY = null;
+  $("#home-indicator").addEventListener("pointerdown", (e) => { swipeY = e.clientY; });
+  $("#home-indicator").addEventListener("pointerup", (e) => {
+    if (swipeY !== null && swipeY - e.clientY > 24 && state.view === "app") { e.preventDefault(); goHome(); swipeY = "done"; }
+  });
   $("#home-indicator").addEventListener("click", () => {
+    if (swipeY === "done") { swipeY = null; return; }
     if (state.view === "lock") {
       setView("home");
       showToast("잠금이 해제되었습니다.");
