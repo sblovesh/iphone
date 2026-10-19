@@ -70,12 +70,18 @@
   let seobinScenario = "new";
   try { localStorage.setItem(SEOBIN_SCENARIO_KEY, "new"); } catch (_) {}
   function saveSeobinScenario(value) { seobinScenario = value; try { localStorage.setItem(SEOBIN_SCENARIO_KEY, value); } catch (_) {} }
-  function currentChatTime() { return new Date().toLocaleTimeString("ko-KR", {hour:"2-digit",minute:"2-digit",hour12:true}); }
+  let storyMinute = 34;
+  function currentChatTime() {
+    const hour = 10 + Math.floor(storyMinute / 60);
+    const minute = storyMinute % 60;
+    storyMinute += 1;
+    return `오전 ${hour > 12 ? hour - 12 : hour}:${String(minute).padStart(2,"0")}`;
+  }
   function addSeobinIncoming(text, photo=false) {
     seobinChat.messages.push({from: photo ? "photo" : "incoming", text: photo ? "seobin-bed-photo.jpg" : text, time: currentChatTime()});
     seobinChat.preview = photo ? "사진" : text; seobinChat.time = "방금"; saveSeobinChat();
     if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao();
-    else { showToast(photo ? "카카오톡 · 서빈 님이 사진을 보냈어요" : "카카오톡 · 서빈 님: " + text); const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); }
+    else { showToast(photo ? "카카오톡 · 서빈 님이 사진을 보냈어요" : "카카오톡 · 서빈 님: " + text, "kakao"); const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); }
   }
   function startSeobinSleepStory() {
     if (seobinScenario !== "received") return;
@@ -88,6 +94,7 @@
   }
   const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모", kakao: "카카오톡", instagram: "Instagram", bubble: "bubble" };
   let toastTimer;
+  let notificationTimer;
   let enteredPasscode = "";
   const demoPasscode = "0711";
 
@@ -118,16 +125,22 @@
     $("#status-time").textContent = time;
     $("#lock-clock").textContent = now.toLocaleTimeString("ko-KR", { hour: "numeric", minute: "2-digit", hour12: false });
     $("#lock-date").textContent = date;
-    $("#home-greeting").textContent = now.toLocaleDateString("ko-KR", { weekday: "long" });
-    $("#home-date-large").textContent = now.toLocaleDateString("ko-KR", { month: "long", day: "numeric" });
+
   }
 
-  function showToast(message) {
+  function showToast(message, kind = "generic") {
     const toast = $("#toast");
-    toast.textContent = message;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    toast.innerHTML = "";
+    if (kind === "kakao") {
+      toast.classList.add("kakao-notification");
+      toast.innerHTML = '<span class="kakao-notify-icon">●</span><span class="kakao-notify-copy"><strong>카카오톡</strong><span>' + escapeHTML(message.replace(/^카카오톡 · /, "")) + '</span></span><time>지금</time>';
+      toast.onclick = () => { toast.classList.remove("show"); openApp("kakao"); state.activeChat = "seobin"; renderKakao(); };
+      toast.style.pointerEvents = "auto";
+    } else {
+      toast.classList.remove("kakao-notification"); toast.textContent = message; toast.onclick = null; toast.style.pointerEvents = "none";
+    }
+    toast.classList.add("show"); clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.classList.remove("show"); toast.style.pointerEvents = "none"; }, kind === "kakao" ? 2000 : 2200);
   }
 
   function setView(view) {
@@ -265,7 +278,7 @@
     try { localStorage.setItem(BUBBLE_STORAGE_KEY, JSON.stringify(bubbleMessages)); } catch (_) {}
   }
 
-  // 방문 30초 후 서빈의 버블 알림 시나리오: 누르면 알림을 멈추고 대화창에서 순차 공개
+  // 방문 30초 후 서빈의 버블 알림 시나리오: 각 알림이 뜨는 순간 해당 메시지를 실제 대화에 추가
   const bubbleRevealMessages = [
     "시혀나",
     "나 너 휴대폰 봣는데",
@@ -297,7 +310,6 @@
         openApp("bubble");
         bubbleChatOpen = true;
         renderBubble();
-        revealBubbleMessagesSequentially();
       });
     }
     return notice;
@@ -305,27 +317,21 @@
   function bubbleNoticeIndexStop() {
     bubbleRevealIndex = bubbleRevealMessages.length;
   }
-  function revealBubbleMessagesSequentially() {
-    let index = 0;
-    const reveal = () => {
-      if (index >= bubbleRevealMessages.length) return;
-      bubbleMessages.push({ from: "artist", day: "2025년 4월 8일", text: bubbleRevealMessages[index], time: currentChatTime() });
-      saveBubbleMessages();
-      if (state.app === "bubble" && state.view === "app" && bubbleChatOpen) renderBubble();
-      index++;
-      if (index < bubbleRevealMessages.length) setTimeout(reveal, 950);
-    };
-    setTimeout(reveal, 450);
-  }
+  function revealBubbleSequentially() { /* 알림 표시 시점에 대화에 즉시 추가됨 */ }
   function showBubblePush(index) {
     if (bubbleRevealOpened || index >= bubbleRevealMessages.length) return;
     bubbleRevealIndex = index;
     const notice = ensureBubbleNotice();
     const text = document.getElementById("bubble-push-text");
     if (text) text.textContent = bubbleRevealMessages[index];
+    if (!bubbleMessages.some(m => m.from === "artist" && m.day === "2025년 4월 8일" && m.text === bubbleRevealMessages[index])) {
+      bubbleMessages.push({ from: "artist", day: "2025년 4월 8일", text: bubbleRevealMessages[index], time: currentChatTime() });
+      saveBubbleMessages();
+    }
+    if (state.app === "bubble" && state.view === "app" && bubbleChatOpen) renderBubble();
     notice.classList.add("show");
     clearTimeout(bubbleNoticeHideTimer);
-    bubbleNoticeHideTimer = setTimeout(() => notice.classList.remove("show"), 4500);
+    bubbleNoticeHideTimer = setTimeout(() => notice.classList.remove("show"), 2000);
     if (index < bubbleRevealMessages.length - 1) {
       bubbleNoticeTimer = setTimeout(() => showBubblePush(index + 1), bubbleNoticeIntervals[index + 1]);
     }
