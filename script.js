@@ -17,7 +17,7 @@
     activeNote: null,
     unread: false,
     messages: [
-      { id: "seobin", name: "서빈 님", avatar: "서", color: "pink", photo: "avatar-seobin.jpg", preview: "시현님은 맨날 다 괜찮다구 해서...", time: "오후 5:58", messages: [{from:"date",text:"2024년 9월 16일"},{from:"incoming",text:"혹시 늦어요??",time:"오후 8:12"},{from:"outgoing",text:"저 이제 퇴근 중!! 왜요??",time:"오후 8:14"},{from:"incoming",text:"저 아직 저녁 안 먹었는데 드시고 싶은 거 있나 해서...",time:"오후 8:16"},{from:"outgoing",text:"서빈 님 좋아하는 걸루 시켜용",time:"오후 8:18"},{from:"incoming",text:"음... 그러면 치킨?",time:"오후 8:21"},{from:"outgoing",text:"그럼 제가 맥주 사서 갈게요!!",time:"오후 8:23"},{from:"incoming",text:"좋아여",time:"오후 8:25"},{from:"date",text:"2024년 9월 20일"},{from:"incoming",text:"시현님",time:"오후 5:06"},{from:"outgoing",text:"무슨 일이에요??",time:"오후 5:07"},{from:"incoming",text:"저 인스타에 사진 올리려고 했는데",time:"오후 5:08"},{from:"incoming",text:"이거 괜찮나 싶어서...",time:"오후 5:08"},{from:"photo",text:"seobin-photo.jpg",time:"오후 5:09"},{from:"outgoing",text:"ㄱㄱ 좋은데여?",time:"오후 5:12"},{from:"incoming",text:"진짜 괜찮져?",time:"오후 5:13"},{from:"outgoing",text:"넹 좋아여",time:"오후 5:14"},{from:"incoming",text:"시현님은 맨날 다 괜찮다구 해서...",time:"오후 5:16"},{from:"outgoing",text:"그건 서빈님이 잘생긴 탓",time:"오후 5:18"}] },
+      { id: "seobin", name: "서빈 형", avatar: "서", color: "pink", photo: "avatar-seobin.jpg", preview: "시현님은 맨날 다 괜찮다구 해서...", time: "오후 5:58", messages: [{from:"date",text:"2024년 9월 16일"},{from:"incoming",text:"혹시 늦어요??",time:"오후 8:12"},{from:"outgoing",text:"저 이제 퇴근 중!! 왜요??",time:"오후 8:14"},{from:"incoming",text:"저 아직 저녁 안 먹었는데 드시고 싶은 거 있나 해서...",time:"오후 8:16"},{from:"outgoing",text:"서빈 님 좋아하는 걸루 시켜용",time:"오후 8:18"},{from:"incoming",text:"음... 그러면 치킨?",time:"오후 8:21"},{from:"outgoing",text:"그럼 제가 맥주 사서 갈게요!!",time:"오후 8:23"},{from:"incoming",text:"좋아여",time:"오후 8:25"},{from:"date",text:"2024년 9월 20일"},{from:"incoming",text:"시현님",time:"오후 5:06"},{from:"outgoing",text:"무슨 일이에요??",time:"오후 5:07"},{from:"incoming",text:"저 인스타에 사진 올리려고 했는데",time:"오후 5:08"},{from:"incoming",text:"이거 괜찮나 싶어서...",time:"오후 5:08"},{from:"photo",text:"seobin-photo.jpg",time:"오후 5:09"},{from:"outgoing",text:"ㄱㄱ 좋은데여?",time:"오후 5:12"},{from:"incoming",text:"진짜 괜찮져?",time:"오후 5:13"},{from:"outgoing",text:"넹 좋아여",time:"오후 5:14"},{from:"incoming",text:"시현님은 맨날 다 괜찮다구 해서...",time:"오후 5:16"},{from:"outgoing",text:"그건 서빈님이 잘생긴 탓",time:"오후 5:18"}] },
       { id: "uyeon", name: "우연 형", avatar: "우", color: "blue", photo: "avatar-uyeon.jpg", preview: "미친놈;", time: "오후 6:58", messages: [{from:"date",text:"2024년 9월 14일"},{from:"incoming",text:"어때 최애랑 같이 사는 기분이?",time:"오전 1:12"},{from:"outgoing",text:"개좋음 진짜",time:"오전 1:13"},{from:"incoming",text:"야야 말버릇;",time:"오전 1:14"},{from:"outgoing",text:"이런 표현이 아니면 설명이 안 됨 진짜로",time:"오전 1:14"},{from:"incoming",text:"이상한 짓 하지 말고",time:"오전 1:15"},{from:"outgoing",text:"내가 뭔 이상한 짓을 해 ㅡㅡ",time:"오전 1:16"},{from:"incoming",text:"아무튼 서빈 님 잘 챙겨주고 알겠냐",time:"오전 1:17"},{from:"outgoing",text:"명을 받들겠습니다",time:"오전 1:18"},{from:"incoming",text:"오냐 형 잔다",time:"오전 1:19"},{from:"outgoing",text:"ㅂㅂ 잘자",time:"오전 1:20"},{from:"date",text:"2024년 9월 20일"},{from:"outgoing",text:"형형형 혹시",time:"오후 6:12"},{from:"outgoing",text:"서빈 님이 사진 하나 보내고 이거 괜찮냐고 물어보면 절대 ㄴㄴ안된다고해 절대로 제발",time:"오후 6:13"},{from:"incoming",text:"?",time:"오후 6:14"},{from:"incoming",text:"인스타에 올려도 괜찮냐고 물어보시긴 했는데",time:"오후 6:15"},{from:"incoming",text:"이거?",time:"오후 6:15"},{from:"photo",text:"seobin-photo.jpg",time:"오후 6:16"},{from:"outgoing",text:"ㅇㅇㅇ그거!!",time:"오후 6:17"},{from:"incoming",text:"왜? 괜찮은데?",time:"오후 6:18"},{from:"outgoing",text:"나만 가질 거임",time:"오후 6:19"},{from:"incoming",text:"미친놈;",time:"오후 6:20"}] },
       { id: "mom", name: "엄마", avatar: "엄", color: "green", preview: "밥은 꼭 챙겨 먹어", time: "오후 8:42", messages: [{from:"incoming",text:"밥은 꼭 챙겨 먹어"},{from:"outgoing",text:"응 엄마. 촬영 끝나고 먹었어."}] },
       { id: "director", name: "김도윤 감독님", avatar: "김", color: "gold", preview: "오늘 감정 연기 좋았습니다.", time: "오후 7:18", messages: [{from:"incoming",text:"오늘 감정 연기 좋았습니다. 다음 장면도 잘 부탁해요."}] },
@@ -27,12 +27,6 @@
       { id: "fanclub", name: "공식 팬카페 운영진", avatar: "팬", color: "gold", preview: "생일 라이브 일정 문의드립니다.", time: "오후 2:06", messages: [{from:"incoming",text:"생일 라이브 일정 관련해 확인 부탁드립니다."}] },
       { id: "college", name: "동기 배우들", avatar: "동", color: "pink", preview: "다 같이 밥 먹자!", time: "어제", messages: [{from:"incoming",text:"이번 주에 다 같이 밥 먹자!"}] },
       { id: "brand", name: "브랜드 협찬 담당자", avatar: "브", color: "blue", preview: "캠페인 제안서 보내드립니다.", time: "어제", messages: [{from:"incoming",text:"신규 캠페인 제안서 보내드립니다. 검토 부탁드립니다."}] }
-    ],
-    calls: [
-      { name: "김민지", type: "outgoing", time: "오늘 오후 7:30", avatar: "민", color: "pink" },
-      { name: "엄마", type: "incoming", time: "오늘 오후 6:04", avatar: "엄", color: "green" },
-      { name: "알 수 없는 번호", type: "missed", time: "오늘 오후 4:01", avatar: "?", color: "gold" },
-      { name: "김민지", type: "incoming", time: "어제 오후 9:12", avatar: "민", color: "pink" }
     ],
     notes: [
       { id: 1, title: "오늘 할 일", body: "□ 장보기\n□ 민지에게 답장하기\n□ 사진 정리하기", updated: Date.now() - 100000 },
@@ -76,7 +70,7 @@
     seobinChat.messages.push({from: photo ? "photo" : "incoming", text: photo ? "seobin-bed-photo.jpg" : text, time: kakaoTime()});
     seobinChat.preview = photo ? "사진" : text; seobinChat.time = "방금"; saveSeobinChat();
     if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao();
-    else { showToast(photo ? "카카오톡 · 서빈 님이 사진을 보냈어요" : "카카오톡 · 서빈 님: " + text, "kakao"); state.unread = true; const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); if (state.app === "kakao" && !state.activeChat && state.view === "app") renderKakao(); }
+    else { showToast(photo ? "카카오톡 · 서빈 형이 사진을 보냈어요" : "카카오톡 · 서빈 형: " + text, "kakao"); state.unread = true; const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); if (state.app === "kakao" && !state.activeChat && state.view === "app") renderKakao(); }
   }
   function startSeobinSleepStory() {
     if (seobinScenario !== "received") return;
@@ -87,7 +81,7 @@
     setTimeout(() => addSeobinIncoming("", true), 2200);
     setTimeout(() => { addSeobinIncoming("나 다시 쫌 잘겡 촬영 열시미 해ㅐㅐ"); saveSeobinScenario("finished"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 3600);
   }
-  const appTitles = { messages: "메시지", photos: "사진", calls: "최근 통화", notes: "메모", kakao: "카카오톡", instagram: "Instagram", bubble: "bubble" };
+  const appTitles = { messages: "메시지", photos: "사진", calls: "전화", notes: "메모", kakao: "카카오톡", instagram: "Instagram", bubble: "bubble" };
   let toastTimer;
   let notificationTimer;
   let enteredPasscode = "";
@@ -151,7 +145,8 @@
     state.activeChat = null;
     state.activePhoto = null;
     state.activeNote = null;
-    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "photo-viewing");
+    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "photo-viewing", "phone-mode");
+    if (app === "calls") { phoneState.tab = "recents"; phoneState.filter = "all"; phoneState.detail = null; phoneState.query = ""; }
     $("#header-action").onclick = null;
     $("#app-title").textContent = appTitles[app] || "앱";
     $("#header-action").textContent = app === "notes" ? "+" : "";
@@ -161,6 +156,8 @@
   }
 
   function goHome() {
+    const co = document.getElementById("call-overlay"); if (co) co.remove();
+    $("#app-screen").classList.remove("phone-mode");
     state.app = null;
     state.activeChat = null;
     state.activePhoto = null;
@@ -374,10 +371,10 @@
       content.innerHTML = `
         <div class="kakao-chat-screen">
           <div class="kakao-chat-log" id="kakao-chat-log">
-            ${chat.messages.map((message) => message.from === "date" ? `<div class="kakao-date">${escapeHTML(message.text)}</div>` : message.from === "photo" ? `<div class="kakao-message-photo incoming">${kakaoAvatar(chat, true)}<img src="${message.text}" alt="서빈 님이 보낸 사진"></div>` : `<div class="kakao-message-wrap ${message.from}">${message.from === "incoming" ? kakaoAvatar(chat, true) : ""}${message.from === "incoming" ? `<div class="kakao-message-body"><strong class="kakao-sender-name">${escapeHTML(chat.name.replace(/ 님$/, ""))}</strong><div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div></div>` : `<div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div>`}${message.time ? `<small class="kakao-message-time">${escapeHTML(message.time)}</small>` : ""}</div>`).join("")}
+            ${chat.messages.map((message) => message.from === "date" ? `<div class="kakao-date">${escapeHTML(message.text)}</div>` : message.from === "photo" ? `<div class="kakao-message-photo incoming">${kakaoAvatar(chat, true)}<img src="${message.text}" alt="서빈 형이 보낸 사진"></div>` : `<div class="kakao-message-wrap ${message.from}">${message.from === "incoming" ? kakaoAvatar(chat, true) : ""}${message.from === "incoming" ? `<div class="kakao-message-body"><strong class="kakao-sender-name">${escapeHTML(chat.name)}</strong><div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div></div>` : `<div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div>`}${message.time ? `<small class="kakao-message-time">${escapeHTML(message.time)}</small>` : ""}</div>`).join("")}
           </div>
           ${chat.id === "seobin" && seobinScenario === "received" ? `<div class="seobin-quick-replies"><button type="button" id="seobin-quick-reply">저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?</button></div>` : ""}
-          <form class="kakao-compose" id="kakao-form"><button type="button" aria-label="첨부">＋</button><input id="kakao-input" maxlength="300" placeholder="${chat.id === "seobin" && seobinScenario === "finished" ? "서빈 님은 자고 있어요…" : "메시지 입력"}" autocomplete="off"><button type="submit" aria-label="보내기">➤</button></form>
+          <form class="kakao-compose" id="kakao-form"><button type="button" aria-label="첨부">＋</button><input id="kakao-input" maxlength="300" placeholder="${chat.id === "seobin" && seobinScenario === "finished" ? "서빈 형은 자고 있어요…" : "메시지 입력"}" autocomplete="off"><button type="submit" aria-label="보내기">➤</button></form>
         </div>`;
       const log = $("#kakao-chat-log"); log.scrollTop = log.scrollHeight;
       const quickReply = $("#seobin-quick-reply"); if (quickReply) quickReply.addEventListener("click", startSeobinSleepStory);
@@ -515,10 +512,18 @@
   }
 
   const photoFavs = new Set();
-  function photoTimeLabel(id) {
-    const t = 12 * 60 + id * 21, h = Math.floor(t / 60);
-    return `${h < 12 ? "오전" : "오후"} ${h % 12 === 0 ? 12 : h % 12}:${String(t % 60).padStart(2, "0")}`;
-  }
+  // 2024년 8월 12일부터 순차적으로 저장된 사진 (id 1이 가장 오래된 사진)
+  const PHOTO_STAMPS = [
+    ["2024년 8월 12일","오후 3:42"],["2024년 8월 12일","오후 7:18"],["2024년 8월 14일","오전 11:05"],
+    ["2024년 8월 17일","오후 2:27"],["2024년 8월 19일","오후 9:03"],["2024년 8월 23일","오전 8:51"],
+    ["2024년 8월 26일","오후 5:36"],["2024년 8월 31일","오후 1:14"],["2024년 9월 3일","오후 10:22"],
+    ["2024년 9월 7일","오후 4:09"],["2024년 9월 9일","오전 9:47"],["2024년 9월 14일","오전 1:08"],
+    ["2024년 9월 15일","오후 6:31"],["2024년 9월 20일","오후 5:10"],["2024년 9월 24일","오후 12:38"],
+    ["2024년 9월 28일","오후 8:55"],["2024년 10월 2일","오전 10:16"],["2024년 10월 6일","오후 3:24"],
+    ["2024년 10월 11일","오후 11:02"]
+  ];
+  const photoDateLabel = (id) => PHOTO_STAMPS[id - 1][0];
+  const photoTimeLabel = (id) => PHOTO_STAMPS[id - 1][1];
   const PHOTO_ICON = {
     back: '<svg viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>',
     more: '<svg viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.6" fill="currentColor" stroke="none"/></svg>',
@@ -534,14 +539,14 @@
     screen.classList.toggle("photo-viewing", !!state.activePhoto);
     $("#app-title").textContent = "사진";
     $("#header-action").textContent = "";
-    const galleryPhotos = Array.from({length:19}, (_,i) => ({id:i+1, src:`photo-${String(i+1).padStart(2,"0")}.jpg`, title:`사진 ${i+1}`, date:"2026년 10월 19일"}));
+    const galleryPhotos = Array.from({length:19}, (_,i) => ({id:i+1, src:`photo-${String(i+1).padStart(2,"0")}.jpg`, title:`사진 ${i+1}`, date:photoDateLabel(i+1)}));
     if (state.activePhoto) {
       let cur = Math.max(0, galleryPhotos.findIndex(p => p.id === state.activePhoto));
       content.innerHTML = `<div class="photo-viewer" id="photo-viewer">
         <div class="photo-track" id="photo-track">${galleryPhotos.map(p => `<div class="photo-slide"><img src="${p.src}" alt="${p.title}" draggable="false"></div>`).join("")}</div>
         <div class="photo-top photo-chrome">
           <button type="button" class="photo-circle-btn" id="photo-back" aria-label="보관함">${PHOTO_ICON.back}</button>
-          <div class="photo-title"><strong>오늘</strong><span id="photo-title-time"></span></div>
+          <div class="photo-title"><strong id="photo-title-date"></strong><span id="photo-title-time"></span></div>
           <button type="button" class="photo-circle-btn" id="photo-more" aria-label="더 보기">${PHOTO_ICON.more}</button>
         </div>
         <div class="photo-bottom photo-chrome">
@@ -558,6 +563,7 @@
       const updateMeta = () => {
         const p = galleryPhotos[cur];
         state.activePhoto = p.id;
+        $("#photo-title-date").textContent = p.date;
         $("#photo-title-time").textContent = photoTimeLabel(p.id);
         $("#photo-fav").classList.toggle("on", photoFavs.has(p.id));
         strip.querySelectorAll(".photo-strip-item").forEach((el, i) => el.classList.toggle("current", i === cur));
@@ -593,34 +599,245 @@
     $("#photos-filter").addEventListener("click",()=>showToast("최근 항목 · 최신순"));
   }
 
+  // ===== 전화 앱 (최근 통화 / 연락처 / 키패드 ...) =====
+  const CONTACTS = [
+    {name:"서빈 형", phone:"010-3821-7745", photo:"avatar-seobin.jpg", fav:true},
+    {name:"우연 형", phone:"010-4417-2086", photo:"avatar-uyeon.jpg", fav:true, note:"매니저"},
+    {name:"엄마", phone:"010-9264-1103", fav:true},
+    {name:"아빠", phone:"010-9264-1108", fav:true},
+    {name:"할머니", phone:"010-5530-8841"},
+    {name:"김도윤 감독님", phone:"010-2748-6392", note:"<청춘 실종 사건> 감독"},
+    {name:"강하늘 선배님", phone:"010-7391-5520", note:"선배 배우"},
+    {name:"박서진 선배님", phone:"010-6205-4417", note:"선배 배우"},
+    {name:"고은채", phone:"010-3358-9071", note:"동료 배우"},
+    {name:"한지훈", phone:"010-8842-1356", note:"동료 배우"},
+    {name:"지훈이", phone:"010-5126-7739", note:"동료 배우", fav:true},
+    {name:"나유진", phone:"010-2093-6648", note:"동료 배우"},
+    {name:"동기 재현", phone:"010-7714-2205", note:"연기과 동기"},
+    {name:"소속사 대표님", phone:"010-4650-3187", note:"소속사"},
+    {name:"소속사 홍보팀", phone:"02-6021-4410", note:"소속사"},
+    {name:"매니지먼트 팀장님", phone:"010-3067-8294", note:"소속사"},
+    {name:"수연 실장님", phone:"010-9183-5546", note:"스타일리스트"},
+    {name:"은지 실장님", phone:"010-6672-0931", note:"헤어"},
+    {name:"다은 실장님", phone:"010-5409-7823", note:"메이크업"},
+    {name:"사진작가 도현", phone:"010-2281-4067", note:"화보 촬영"},
+    {name:"조연출 박성민", phone:"010-8035-6912", note:"제작팀"},
+    {name:"캐스팅 디렉터", phone:"010-4976-2358", note:"캐스팅"},
+    {name:"드라마 제작사 PD님", phone:"02-3412-7750", note:"제작사"},
+    {name:"방송국 작가님", phone:"010-7468-1624", note:"방송 작가"},
+    {name:"광고대행사 윤 담당자", phone:"010-3590-8176", note:"광고"},
+    {name:"브랜드 협찬 담당자", phone:"010-6841-2049", note:"협찬"},
+    {name:"영화제 사무국", phone:"02-780-3300", note:"영화제"},
+    {name:"세무 담당자", phone:"010-2714-9965", note:"세무"},
+    {name:"Ryan 트레이너", phone:"010-9507-3318", note:"헬스"},
+    {name:"Jenny 어학원", phone:"02-515-4472", note:"영어 회화"}
+  ];
+  const STALKER = ["010-4827-3391", "010-2095-7746", "010-6613-0584"];
+  // kind: out(발신) / in(수신) / missed(부재중). who: 연락처 이름 또는 번호. count: 연속 통화 수
+  const RECENT_CALLS = [
+    {who:STALKER[0], kind:"missed", count:7, time:"오후 9:47", day:"오늘", dur:null},
+    {who:"서빈 형", kind:"in", time:"오후 8:52", day:"오늘", dur:"12분 8초"},
+    {who:"발신자 표시 제한", kind:"missed", count:3, time:"오후 7:15", day:"오늘", dur:null},
+    {who:"우연 형", kind:"out", time:"오후 6:30", day:"오늘", dur:"3분 41초"},
+    {who:STALKER[1], kind:"missed", count:4, time:"오후 4:22", day:"오늘", dur:null},
+    {who:"엄마", kind:"in", time:"오후 12:08", day:"오늘", dur:"5분 19초"},
+    {who:STALKER[0], kind:"missed", count:5, time:"오후 11:36", day:"어제", dur:null},
+    {who:"서빈 형", kind:"out", time:"오후 10:14", day:"어제", dur:"47분 2초"},
+    {who:"우연 형", kind:"in", time:"오후 6:02", day:"어제", dur:"1분 55초"},
+    {who:STALKER[2], kind:"missed", count:2, time:"오후 2:40", day:"어제", dur:null},
+    {who:"김도윤 감독님", kind:"in", time:"오전 9:30", day:"어제", dur:"4분 12초"},
+    {who:"우연 형", kind:"missed", time:"오후 8:20", day:"일요일", dur:null},
+    {who:STALKER[0], kind:"missed", count:9, time:"오후 3:51", day:"일요일", dur:null},
+    {who:"수연 실장님", kind:"in", time:"오후 1:15", day:"일요일", dur:"2분 30초"},
+    {who:"서빈 형", kind:"in", time:"오전 1:26", day:"토요일", dur:"1시간 3분"},
+    {who:"아빠", kind:"missed", time:"오후 7:03", day:"토요일", dur:null},
+    {who:"발신자 표시 제한", kind:"missed", count:6, time:"오후 5:48", day:"금요일", dur:null},
+    {who:"소속사 대표님", kind:"in", time:"오후 4:10", day:"금요일", dur:"8분 21초"},
+    {who:"고은채", kind:"out", time:"오후 12:44", day:"금요일", dur:"6분 3초"},
+    {who:STALKER[1], kind:"missed", count:11, time:"오전 3:12", day:"목요일", dur:null}
+  ];
+  const phoneState = { tab:"recents", filter:"all", detail:null, query:"", dialed:"", calling:null };
+  const contactByName = (n) => CONTACTS.find(c => c.name === n);
+  const hangulInitials = ["ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+  const hangulBase = ["ㄱ","ㄱ","ㄴ","ㄷ","ㄷ","ㄹ","ㅁ","ㅂ","ㅂ","ㅅ","ㅅ","ㅇ","ㅈ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+  function contactSection(name) {
+    const ch = name.trim().charAt(0), code = ch.charCodeAt(0);
+    if (code >= 0xAC00 && code <= 0xD7A3) return hangulBase[Math.floor((code - 0xAC00) / 588)];
+    if (/[A-Za-z]/.test(ch)) return ch.toUpperCase();
+    return "#";
+  }
+  const sectionOrder = [...new Set(hangulBase), ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ", "#"];
+  const PH_ICON = {
+    star:'<svg viewBox="0 0 24 24"><path d="m12 3.6 2.4 5.1 5.6.7-4.1 3.9 1.1 5.5-5-2.8-5 2.8 1.1-5.5L4 9.4l5.6-.7z"/></svg>',
+    clock:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7v5.4l3.6 2"/></svg>',
+    person:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8.6" r="3.8"/><path d="M4.6 20c.6-4 3.5-6 7.4-6s6.8 2 7.4 6"/></svg>',
+    keypad:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="6" cy="5" r="1.7"/><circle cx="12" cy="5" r="1.7"/><circle cx="18" cy="5" r="1.7"/><circle cx="6" cy="11" r="1.7"/><circle cx="12" cy="11" r="1.7"/><circle cx="18" cy="11" r="1.7"/><circle cx="6" cy="17" r="1.7"/><circle cx="12" cy="17" r="1.7"/><circle cx="18" cy="17" r="1.7"/><circle cx="12" cy="22" r="1.7"/></svg>',
+    vm:'<svg viewBox="0 0 24 24"><circle cx="7" cy="12" r="3.6"/><circle cx="17" cy="12" r="3.6"/><path d="M7 15.6h10"/></svg>',
+    phone:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6.6 3.5 9 3c.5 0 .9.3 1 .8l.8 3.2c.1.4 0 .8-.3 1.1L9.3 9.4c1 2.1 2.7 3.9 4.9 5l1.3-1.3c.3-.3.7-.4 1.1-.3l3.2.8c.5.1.8.5.8 1l-.5 2.4c-.1.7-.7 1.2-1.4 1.2C11.5 18.2 5.8 12.500 5.400 4.900c0-.7.5-1.300 1.200-1.400z"/></svg>',
+    out:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6.6 3.5 9 3c.5 0 .9.3 1 .8l.8 3.2c.1.4 0 .8-.3 1.1L9.3 9.4c1 2.1 2.7 3.9 4.9 5l1.3-1.3c.3-.3.7-.4 1.1-.3l3.2.8c.5.1.8.5.8 1l-.5 2.4c-.1.7-.7 1.2-1.4 1.2C11.5 18.2 5.8 12.500 5.400 4.900c0-.7.5-1.300 1.200-1.400z"/></svg>',
+    msg:'<svg viewBox="0 0 24 24"><path d="M5 5.5h14a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-7l-4.500 3.500V17H5a2 2 0 0 1-2-2V7.500a2 2 0 0 1 2-2z"/></svg>',
+    video:'<svg viewBox="0 0 24 24"><rect x="3" y="6.500" width="12.500" height="11" rx="2.500"/><path d="m15.500 10.500 5.500-3v9l-5.500-3z"/></svg>',
+    mail:'<svg viewBox="0 0 24 24"><rect x="3" y="5.500" width="18" height="13" rx="2.500"/><path d="m3.500 7.500 8.500 6 8.500-6"/></svg>',
+    search:'<svg viewBox="0 0 24 24"><circle cx="10.500" cy="10.500" r="6.500"/><path d="m15.500 15.500 5 5"/></svg>',
+    plus:'<svg viewBox="0 0 24 24"><path d="M12 4.500v15M4.500 12h15"/></svg>',
+    del:'<svg viewBox="0 0 24 24"><path d="M9 6h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-6-6z"/><path d="m12.500 9.500 5 5m0-5-5 5"/></svg>'
+  };
+  const PH_COLORS = ["#8e9aa8","#a1a3b0","#9aa5a0","#b0a496","#9a97b0","#a8999f"];
+  function phAvatar(name, big) {
+    const c = contactByName(name);
+    const cls = "ph-avatar" + (big ? " big" : "");
+    if (c && c.photo) return `<span class="${cls}"><img src="${c.photo}" alt=""></span>`;
+    if (!c) return `<span class="${cls} unknown">${PH_ICON.person}</span>`;
+    const idx = [...name].reduce((a, ch) => a + ch.charCodeAt(0), 0) % PH_COLORS.length;
+    return `<span class="${cls}" style="background:linear-gradient(#b8bdc7,${PH_COLORS[idx]})">${escapeHTML(name.replace(/^[^가-힣A-Za-z]+/, "").charAt(0))}</span>`;
+  }
+  const phoneOf = (who) => (contactByName(who) ? contactByName(who).phone : /^[0-9-]+$/.test(who) ? who : "");
+
+  function startCall(name) {
+    phoneState.calling = name; phoneState.callSecs = -1;
+    const overlay = document.createElement("section");
+    overlay.className = "call-overlay"; overlay.id = "call-overlay";
+    overlay.innerHTML = `<div class="call-top">${phAvatar(name, true)}<h2>${escapeHTML(contactByName(name)?.name || name)}</h2><p id="call-status">전화 거는 중...</p></div>
+      <div class="call-grid">${[["mute","소리 끔"],["keypad","키패드"],["speaker","스피커"],["add","통화 추가"],["video","FaceTime"],["contacts","연락처"]].map(([k,l]) => `<button type="button"><i></i><span>${l}</span></button>`).join("")}</div>
+      <button type="button" class="call-end" id="call-end" aria-label="통화 종료">${PH_ICON.phone}</button>`;
+    $(".screen").appendChild(overlay);
+    let timer = setTimeout(() => { const st = $("#call-status"); if (st) st.textContent = "연결 중..."; }, 1600);
+    $("#call-end").addEventListener("click", () => { clearTimeout(timer); overlay.remove(); phoneState.calling = null; });
+  }
+
   function renderCalls() {
     const content = $("#app-content");
-    $("#app-title").textContent = "최근 통화";
-    $("#header-action").textContent = "편집";
-    content.innerHTML = `
-      <div class="section-label">최근 통화</div>
-      <div class="list-card">
-        ${state.calls.map((call, index) => `
-          <div class="list-row">
-            <span class="avatar ${call.color}">${escapeHTML(call.avatar)}</span>
-            <span class="row-main">
-              <span class="row-title">${escapeHTML(call.name)}</span>
-              <span class="row-subtitle">${call.type === "missed" ? '<span style="color:#e04444">부재중 전화</span>' : call.type === "incoming" ? "↙ 수신 전화" : "↗ 발신 전화"}</span>
-            </span>
-            <span class="row-trailing">${escapeHTML(call.time)}</span>
-            <button class="chevron call-detail" data-call="${index}" aria-label="${escapeHTML(call.name)} 상세">ⓘ</button>
-          </div>`).join("")}
-      </div>
-      <button class="call-action" id="fake-call">전화 걸기 (데모)</button>
-      <div class="empty-state">실제 전화는 걸리지 않는 가상 통화 기록입니다.</div>`;
-    content.querySelectorAll("[data-call]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const call = state.calls[Number(button.dataset.call)];
-        showToast(`${call.name} · ${call.time}`);
-      });
-    });
-    $("#fake-call").addEventListener("click", () => showToast("데모 화면에서는 실제 통화를 할 수 없어요."));
-    $("#header-action").onclick = () => showToast("통화 기록 편집은 데모 기능입니다.");
+    const screen = $("#app-screen");
+    screen.classList.add("phone-mode");
+    $("#app-title").textContent = "전화";
+    $("#header-action").textContent = "";
+    const d = phoneState.detail;
+    const tabs = [["favorites","즐겨찾기","star"],["recents","최근 통화","clock"],["contacts","연락처","person"],["keypad","키패드","keypad"],["voicemail","음성 사서함","vm"]];
+    let body = "";
+    if (d) body = phoneDetailHTML(d);
+    else if (phoneState.tab === "favorites") body = phoneFavoritesHTML();
+    else if (phoneState.tab === "recents") body = phoneRecentsHTML();
+    else if (phoneState.tab === "contacts") body = phoneContactsHTML();
+    else if (phoneState.tab === "keypad") body = phoneKeypadHTML();
+    else body = phoneVoicemailHTML();
+    const missedCount = RECENT_CALLS.filter(c => c.kind === "missed" && c.day === "오늘").length;
+    content.innerHTML = `<div class="ph-app">
+      <div class="ph-body" id="ph-body">${body}</div>
+      ${!d && phoneState.tab === "contacts" ? `<div class="ph-index">${(phoneState.letters || []).map(k => `<button type="button" data-ph-jump="${k}">${k}</button>`).join("")}</div>` : ""}
+      ${d ? "" : `<nav class="ph-tabs">${tabs.map(([k,l,ic]) => `<button type="button" class="ph-tab${phoneState.tab === k ? " active" : ""}" data-ph-tab="${k}"><span class="ph-tab-ic">${PH_ICON[ic]}${k === "recents" && missedCount ? `<b>${missedCount}</b>` : ""}</span>${l}</button>`).join("")}</nav>`}
+    </div>`;
+    bindPhone(content);
+  }
+
+  function phoneRecentsHTML() {
+    const list = RECENT_CALLS.map((c, i) => ({...c, i})).filter(c => phoneState.filter === "all" || c.kind === "missed");
+    return `<div class="ph-nav"><button type="button" class="ph-link" id="ph-edit">편집</button>
+        <div class="ph-seg" role="tablist"><button type="button" class="${phoneState.filter === "all" ? "on" : ""}" data-ph-filter="all">전체</button><button type="button" class="${phoneState.filter === "missed" ? "on" : ""}" data-ph-filter="missed">부재중</button></div><span></span></div>
+      <h2 class="ph-large">최근 통화</h2>
+      <div class="ph-list">${list.map(c => {
+        const contact = contactByName(c.who);
+        const name = contact ? contact.name : c.who;
+        const sub = contact ? "휴대전화" : (c.who === "발신자 표시 제한" ? "알 수 없음" : "휴대전화 · 대한민국");
+        const ic = c.kind === "out" ? `<i class="ph-out">${PH_ICON.out}</i>` : "";
+        return `<div class="ph-row${c.kind === "missed" ? " missed" : ""}" data-ph-call="${c.i}"><div class="ph-row-main"><strong>${escapeHTML(name)}${c.count ? ` <em>(${c.count})</em>` : ""}</strong><span>${ic}${sub}</span></div><time>${c.day === "오늘" ? c.time : c.day}</time><button type="button" class="ph-info" data-ph-info="${c.i}" aria-label="상세 정보">ⓘ</button></div>`;
+      }).join("")}${list.length ? "" : '<div class="ph-empty">부재중 전화가 없습니다.</div>'}</div>`;
+  }
+
+  function phoneFavoritesHTML() {
+    const favs = CONTACTS.filter(c => c.fav);
+    return `<div class="ph-nav"><button type="button" class="ph-link">편집</button><span></span><button type="button" class="ph-link ph-plus" aria-label="추가">${PH_ICON.plus}</button></div>
+      <h2 class="ph-large">즐겨찾기</h2>
+      <div class="ph-list">${favs.map(c => `<div class="ph-row ph-fav" data-ph-contact="${escapeHTML(c.name)}">${phAvatar(c.name)}<div class="ph-row-main"><strong>${escapeHTML(c.name)}</strong><span>휴대전화</span></div><button type="button" class="ph-info" data-ph-info-contact="${escapeHTML(c.name)}" aria-label="상세 정보">ⓘ</button></div>`).join("")}</div>`;
+  }
+
+  function phoneContactsHTML() {
+    const q = phoneState.query.trim();
+    const sorted = [...CONTACTS].filter(c => !q || c.name.includes(q) || c.phone.replace(/-/g, "").includes(q.replace(/-/g, "")))
+      .sort((a, b) => { const sa = sectionOrder.indexOf(contactSection(a.name)), sb = sectionOrder.indexOf(contactSection(b.name)); return sa - sb || a.name.localeCompare(b.name, "ko"); });
+    const groups = {}; sorted.forEach(c => (groups[contactSection(c.name)] ||= []).push(c));
+    const letters = sectionOrder.filter(k => groups[k]); phoneState.letters = letters;
+    return `<div class="ph-nav"><button type="button" class="ph-link">목록</button><span></span><button type="button" class="ph-link ph-plus" aria-label="연락처 추가">${PH_ICON.plus}</button></div>
+      <h2 class="ph-large">연락처</h2>
+      <label class="ph-search">${PH_ICON.search}<input id="ph-search" placeholder="검색" value="${escapeHTML(phoneState.query)}" autocomplete="off"></label>
+      <div class="ph-me" data-ph-contact="나"><span class="ph-avatar" style="background:linear-gradient(#b8bdc7,#8e9aa8)">안</span><div><strong>안시현</strong><span>내 카드</span></div></div>
+      <div class="ph-contacts-wrap"><div class="ph-contacts">${letters.map(k => `<div class="ph-group" id="ph-sec-${k}"><div class="ph-letter">${k}</div>${groups[k].map(c => `<button type="button" class="ph-contact" data-ph-contact="${escapeHTML(c.name)}">${escapeHTML(c.name)}</button>`).join("")}</div>`).join("")}${sorted.length ? `<div class="ph-count">${sorted.length}명의 연락처</div>` : '<div class="ph-empty">검색 결과 없음</div>'}</div>
+</div>`;
+  }
+
+  function phoneKeypadHTML() {
+    const keys = [["1",""],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]];
+    return `<div class="ph-keypad"><div class="ph-dialed" id="ph-dialed">${escapeHTML(formatDial(phoneState.dialed))}</div>
+      <div class="ph-dial-name" id="ph-dial-name"></div>
+      <div class="ph-keys">${keys.map(([k,l]) => `<button type="button" data-ph-key="${k}"><b>${k}</b><small>${l}</small></button>`).join("")}</div>
+      <div class="ph-dial-actions"><span></span><button type="button" class="ph-dial-call" id="ph-dial-call" aria-label="통화">${PH_ICON.phone}</button><button type="button" class="ph-dial-del" id="ph-dial-del" aria-label="지우기">${PH_ICON.del}</button></div></div>`;
+  }
+  function formatDial(v) {
+    if (/^010\d+$/.test(v)) { const m = v.match(/^(010)(\d{0,4})(\d{0,4})/); return [m[1], m[2], m[3]].filter(Boolean).join("-"); }
+    return v;
+  }
+
+  function phoneVoicemailHTML() {
+    return `<div class="ph-nav"><span></span><span></span><span></span></div><h2 class="ph-large">음성 사서함</h2>
+      <div class="ph-vm-empty"><strong>음성 사서함 없음</strong><span>새로운 음성 메시지가 없습니다.</span></div>`;
+  }
+
+  function phoneDetailHTML(d) {
+    const isCall = d.type === "call";
+    const call = isCall ? RECENT_CALLS[d.index] : null;
+    const who = isCall ? call.who : d.name;
+    const contact = contactByName(who);
+    const name = who === "나" ? "안시현" : (contact ? contact.name : who);
+    const phone = who === "나" ? "010-0711-0711" : phoneOf(who);
+    const history = RECENT_CALLS.filter(c => c.who === who);
+    const kindLabel = (c) => c.kind === "missed" ? "부재중 전화" : c.kind === "out" ? "발신 전화" : "수신 전화";
+    return `<div class="ph-nav ph-detail-nav"><button type="button" class="ph-link ph-back" id="ph-detail-back">‹ ${isCall ? "최근 통화" : "연락처"}</button><span></span>${contact ? '<button type="button" class="ph-link">편집</button>' : "<span></span>"}</div>
+      <div class="ph-detail-head">${who === "나" ? '<span class="ph-avatar big" style="background:linear-gradient(#b8bdc7,#8e9aa8)">안</span>' : phAvatar(who, true)}<h2>${escapeHTML(name)}</h2>${contact && contact.note ? `<p>${escapeHTML(contact.note)}</p>` : ""}</div>
+      <div class="ph-actions">${[["msg","메시지"],["phone","음성"],["video","FaceTime"],["mail","이메일"]].map(([ic,l]) => `<button type="button" data-ph-action="${ic}">${ic === "phone" ? `<span>${PH_ICON.phone}</span>` : `<span>${PH_ICON[ic]}</span>`}${l}</button>`).join("")}</div>
+      ${isCall || history.length ? `<div class="ph-card"><div class="ph-card-title">최근 통화</div>${(isCall ? [call] : history.slice(0, 5)).map(c => `<div class="ph-hist${c.kind === "missed" ? " missed" : ""}"><span>${c.day} ${c.time}</span><strong>${kindLabel(c)}</strong><small>${c.dur ? c.dur : ""}</small></div>`).join("")}</div>` : ""}
+      <div class="ph-card"><div class="ph-card-title">휴대전화</div><div class="ph-phone-num">${escapeHTML(phone || "알 수 없음")}</div></div>
+      ${!contact && who !== "나" ? '<div class="ph-card ph-danger-card"><button type="button" class="ph-card-btn" data-ph-action="block">이 발신자 차단</button></div>' : ""}`;
+  }
+
+  function bindPhone(content) {
+    content.querySelectorAll("[data-ph-tab]").forEach(b => b.addEventListener("click", () => { phoneState.tab = b.dataset.phTab; phoneState.detail = null; renderCalls(); }));
+    content.querySelectorAll("[data-ph-filter]").forEach(b => b.addEventListener("click", () => { phoneState.filter = b.dataset.phFilter; renderCalls(); }));
+    content.querySelectorAll("[data-ph-call]").forEach(r => r.addEventListener("click", (e) => {
+      if (e.target.closest("[data-ph-info]")) return;
+      const c = RECENT_CALLS[Number(r.dataset.phCall)]; startCall(contactByName(c.who)?.name || c.who);
+    }));
+    content.querySelectorAll("[data-ph-info]").forEach(b => b.addEventListener("click", () => { phoneState.detail = {type:"call", index:Number(b.dataset.phInfo)}; renderCalls(); }));
+    content.querySelectorAll("[data-ph-info-contact]").forEach(b => b.addEventListener("click", (e) => { e.stopPropagation(); phoneState.detail = {type:"contact", name:b.dataset.phInfoContact}; renderCalls(); }));
+    content.querySelectorAll("[data-ph-contact]").forEach(r => r.addEventListener("click", (e) => {
+      if (e.target.closest("[data-ph-info-contact]")) return;
+      const n = r.dataset.phContact;
+      if (phoneState.tab === "favorites" && n !== "나") { startCall(n); return; }
+      phoneState.detail = {type:"contact", name:n}; renderCalls();
+    }));
+    const back = $("#ph-detail-back"); if (back) back.addEventListener("click", () => { phoneState.detail = null; renderCalls(); });
+    content.querySelectorAll("[data-ph-action]").forEach(b => b.addEventListener("click", () => {
+      const d = phoneState.detail, a = b.dataset.phAction;
+      const who = d.type === "call" ? RECENT_CALLS[d.index].who : d.name;
+      if (a === "phone" && who !== "나") startCall(contactByName(who)?.name || who);
+      else if (a === "block") showToast("데모에서는 차단할 수 없어요.");
+      else showToast("데모에서는 지원하지 않아요.");
+    }));
+    const search = $("#ph-search");
+    if (search) search.addEventListener("input", () => { phoneState.query = search.value; const pos = search.selectionStart; renderCalls(); const s2 = $("#ph-search"); s2.focus(); s2.setSelectionRange(pos, pos); });
+    content.querySelectorAll("[data-ph-jump]").forEach(b => b.addEventListener("click", () => { const t = $("#ph-sec-" + b.dataset.phJump), body = $("#ph-body"); if (t && body) body.scrollTo({top: t.offsetTop - 4, behavior:"smooth"}); }));
+    const dialed = $("#ph-dialed");
+    if (dialed) {
+      const sync = () => {
+        dialed.textContent = formatDial(phoneState.dialed);
+        const match = CONTACTS.find(c => phoneState.dialed.length >= 4 && c.phone.replace(/-/g, "") === phoneState.dialed);
+        $("#ph-dial-name").textContent = match ? match.name : "";
+        $("#ph-dial-del").style.visibility = phoneState.dialed ? "visible" : "hidden";
+        dialed.classList.toggle("long", phoneState.dialed.length > 11);
+      };
+      sync();
+      content.querySelectorAll("[data-ph-key]").forEach(b => b.addEventListener("click", () => { if (phoneState.dialed.length < 15) { phoneState.dialed += b.dataset.phKey; sync(); } }));
+      $("#ph-dial-del").addEventListener("click", () => { phoneState.dialed = phoneState.dialed.slice(0, -1); sync(); });
+      $("#ph-dial-call").addEventListener("click", () => { if (!phoneState.dialed) return; const m = CONTACTS.find(c => c.phone.replace(/-/g, "") === phoneState.dialed); startCall(m ? m.name : formatDial(phoneState.dialed)); });
+    }
   }
 
   function renderNotes() {
