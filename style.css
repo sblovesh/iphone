@@ -54,16 +54,16 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .lock-screen::before, .lock-screen::after { display: none; }
 .lock-date { position: relative; z-index: 1; margin-top: 111px; font-size: 17px; font-weight: 500; text-shadow: 0 1px 8px #18232c40; }
 .lock-clock { position: relative; z-index: 1; font-size: clamp(68px, 19vw, 90px); line-height: 1.05; letter-spacing: -4px; font-weight: 300; text-shadow: 0 2px 12px #18232c20; }
-.lock-message { position: relative; z-index: 1; margin-top: 13px; font-size: 13px; color: #ffffffd9; }
+
 .unlock-area { position: absolute; z-index: 2; bottom: 88px; left: 0; right: 0; display: flex; align-items: center; flex-direction: column; gap: 11px; }
 .primary-button { border: 1px solid #ffffff6b; border-radius: 25px; padding: 12px 24px; color: white; background: #ffffff25; backdrop-filter: blur(20px); font-size: 14px; font-weight: 600; box-shadow: 0 4px 20px #10182015; }
 .primary-button:active { transform: scale(.97); }
 .unlock-area p { margin: 0; font-size: 11px; color: #ffffffb5; }
 .lock-bottom { position: absolute; z-index: 2; bottom: 32px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 33px; font-size: 21px; }
 .home-screen { padding: 70px 20px 16px; background: linear-gradient(rgba(255,255,255,.10), rgba(255,255,255,.10)), url("home-wallpaper.jpg") center center / cover no-repeat; }
-.home-date { margin: 10px 2px 25px; color: #26323e; }
-#home-greeting { font-size: 13px; font-weight: 500; opacity: .8; }
-.home-date-large { font-size: 26px; font-weight: 700; letter-spacing: -.7px; margin-top: 1px; }
+
+
+
 .app-grid { display: grid; grid-template-columns: repeat(4, 1fr); row-gap: 20px; }
 .app-icon { position: relative; display: flex; align-items: center; flex-direction: column; gap: 6px; padding: 0; border: 0; background: transparent; color: #202833; font-size: 10px; font-weight: 500; }
 .app-art { width: 54px; height: 54px; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; box-shadow: 0 3px 8px #17212a22; position: relative; overflow: hidden; border: 1px solid #ffffff35; }
@@ -77,10 +77,10 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .calls-art { background: linear-gradient(145deg, #5ee878, #17b94d); font-size: 26px; }
 .notes-art { background: linear-gradient(#ffe67b 0 24%, #fff 24%); color: #a8a8aa; font-size: 27px; align-items: flex-end; padding-bottom: 7px; }
 .unread-dot { position: absolute; width: 7px; height: 7px; background: #ff453a; border: 1px solid #fff; border-radius: 50%; right: 16px; top: -2px; }
-.widget { margin-top: 28px; padding: 17px; border-radius: 23px; background: #ffffffad; border: 1px solid #ffffffb5; backdrop-filter: blur(18px); box-shadow: 0 8px 20px #53657512; color: #27313a; }
-.widget-top { display: flex; justify-content: space-between; font-size: 11px; color: #6c747b; font-weight: 600; }
-.widget-title { font-size: 18px; line-height: 1.45; font-weight: 700; margin-top: 12px; letter-spacing: -.4px; }
-.widget-foot { font-size: 10px; color: #77818a; margin-top: 10px; }
+
+
+
+
 .dock { position: absolute; bottom: 21px; left: 17px; right: 17px; height: 78px; display: flex; align-items: center; justify-content: space-evenly; border: 1px solid #ffffff80; border-radius: 25px; background: #ffffff69; backdrop-filter: blur(20px); }
 .dock-icon { width: 48px; height: 48px; border: 0; border-radius: 14px; }
 .dock-icon.app-art { box-shadow: none; }
@@ -105,39 +105,39 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .row-subtitle { font-size: 12px; color: #858891; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .row-trailing { color: #989ba3; font-size: 11px; align-self: flex-start; padding-top: 2px; white-space: nowrap; }
 .chevron { color: #b3b4bb; font-size: 21px; }
-.chat-view { display: flex; flex-direction: column; min-height: 100%; }
-.chat-person { text-align: center; padding: 14px 12px 18px; }
-.chat-person .avatar { margin: 0 auto 7px; width: 48px; height: 48px; }
-.chat-person strong { font-size: 13px; }
-.chat-person p { margin: 4px 0 0; font-size: 10px; color: #858891; }
-.chat-log { padding: 8px 13px 18px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
-.chat-date { font-size: 10px; color: #8d9097; text-align: center; margin: 3px 0 7px; }
+
+
+
+
+
+
+
 .bubble { max-width: 82%; border-radius: 19px; padding: 10px 13px; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
 .bubble.incoming { align-self: flex-start; background: #e7e7ec; border-bottom-left-radius: 6px; }
 .bubble.outgoing { align-self: flex-end; color: white; background: #1684ff; border-bottom-right-radius: 6px; }
-.chat-compose { position: sticky; bottom: 0; display: flex; gap: 8px; align-items: center; padding: 10px 12px calc(12px + env(safe-area-inset-bottom)); background: #f7f7f9ed; border-top: 1px solid #e5e5e9; }
-.chat-compose input { min-width: 0; flex: 1; border: 1px solid #d9d9df; border-radius: 20px; background: white; padding: 10px 13px; outline: none; font-size: 13px; }
-.send-button { border: 0; background: var(--blue); color: white; border-radius: 50%; width: 34px; height: 34px; font-size: 17px; }
-.photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-.photo-tile { border: 0; padding: 0; aspect-ratio: 1; overflow: hidden; background: #d8e0e6; position: relative; }
-.photo-scene { width: 100%; height: 100%; display: block; position: relative; overflow: hidden; }
-.scene-1 { background: linear-gradient(#a8c4d5 0 47%, #7a9b9d 47% 65%, #d7d1ba 65%); }
-.scene-1::before { content: ""; position: absolute; width: 58%; height: 35%; border-radius: 50%; background: #f7e8bd; top: 13%; left: 21%; filter: blur(1px); }
-.scene-1::after { content: ""; position: absolute; width: 140%; height: 42%; left: -20%; bottom: -12%; background: #658b7c; transform: rotate(-10deg); border-radius: 50%; }
-.scene-2 { background: linear-gradient(145deg, #ead5c5, #c4a8a0 55%, #7c8f9b); }
-.scene-2::before { content: ""; position: absolute; width: 32%; height: 52%; background: #e8e2d8; left: 35%; top: 25%; border-radius: 4px; box-shadow: 0 3px 8px #3333; }
-.scene-3 { background: linear-gradient(#d3e1eb, #8fa8b9); }
-.scene-3::before { content: ""; position: absolute; width: 60%; height: 60%; left: 20%; top: 25%; background: #d8d0bf; border-radius: 50% 50% 10% 10%; }
-.scene-4 { background: linear-gradient(160deg, #e5c5b8, #b8a3b5 55%, #737f94); }
-.scene-4::before { content: ""; position: absolute; width: 45%; height: 70%; left: 27%; bottom: -12%; border-radius: 40% 40% 0 0; background: #596b7d; }
-.scene-5 { background: linear-gradient(#9fb7c8, #e5d8be); }
-.scene-5::before { content: ""; position: absolute; width: 80%; height: 30%; bottom: 15%; left: 10%; background: #77959a; transform: rotate(-13deg); border-radius: 50%; }
-.scene-6 { background: linear-gradient(135deg, #e9d9bf, #c1b1a1 50%, #7f999b); }
-.scene-6::before { content: ""; position: absolute; width: 45%; height: 55%; left: 28%; top: 24%; border-radius: 45% 45% 8px 8px; background: #e8e2d9; }
-.photo-detail { padding: 18px; }
-.photo-large { height: 290px; max-height: 40vh; border-radius: 18px; overflow: hidden; }
-.photo-caption { font-size: 14px; font-weight: 600; margin-top: 14px; }
-.photo-subcaption { color: #83858e; font-size: 12px; margin-top: 5px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .call-action { margin: 16px; width: calc(100% - 32px); padding: 13px; border: 0; border-radius: 13px; background: #1684ff; color: white; font-weight: 600; }
 .notes-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px 8px; color: #858891; font-size: 12px; }
 .note-item { padding: 14px 18px; border-bottom: 1px solid #e8e8ec; background: white; width: 100%; border-left: 0; border-right: 0; border-top: 0; text-align: left; }
@@ -219,18 +219,18 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .kakao-art span::after { content: ""; position: absolute; left: 4px; bottom: -3px; border-top: 7px solid #251f00; border-right: 7px solid transparent; }
 .instagram-art { background: radial-gradient(circle at 30% 105%, #ffdc80 0 15%, #fcaf45 25%, #f77737 42%, #e1306c 60%, #c13584 75%, #833ab4 90%, #405de6 100%); font-size: 36px; }
 .instagram-art span { font-weight: 300; line-height: 1; }
-.app-screen:has(.kakao-tools) { background: #fff; }
-.kakao-tools { display: flex; justify-content: space-around; padding: 15px 4px 12px; font-size: 12px; font-weight: 600; border-bottom: 1px solid #f1f1f1; }
-.kakao-tools span:nth-child(2) { position: relative; }
-.kakao-tools span:nth-child(2)::after { content: ""; position: absolute; bottom: -13px; left: 0; right: 0; height: 2px; background: #222; }
-.kakao-search { margin: 12px 16px 7px; padding: 10px 12px; border-radius: 9px; background: #f5f5f5; color: #999; font-size: 12px; }
+
+
+
+
+
 .kakao-list-label { padding: 12px 17px 7px; font-size: 12px; color: #777; }
 .kakao-list { background: white; }
 .kakao-row { width: 100%; border: 0; background: white; display: flex; align-items: center; gap: 11px; padding: 11px 15px; text-align: left; color: #222; min-height: 72px; }
 .kakao-row:active { background: #f7f7f7; }
-.kakao-avatar { width: 49px; height: 49px; flex: 0 0 49px; border-radius: 17px; display: grid; place-items: center; color: white; font-size: 18px; font-weight: 700; background: linear-gradient(145deg,#e8b8c8,#b76a8c); }
-.kakao-avatar.green { background: linear-gradient(145deg,#a2d6ae,#4b9d73); }
-.kakao-avatar.gold { background: linear-gradient(145deg,#edda9b,#b3914b); }
+
+
+
 .kakao-row-main { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 6px; }
 .kakao-row-main strong { font-size: 14px; font-weight: 600; }
 .kakao-row-main span { font-size: 12px; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -241,7 +241,7 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .kakao-bottom-tabs small { font-size: 9px; }
 .kakao-bottom-tabs .selected { color: #222; }
 .kakao-chat-screen { min-height: 100%; display: flex; flex-direction: column; background: #abc8d7; }
-.kakao-chat-info { text-align: center; padding: 12px; font-size: 11px; color: #3c5664; }
+
 .kakao-chat-log { display: flex; flex: 1; flex-direction: column; gap: 9px; padding: 10px 13px 18px; }
 .kakao-date { align-self: center; background: #91afbd; color: white; border-radius: 12px; padding: 5px 10px; font-size: 10px; margin-bottom: 9px; }
 .kakao-message { max-width: 80%; padding: 10px 12px; border-radius: 4px 15px 15px 15px; background: white; font-size: 13px; line-height: 1.45; align-self: flex-start; }
@@ -253,35 +253,35 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .ig-topbar { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px 13px; border-bottom: 1px solid #eee; }
 .ig-topbar strong { font-family: cursive; font-size: 24px; letter-spacing: -.7px; }
 .ig-topbar span { font-size: 20px; letter-spacing: 3px; }
-.ig-stories { display: flex; gap: 13px; overflow-x: auto; padding: 12px 10px 13px; border-bottom: 1px solid #eee; }
-.ig-story { border: 0; background: transparent; padding: 0; display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 58px; color: #222; }
-.ig-story-ring { width: 54px; height: 54px; padding: 3px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#ffb34b,#e1306c,#833ab4,#ffb34b); }
-.ig-story-ring i { width: 100%; height: 100%; border: 2px solid white; border-radius: 50%; background: #f4d8c4; display: grid; place-items: center; font-style: normal; font-weight: 700; color: #704a43; }
-.ig-story-ring.mine { background: #ddd; }
-.ig-story-ring.orange i { background: #d9a56b; }.ig-story-ring.blue i { background: #9dc7d9; }.ig-story-ring.green i { background: #9ab99b; }
-.ig-story small { font-size: 9px; white-space: nowrap; }
+
+
+
+
+
+
+
 .ig-post { border-bottom: 1px solid #eee; }
 .ig-post-user { height: 47px; display: flex; align-items: center; gap: 9px; padding: 0 12px; font-size: 12px; }
-.ig-mini-avatar { width: 29px; height: 29px; border-radius: 50%; display: grid; place-items: center; color: white; font-weight: 700; background: linear-gradient(135deg,#e9a5bd,#a54e7a); }
-.ig-mini-avatar.orange { background: linear-gradient(135deg,#f4bd6b,#b15b37); }
+
+
 .ig-more { margin-left: auto; letter-spacing: 2px; font-weight: 700; }
-.ig-photo { height: auto; aspect-ratio: 1 / .93; position: relative; overflow: hidden; }
-.ig-photo-sunset { background: linear-gradient(#8faec5 0%,#e9b7a3 36%,#f3b77b 48%,#8a9ba6 49%,#435d70 75%,#203d50 100%); }
-.ig-sun { position: absolute; width: 72px; height: 72px; border-radius: 50%; background: #ffe2a0; top: 31%; left: calc(50% - 36px); box-shadow: 0 0 36px #ffdb9c9c; }
-.ig-horizon { position: absolute; left: 0; right: 0; top: 54%; height: 3px; background: #ffe3bd99; }
-.ig-water { position: absolute; left: 25%; width: 50%; top: 59%; height: 36%; background: linear-gradient(180deg,#f5c18d66,#27485e00); filter: blur(9px); }
-.ig-photo-cafe { background: linear-gradient(145deg,#d8c1a3,#b18d6c 48%,#70523e); }
-.ig-plate { position: absolute; width: 66%; height: 54%; border-radius: 50%; background: #f2e7d6; top: 20%; left: 17%; box-shadow: 0 9px 12px #38241644; }
-.ig-cup { position: absolute; z-index: 1; width: 35%; height: 34%; border-radius: 8px 8px 30px 30px; background: linear-gradient(90deg,#eee2d1,#fff5e5,#c6ad91); top: 29%; left: 33%; box-shadow: 0 5px 9px #4c352044; }
-.ig-cup span { position: absolute; left: 10%; right: 10%; top: 9%; height: 18%; border-radius: 50%; background: #69432c; }
-.ig-table-line { position: absolute; width: 130%; height: 18px; background: #ead5b9; transform: rotate(-20deg); top: 74%; left: -10%; }
+
+
+
+
+
+
+
+
+
+
 .ig-actions { display: flex; align-items: center; gap: 13px; padding: 8px 12px 2px; }
 .ig-actions button { border: 0; background: transparent; color: #191919; font-size: 26px; padding: 0; line-height: 1.2; }
 .ig-actions button.liked { color: #ed315a; }.ig-actions .ig-save { margin-left: auto; }
 .ig-post-copy { padding: 3px 13px 12px; font-size: 11px; line-height: 1.5; }
 .ig-post-copy p { margin: 4px 0; }.ig-post-copy small { display: block; color: #999; font-size: 9px; margin-top: 5px; }.ig-comments { color: #8d8d8d; }
 .ig-bottom-tabs { position: sticky; bottom: 0; display: flex; justify-content: space-around; align-items: center; height: 47px; background: #fffffff5; border-top: 1px solid #eee; font-size: 22px; }
-.ig-profile-dot { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: #d9b3a1; font-size: 10px; font-weight: 700; }
+
 
 /* Detailed actor-phone KakaoTalk and Instagram mock screens */
 .app-screen.kakao-mode { background:#fff; }
@@ -301,8 +301,8 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .kakao-list-label { padding:8px 17px 5px; font-size:12px; color:#888; }
 .kakao-list { padding-bottom:14px; }
 .kakao-row { min-height:69px; padding:10px 16px; gap:12px; }
-.kakao-avatar { border-radius:17px; width:47px; height:47px; flex-basis:47px; }
-.kakao-avatar.blue { background:linear-gradient(145deg,#b4e0ff,#79baff); }
+
+
 .kakao-row-meta i { display:none; }
 .kakao-bottom-tabs { position:sticky; bottom:0; }
 .ig-topbar { display:flex; align-items:center; justify-content:space-between; padding:7px 18px 13px; font-size:22px; }
@@ -313,11 +313,11 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .ig-drama-ad { height: min(54vh,470px); min-height:310px; padding:30px 22px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:white; background:radial-gradient(ellipse at 50% 35%,#b9a28b 0%,#665b62 32%,#252734 72%,#11131c 100%); position:relative; overflow:hidden; }
 .ig-drama-ad:before,.ig-drama-ad:after { content:''; position:absolute; width:65%; height:120%; top:-10%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent); transform:rotate(20deg); }
 .ig-drama-ad:after { transform:rotate(-20deg); }
-.ig-drama-tag { font-size:10px; letter-spacing:4px; border:1px solid rgba(255,255,255,.8); padding:8px 12px; margin-bottom:26px; z-index:1; }
-.ig-drama-title { font-size:clamp(24px,6vw,38px); font-weight:800; line-height:1.35; text-shadow:0 2px 10px #111; z-index:1; }
-.ig-drama-subtitle { margin-top:13px; font-size:13px; letter-spacing:1px; z-index:1; }
-.ig-drama-credit { margin-top:50px; border-top:1px solid #ffffff88; padding-top:12px; font-size:12px; z-index:1; }
-.ig-drama-caption { position:absolute; bottom:15px; right:15px; font-size:10px; color:#eee; z-index:1; }
+
+
+
+
+
 .ig-actions { display:flex; align-items:center; gap:17px; padding:9px 15px 5px; }
 .ig-actions button { border:0; background:transparent; font-size:25px; padding:0; color:#111; }
 .ig-actions .ig-save { margin-left:auto; }
@@ -334,18 +334,18 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .ig-dm-list-title { display:flex; justify-content:space-between; padding:8px 16px 6px; font-size:15px; font-weight:700; }
 .ig-dm-list-title span { color:#7b9ed1; font-size:12px; }
 .ig-dm-row { width:100%; border:0; background:white; display:flex; align-items:center; gap:12px; text-align:left; padding:11px 15px; min-height:67px; }
-.ig-dm-row .ig-mini-avatar { width:47px; height:47px; flex:0 0 47px; border-radius:50%; display:grid; place-items:center; font-size:17px; }
-.ig-mini-avatar.blue { background:#dce8f5; color:#58718d; }
-.ig-mini-avatar.gold { background:#f3dfb4; color:#805c2a; }
-.ig-mini-avatar.green { background:#d5e9d9; color:#467b54; }
-.ig-mini-avatar.pink { background:#f0d7df; color:#8c5267; }
+
+
+
+
+
 .ig-dm-row>span:nth-child(2) { display:flex; flex-direction:column; gap:5px; flex:1; min-width:0; }
 .ig-dm-row strong { font-size:13px; font-weight:500; }
 .ig-dm-row small,.ig-dm-row time { color:#858585; font-size:11px; }
 .ig-dm-row small { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .ig-dm-chat { height:100%; min-height:440px; display:flex; flex-direction:column; background:white; }
 .ig-dm-person { display:flex; align-items:center; gap:10px; padding:12px 15px; border-bottom:1px solid #eee; }
-.ig-dm-person .ig-mini-avatar { width:37px; height:37px; display:grid; place-items:center; border-radius:50%; }
+
 .ig-dm-person small { margin-left:auto; color:#888; font-size:11px; }
 .ig-dm-history { display:flex; flex-direction:column; gap:10px; padding:18px 13px; flex:1; overflow:auto; }
 .ig-dm-date { text-align:center; color:#999; font-size:10px; margin-bottom:12px; }
@@ -358,9 +358,9 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 /* Detailed actor-project updates */
 .kakao-avatar-img { width:49px; height:49px; flex:0 0 49px; object-fit:cover; border-radius:15px; display:block; }
 .kakao-avatar-img.small { width:30px; height:30px; flex:0 0 30px; border-radius:10px; }
-.kakao-chat-info { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 12px 12px; }
-.kakao-chat-info strong { color:#222; font-size:12px; font-weight:600; }
-.kakao-chat-info span { font-size:10px; color:#81909a; }
+
+
+
 .kakao-chat-log { gap:9px; }
 .kakao-message-wrap { display:flex; align-items:flex-end; gap:6px; max-width:95%; }
 .kakao-message-wrap.outgoing { align-self:flex-end; }
@@ -379,7 +379,7 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 /* Final detail pass: KakaoTalk chat layout + Instagram drama promo and DMs */
 .kakao-chat-screen { background:#abc5d4; min-height:100%; height:100%; }
 .kakao-chat-log { overflow-y:auto; min-height:0; padding:12px 12px 18px; gap:10px; }
-.kakao-chat-info { display:none !important; }
+
 .kakao-message-wrap { align-items:flex-end; gap:7px; max-width:100%; }
 .kakao-message-wrap.incoming { align-self:flex-start; }
 .kakao-message-wrap.outgoing { align-self:flex-end; }
@@ -459,9 +459,9 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 }
 
 /* Read-only Messages preview inbox, deliberately independent from KakaoTalk chat state */
-.sms-note { margin: 14px 16px 4px; padding: 14px 15px; border-radius: 13px; background: #f1f2f6; display: flex; flex-direction: column; gap: 4px; }
-.sms-note strong { font-size: 14px; color: #25262b; }
-.sms-note span { font-size: 12px; color: #7b7e87; }
+
+
+
 .sms-list .sms-row { cursor: default; }
 .sms-row .row-title { display: block; }
 .sms-row .row-subtitle { max-width: 100%; }
@@ -475,16 +475,16 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .app-screen:has(.bubble-app) .app-header h1 { color: #ec4b86; font-size: 20px; letter-spacing: -.5px; }
 .app-screen:has(.bubble-app) .back-button { color: #e84c85; }
 .bubble-app { height: 100%; min-height: 0; display: flex; flex-direction: column; background: #fff8fb; color: #29232a; }
-.bubble-artist-card { display:flex; align-items:center; gap:11px; padding:13px 16px; background:#fff; border-bottom:1px solid #f4e5eb; flex:0 0 auto; }
-.bubble-artist-avatar { width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid #ffd4e3; }
-.bubble-artist-copy { display:flex; flex-direction:column; gap:4px; flex:1; min-width:0; }
-.bubble-artist-copy strong { font-size:14px; }
-.bubble-artist-copy span { color:#a08a94; font-size:10px; }
-.bubble-subscribed { padding:6px 9px; border-radius:14px; background:#fff0f6; color:#e64b84; font-size:10px; font-weight:700; }
-.bubble-intro { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:5px; padding:15px 12px 12px; text-align:center; }
-.bubble-intro-heart { display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:#ffe7f0; color:#ee5b91; font-size:13px; }
-.bubble-intro strong { font-size:12px; }
-.bubble-intro span:last-child { color:#a08e97; font-size:10px; }
+
+
+
+
+
+
+
+
+
+
 .bubble-chat-log { flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; gap:11px; padding:10px 12px 15px; overscroll-behavior:contain; }
 .bubble-day-divider { display:flex; align-items:center; justify-content:center; margin:2px 0 7px; }
 .bubble-day-divider span { background:#f5e7ed; color:#a68d98; border-radius:15px; padding:5px 11px; font-size:10px; }
@@ -499,10 +499,10 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .bubble-message.fan { background:#f46d9c; color:#fff; border-bottom-right-radius:5px; }
 .bubble-line time { color:#b7a5ad; font-size:9px; white-space:nowrap; padding-bottom:3px; }
 .bubble-compose { display:flex; align-items:center; gap:8px; margin:5px 10px 6px; padding:7px 8px; border:1px solid #f0dbe4; border-radius:24px; background:#fff; flex:0 0 auto; }
-.bubble-plus { border:0; background:transparent; color:#e86a98; font-size:23px; width:25px; padding:0; }
+
 .bubble-compose input { border:0; outline:none; min-width:0; flex:1; background:transparent; font-size:11px; color:#33262d; }
 .bubble-send { width:29px; height:29px; border:0; border-radius:50%; background:#f46d9c; color:#fff; font-size:19px; line-height:1; }
-.bubble-disclaimer { flex:0 0 auto; text-align:center; color:#b7a3ad; font-size:9px; padding:0 8px 8px; }
+
 
 /* Bubble inbox and clean, date-grouped chat */
 .app-screen:has(.bubble-app), .app-screen:has(.bubble-inbox) { background:#fff; }
@@ -561,14 +561,14 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .messages-art svg { width: 100%; height: 100%; }
 .messages-art svg path { fill: #fff; }
 .calls-art { background: linear-gradient(145deg, #61e979, #14b94a); }
-.phone-glyph { color:#fff; font-size:30px; transform:rotate(-12deg); }
+
 .notes-art { background: linear-gradient(#ffdb4d 0 24%, #fff 24% 100%); color: #c4c4c7; padding: 0; align-items:center; justify-content:flex-end; }
-.notes-lines { color:#b4b5b9; font-size:20px; line-height:1; margin-bottom:8px; transform:scaleX(1.2); }
+
 .kakao-art { background:#fee500; color:#241f00; }
-.kakao-art .kakao-face { width:29px; height:24px; display:grid; place-items:center; border-radius:50%; background:#251f00; color:#fee500; font-size:9px; position:relative; }
-.kakao-art .kakao-face::after { content:""; position:absolute; left:5px; bottom:-3px; border-top:7px solid #251f00; border-right:7px solid transparent; }
+
+
 .instagram-art { background: radial-gradient(circle at 30% 105%, #ffdc80 0 12%, #fcaf45 25%, #f77737 42%, #e1306c 60%, #c13584 75%, #833ab4 90%, #405de6 100%); }
-.instagram-lens { font-size:35px; font-weight:300; line-height:1; }
+
 .bubble-art { background: linear-gradient(145deg,#ff91b8,#ef4e87); font-size:24px; }
 .toast.kakao-notification { display:flex; align-items:center; gap:10px; padding:11px 13px; border-radius:19px; background:rgba(250,250,252,.96); color:#19191b; border:1px solid #ffffffd9; box-shadow:0 8px 28px #0002; backdrop-filter:blur(22px); cursor:pointer; }
 .kakao-notify-icon { width:35px;height:35px; flex:0 0 35px; display:grid;place-items:center; border-radius:10px; background:#fee500; color:#241f00; font-size:13px; position:relative; }

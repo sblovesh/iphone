@@ -13,10 +13,9 @@
     app: null,
     activeChat: null,
     instagramScreen: "feed",
-    activeDM: null,
     activePhoto: null,
     activeNote: null,
-    unread: true,
+    unread: false,
     messages: [
       { id: "seobin", name: "서빈 님", avatar: "서", color: "pink", photo: "avatar-seobin.jpg", preview: "시현님은 맨날 다 괜찮다구 해서...", time: "오후 5:58", messages: [{from:"date",text:"2024년 9월 16일"},{from:"incoming",text:"혹시 늦어요??",time:"오후 8:12"},{from:"outgoing",text:"저 이제 퇴근 중!! 왜요??",time:"오후 8:14"},{from:"incoming",text:"저 아직 저녁 안 먹었는데 드시고 싶은 거 있나 해서...",time:"오후 8:16"},{from:"outgoing",text:"서빈 님 좋아하는 걸루 시켜용",time:"오후 8:18"},{from:"incoming",text:"음... 그러면 치킨?",time:"오후 8:21"},{from:"outgoing",text:"그럼 제가 맥주 사서 갈게요!!",time:"오후 8:23"},{from:"incoming",text:"좋아여",time:"오후 8:25"},{from:"date",text:"2024년 9월 20일"},{from:"incoming",text:"시현님",time:"오후 5:06"},{from:"outgoing",text:"무슨 일이에요??",time:"오후 5:07"},{from:"incoming",text:"저 인스타에 사진 올리려고 했는데",time:"오후 5:08"},{from:"incoming",text:"이거 괜찮나 싶어서...",time:"오후 5:08"},{from:"photo",text:"seobin-photo.jpg",time:"오후 5:09"},{from:"outgoing",text:"ㄱㄱ 좋은데여?",time:"오후 5:12"},{from:"incoming",text:"진짜 괜찮져?",time:"오후 5:13"},{from:"outgoing",text:"넹 좋아여",time:"오후 5:14"},{from:"incoming",text:"시현님은 맨날 다 괜찮다구 해서...",time:"오후 5:16"},{from:"outgoing",text:"그건 서빈님이 잘생긴 탓",time:"오후 5:18"}] },
       { id: "uyeon", name: "우연 형", avatar: "우", color: "blue", photo: "avatar-uyeon.jpg", preview: "미친놈;", time: "오후 6:58", messages: [{from:"date",text:"2024년 9월 14일"},{from:"incoming",text:"어때 최애랑 같이 사는 기분이?",time:"오전 1:12"},{from:"outgoing",text:"개좋음 진짜",time:"오전 1:13"},{from:"incoming",text:"야야 말버릇;",time:"오전 1:14"},{from:"outgoing",text:"이런 표현이 아니면 설명이 안 됨 진짜로",time:"오전 1:14"},{from:"incoming",text:"이상한 짓 하지 말고",time:"오전 1:15"},{from:"outgoing",text:"내가 뭔 이상한 짓을 해 ㅡㅡ",time:"오전 1:16"},{from:"incoming",text:"아무튼 서빈 님 잘 챙겨주고 알겠냐",time:"오전 1:17"},{from:"outgoing",text:"명을 받들겠습니다",time:"오전 1:18"},{from:"incoming",text:"오냐 형 잔다",time:"오전 1:19"},{from:"outgoing",text:"ㅂㅂ 잘자",time:"오전 1:20"},{from:"date",text:"2024년 9월 20일"},{from:"outgoing",text:"형형형 혹시",time:"오후 6:12"},{from:"outgoing",text:"서빈 님이 사진 하나 보내고 이거 괜찮냐고 물어보면 절대 ㄴㄴ안된다고해 절대로 제발",time:"오후 6:13"},{from:"incoming",text:"?",time:"오후 6:14"},{from:"incoming",text:"인스타에 올려도 괜찮냐고 물어보시긴 했는데",time:"오후 6:15"},{from:"incoming",text:"이거?",time:"오후 6:15"},{from:"photo",text:"seobin-photo.jpg",time:"오후 6:16"},{from:"outgoing",text:"ㅇㅇㅇ그거!!",time:"오후 6:17"},{from:"incoming",text:"왜? 괜찮은데?",time:"오후 6:18"},{from:"outgoing",text:"나만 가질 거임",time:"오후 6:19"},{from:"incoming",text:"미친놈;",time:"오후 6:20"}] },
@@ -28,14 +27,6 @@
       { id: "fanclub", name: "공식 팬카페 운영진", avatar: "팬", color: "gold", preview: "생일 라이브 일정 문의드립니다.", time: "오후 2:06", messages: [{from:"incoming",text:"생일 라이브 일정 관련해 확인 부탁드립니다."}] },
       { id: "college", name: "동기 배우들", avatar: "동", color: "pink", preview: "다 같이 밥 먹자!", time: "어제", messages: [{from:"incoming",text:"이번 주에 다 같이 밥 먹자!"}] },
       { id: "brand", name: "브랜드 협찬 담당자", avatar: "브", color: "blue", preview: "캠페인 제안서 보내드립니다.", time: "어제", messages: [{from:"incoming",text:"신규 캠페인 제안서 보내드립니다. 검토 부탁드립니다."}] }
-    ],
-    photos: [
-      { id: 1, scene: "scene-1", title: "저녁 하늘", date: "오늘 오후 6:42" },
-      { id: 2, scene: "scene-2", title: "카페에서", date: "오늘 오후 4:16" },
-      { id: 3, scene: "scene-3", title: "창가", date: "어제 오후 2:10" },
-      { id: 4, scene: "scene-4", title: "거리 풍경", date: "어제 오전 11:25" },
-      { id: 5, scene: "scene-5", title: "산책길", date: "10월 15일" },
-      { id: 6, scene: "scene-6", title: "기록", date: "10월 12일" }
     ],
     calls: [
       { name: "김민지", type: "outgoing", time: "오늘 오후 7:30", avatar: "민", color: "pink" },
@@ -70,23 +61,27 @@
   let seobinScenario = "new";
   try { localStorage.setItem(SEOBIN_SCENARIO_KEY, "new"); } catch (_) {}
   function saveSeobinScenario(value) { seobinScenario = value; try { localStorage.setItem(SEOBIN_SCENARIO_KEY, value); } catch (_) {} }
-  let storyMinute = 34;
-  function currentChatTime() {
-    const hour = 10 + Math.floor(storyMinute / 60);
-    const minute = storyMinute % 60;
-    storyMinute += 1;
-    return `오전 ${hour > 12 ? hour - 12 : hour}:${String(minute).padStart(2,"0")}`;
+  // 앱마다 독립된 가상 시계 (24시간제 시작 시각 → "오전/오후 h:mm" 문자열, 1분씩 증가)
+  function makeChatClock(startHour, startMinute) {
+    let total = startHour * 60 + startMinute;
+    return () => {
+      const t = total % 1440; total += 1;
+      const h = Math.floor(t / 60), m = t % 60;
+      return `${h < 12 ? "오전" : "오후"} ${h % 12 === 0 ? 12 : h % 12}:${String(m).padStart(2, "0")}`;
+    };
   }
+  const kakaoTime = makeChatClock(10, 34);   // 카카오톡 서빈 시나리오 (2025년 1월 5일 오전)
+  const bubbleTime = makeChatClock(15, 10);  // 버블 (2025년 4월 8일 마지막 메시지 오후 2:52 이후)
   function addSeobinIncoming(text, photo=false) {
-    seobinChat.messages.push({from: photo ? "photo" : "incoming", text: photo ? "seobin-bed-photo.jpg" : text, time: currentChatTime()});
+    seobinChat.messages.push({from: photo ? "photo" : "incoming", text: photo ? "seobin-bed-photo.jpg" : text, time: kakaoTime()});
     seobinChat.preview = photo ? "사진" : text; seobinChat.time = "방금"; saveSeobinChat();
     if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao();
-    else { showToast(photo ? "카카오톡 · 서빈 님이 사진을 보냈어요" : "카카오톡 · 서빈 님: " + text, "kakao"); const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); }
+    else { showToast(photo ? "카카오톡 · 서빈 님이 사진을 보냈어요" : "카카오톡 · 서빈 님: " + text, "kakao"); state.unread = true; const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); if (state.app === "kakao" && !state.activeChat && state.view === "app") renderKakao(); }
   }
   function startSeobinSleepStory() {
     if (seobinScenario !== "received") return;
     saveSeobinScenario("replied");
-    seobinChat.messages.push({from:"outgoing", text:"저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?", time:currentChatTime()});
+    seobinChat.messages.push({from:"outgoing", text:"저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?", time:kakaoTime()});
     seobinChat.preview = "저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?"; seobinChat.time="방금"; saveSeobinChat(); renderKakao();
     setTimeout(() => addSeobinIncoming("나는 침대랑 한 몸이야...."), 900);
     setTimeout(() => addSeobinIncoming("", true), 2200);
@@ -156,6 +151,8 @@
     state.activeChat = null;
     state.activePhoto = null;
     state.activeNote = null;
+    $("#app-screen").classList.remove("photos-mode", "kakao-mode");
+    $("#header-action").onclick = null;
     $("#app-title").textContent = appTitles[app] || "앱";
     $("#header-action").textContent = app === "notes" ? "+" : "";
     $("#header-action").setAttribute("aria-label", app === "notes" ? "새 메모" : "추가 작업");
@@ -270,13 +267,8 @@
     {from:"fan",day:"2025년 4월 8일",text:"최고",time:"오후 2:52"}
   ];
   let bubbleMessages = bubbleInitialMessages.map(message => ({ ...message }));
-  try {
-    const savedBubble = JSON.parse(localStorage.getItem(BUBBLE_STORAGE_KEY) || "null");
-    if (Array.isArray(savedBubble) && savedBubble.every(m => m && ["artist", "fan"].includes(m.from) && typeof m.text === "string" && typeof m.time === "string")) bubbleMessages = savedBubble;
-  } catch (_) {}
-  function saveBubbleMessages() {
-    try { localStorage.setItem(BUBBLE_STORAGE_KEY, JSON.stringify(bubbleMessages)); } catch (_) {}
-  }
+  // 카카오 서빈 채팅과 동일하게 방문할 때마다 처음 상태에서 시작 (이전 저장값은 삭제)
+  try { localStorage.removeItem(BUBBLE_STORAGE_KEY); } catch (_) {}
 
   // 방문 30초 후 서빈의 버블 알림 시나리오: 각 알림이 뜨는 순간 해당 메시지를 실제 대화에 추가
   const bubbleRevealMessages = [
@@ -290,6 +282,7 @@
   let bubbleRevealIndex = 0;
   let bubbleNoticeTimer = null;
   let bubbleNoticeHideTimer = null;
+  let bubbleUnread = 105;
   const bubbleNoticeIntervals = [0, 2000, 5000, 10000];
 
   function ensureBubbleNotice() {
@@ -303,6 +296,7 @@
       document.body.appendChild(notice);
       notice.addEventListener("click", () => {
         bubbleRevealOpened = true;
+        bubbleUnread = 0;
         clearTimeout(bubbleNoticeTimer);
         clearTimeout(bubbleNoticeHideTimer);
         notice.classList.remove("show");
@@ -317,7 +311,6 @@
   function bubbleNoticeIndexStop() {
     bubbleRevealIndex = bubbleRevealMessages.length;
   }
-  function revealBubbleSequentially() { /* 알림 표시 시점에 대화에 즉시 추가됨 */ }
   function showBubblePush(index) {
     if (bubbleRevealOpened || index >= bubbleRevealMessages.length) return;
     bubbleRevealIndex = index;
@@ -325,10 +318,10 @@
     const text = document.getElementById("bubble-push-text");
     if (text) text.textContent = bubbleRevealMessages[index];
     if (!bubbleMessages.some(m => m.from === "artist" && m.day === "2025년 4월 8일" && m.text === bubbleRevealMessages[index])) {
-      bubbleMessages.push({ from: "artist", day: "2025년 4월 8일", text: bubbleRevealMessages[index], time: currentChatTime() });
-      saveBubbleMessages();
+      bubbleMessages.push({ from: "artist", day: "2025년 4월 8일", text: bubbleRevealMessages[index], time: bubbleTime() });
+      if (!(state.app === "bubble" && state.view === "app" && bubbleChatOpen)) bubbleUnread += 1;
     }
-    if (state.app === "bubble" && state.view === "app" && bubbleChatOpen) renderBubble();
+    if (state.app === "bubble" && state.view === "app") renderBubble();
     notice.classList.add("show");
     clearTimeout(bubbleNoticeHideTimer);
     bubbleNoticeHideTimer = setTimeout(() => notice.classList.remove("show"), 2000);
@@ -347,8 +340,8 @@
     if (!bubbleChatOpen) {
       const latest = bubbleMessages[bubbleMessages.length - 1] || bubbleInitialMessages[bubbleInitialMessages.length - 1];
       const preview = latest.image ? "사진" : latest.text;
-      content.innerHTML = `<div class="bubble-inbox"><div class="bubble-inbox-subtitle">최근 채팅방</div><button class="bubble-room-row" id="bubble-open-room"><img src="bubble-cat.jpg" alt="서빈 프로필"><span class="bubble-room-main"><strong>서빈</strong><span>${escapeHTML(preview)}</span></span><span class="bubble-room-trailing"><time>오전 9:11</time><b>105</b></span></button></div>`;
-      $("#bubble-open-room").addEventListener("click", () => { bubbleChatOpen = true; renderBubble(); });
+      content.innerHTML = `<div class="bubble-inbox"><div class="bubble-inbox-subtitle">최근 채팅방</div><button class="bubble-room-row" id="bubble-open-room"><img src="bubble-cat.jpg" alt="서빈 프로필"><span class="bubble-room-main"><strong>서빈</strong><span>${escapeHTML(preview)}</span></span><span class="bubble-room-trailing"><time>${escapeHTML(latest.time)}</time>${bubbleUnread > 0 ? `<b>${bubbleUnread}</b>` : ""}</span></button></div>`;
+      $("#bubble-open-room").addEventListener("click", () => { bubbleChatOpen = true; bubbleUnread = 0; renderBubble(); });
       return;
     }
     const lines = bubbleMessages.map((message, index) => {
@@ -362,8 +355,8 @@
     log.scrollTop = log.scrollHeight;
     $("#bubble-form").addEventListener("submit", event => {
       event.preventDefault(); const input = $("#bubble-input"); const value = input.value.trim(); if (!value) return;
-      bubbleMessages.push({ from: "fan", day: "2025년 4월 8일", text: value, time: currentChatTime() });
-      saveBubbleMessages(); renderBubble(); $("#bubble-input").focus();
+      bubbleMessages.push({ from: "fan", day: "2025년 4월 8일", text: value, time: bubbleTime() });
+      renderBubble(); $("#bubble-input").focus();
     });
   }
 
@@ -375,6 +368,7 @@
     $("#app-screen").classList.toggle("kakao-mode", !state.activeChat);
     $("#header-action").textContent = state.activeChat ? "" : "＋";
     if (state.activeChat) {
+      if (state.activeChat === "seobin") { state.unread = false; $("#unread-dot").classList.add("hidden"); }
       const chat = state.messages.find((item) => item.id === state.activeChat);
       if (!chat) { state.activeChat = null; renderKakao(); return; }
       content.innerHTML = `
@@ -389,7 +383,7 @@
       const quickReply = $("#seobin-quick-reply"); if (quickReply) quickReply.addEventListener("click", startSeobinSleepStory);
       $("#kakao-form").addEventListener("submit", (event) => {
         event.preventDefault(); const input = $("#kakao-input"); const value = input.value.trim(); if (!value) return;
-        chat.messages.push({ from: "outgoing", text: value, time: currentChatTime() }); chat.preview = value; chat.time = "방금"; if(chat.id === "seobin") saveSeobinChat(); renderKakao();
+        chat.messages.push({ from: "outgoing", text: value, time: kakaoTime() }); chat.preview = value; chat.time = "방금"; if(chat.id === "seobin") saveSeobinChat(); renderKakao();
       });
       return;
     }
@@ -405,6 +399,7 @@
     content.querySelectorAll("[data-kakao-chat]").forEach((button) => button.addEventListener("click", () => { if (!["seobin", "uyeon"].includes(button.dataset.kakaoChat)) return; state.activeChat = button.dataset.kakaoChat; renderKakao(); }));
   }
 
+  const igDmSent = [];
   function renderInstagram() {
     const content = $("#app-content");
     $("#app-screen").classList.remove("kakao-mode");
@@ -499,16 +494,17 @@
       ["outgoing","얼른 주무세요!!"],
       ["incoming","배우님도요"]
     ];
+    const dmAll = dmConversation.concat(igDmSent);
     if (state.instagramScreen === "dm-chat") {
       $("#app-title").textContent = "seo_BBini"; $("#header-action").textContent = "⋯";
-      content.innerHTML = `<div class="ig-dm-chat"><div class="ig-dm-person">${seobinAvatar}<div class="ig-dm-name"><strong>서빈</strong><small>seo_BBini</small></div><span class="ig-dm-head-actions">⌕　▢</span></div><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우하지 않음</small></div><div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-date">2024년 7월 12일 · 오전 4:00–5:00</div>${dmConversation.map(([from,text],i)=>`<div class="ig-dm-line ${from} ${from === "incoming" && i > 0 && dmConversation[i-1][0] === "incoming" ? "ig-dm-continuation" : ""}">${from === "incoming" && (i === 0 || dmConversation[i-1][0] !== "incoming") ? seobinAvatar : from === "incoming" ? '<span class="ig-dm-avatar-spacer" aria-hidden="true"></span>' : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div><form class="ig-dm-compose" id="ig-dm-form"><button type="button" class="ig-camera" aria-label="카메라">◎</button><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300"><button type="submit" aria-label="보내기">➤</button></form></div>`;
+      content.innerHTML = `<div class="ig-dm-chat"><div class="ig-dm-person">${seobinAvatar}<div class="ig-dm-name"><strong>서빈</strong><small>seo_BBini</small></div><span class="ig-dm-head-actions">⌕　▢</span></div><div class="ig-dm-profile-intro">${seobinAvatar}<strong>서빈</strong><span>seo_BBini · Instagram</span><small>서로 팔로우하지 않음</small></div><div class="ig-dm-history" id="ig-dm-history"><div class="ig-dm-date">2024년 7월 12일 · 오전 4:00–5:00</div>${dmAll.map(([from,text],i)=>`<div class="ig-dm-line ${from} ${from === "incoming" && i > 0 && dmAll[i-1][0] === "incoming" ? "ig-dm-continuation" : ""}">${from === "incoming" && (i === 0 || dmAll[i-1][0] !== "incoming") ? seobinAvatar : from === "incoming" ? '<span class="ig-dm-avatar-spacer" aria-hidden="true"></span>' : ""}<div class="ig-dm-bubble ${from}">${escapeHTML(text)}</div></div>`).join("")}</div><form class="ig-dm-compose" id="ig-dm-form"><button type="button" class="ig-camera" aria-label="카메라">◎</button><input id="ig-dm-input" placeholder="메시지 보내기..." maxlength="300"><button type="submit" aria-label="보내기">➤</button></form></div>`;
       const history = $("#ig-dm-history"); history.scrollTop = history.scrollHeight;
-      $("#ig-dm-form").addEventListener("submit", e => { e.preventDefault(); const input=$("#ig-dm-input"); if(input.value.trim()){ const line=document.createElement("div"); line.className="ig-dm-line outgoing"; const bubble=document.createElement("div"); bubble.className="ig-dm-bubble outgoing"; bubble.textContent=input.value.trim(); line.appendChild(bubble); history.appendChild(line); input.value=""; history.scrollTop=history.scrollHeight; }}); return;
+      $("#ig-dm-form").addEventListener("submit", e => { e.preventDefault(); const input=$("#ig-dm-input"); if(input.value.trim()){ igDmSent.push(["outgoing", input.value.trim()]); const line=document.createElement("div"); line.className="ig-dm-line outgoing"; const bubble=document.createElement("div"); bubble.className="ig-dm-bubble outgoing"; bubble.textContent=input.value.trim(); line.appendChild(bubble); history.appendChild(line); input.value=""; history.scrollTop=history.scrollHeight; }}); return;
     }
     if (state.instagramScreen === "dm") {
       $("#app-title").textContent = "sihye0n_an"; $("#header-action").textContent = "✎";
       content.innerHTML = `<div class="ig-dm-top"><div class="ig-dm-account">sihye0n_an <span>⌄</span></div><div class="ig-dm-search">⌕　검색</div></div><div class="ig-dm-list-title">메시지 <span>요청</span></div><div class="ig-dm-list">${dmItems.map(x=>`<button class="ig-dm-row" data-dm="${x.name}">${x.avatar}<span><strong>${x.name}</strong><small>${x.preview}</small></span><time>${x.time}</time></button>`).join("")}</div><div class="ig-bottom-tabs"><button data-ig-nav="feed">⌂</button><button>▣</button><button data-ig-nav="dm" class="ig-nav-active">➤</button><button>⌕</button><button>●</button></div>`;
-      content.querySelectorAll("[data-dm]").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.dm !== "서빈") return; state.activeDM=b.dataset.dm;state.instagramScreen="dm-chat";renderInstagram();}));
+      content.querySelectorAll("[data-dm]").forEach(b=>b.addEventListener("click",()=>{if(b.dataset.dm !== "서빈") return; state.instagramScreen="dm-chat";renderInstagram();}));
       content.querySelectorAll("[data-ig-nav]").forEach(b=>b.addEventListener("click",()=>{state.instagramScreen=b.dataset.igNav;renderInstagram();})); return;
     }
     $("#app-title").textContent = "Instagram"; $("#header-action").textContent = "♡";
