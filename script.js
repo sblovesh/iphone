@@ -520,29 +520,24 @@
 
   function renderPhotos() {
     const content = $("#app-content");
-    $("#app-title").textContent = state.activePhoto ? "사진" : "사진";
+    const screen = $("#app-screen");
+    screen.classList.add("photos-mode");
+    $("#app-title").textContent = "사진";
     $("#header-action").textContent = "";
+    const galleryPhotos = Array.from({length:19}, (_,i) => ({id:i+1, src:`gallery/photo-${String(i+1).padStart(2,"0")}.jpg`, title:`사진 ${i+1}`, date:"2026년 10월 19일"}));
     if (state.activePhoto) {
-      const photo = state.photos.find((item) => item.id === state.activePhoto);
-      content.innerHTML = `
-        <div class="photo-detail">
-          <div class="photo-large"><span class="photo-scene ${photo.scene}"></span></div>
-          <div class="photo-caption">${escapeHTML(photo.title)}</div>
-          <div class="photo-subcaption">${escapeHTML(photo.date)}</div>
-          <button class="call-action" id="photo-back">모든 사진 보기</button>
-        </div>`;
-      $("#photo-back").addEventListener("click", () => { state.activePhoto = null; renderPhotos(); });
+      const photo = galleryPhotos.find(p => p.id === state.activePhoto);
+      content.innerHTML = `<div class="photos-detail-screen"><div class="photos-detail-nav"><button id="photos-detail-back">‹ 보관함</button><span>사진 ${state.activePhoto} / 711</span><button id="photos-detail-more">•••</button></div><img class="photos-detail-image" src="${photo.src}" alt="${photo.title}"><div class="photos-detail-meta"><strong>${photo.title}</strong><span>${photo.date}</span></div></div><div class="photos-bottom-tabs"><button class="photos-tab active" data-photos-tab="library"><span>▧</span>보관함</button><button class="photos-tab" data-photos-tab="albums"><span>▤</span>모음</button><button class="photos-search" aria-label="검색">⌕</button></div>`;
+      $("#photos-detail-back").addEventListener("click",()=>{state.activePhoto=null;renderPhotos();});
+      $("#photos-detail-more").addEventListener("click",()=>showToast("사진 옵션"));
+      content.querySelectorAll("[data-photos-tab]").forEach(b=>b.addEventListener("click",()=>{state.activePhoto=null;renderPhotos();}));
       return;
     }
-    content.innerHTML = `
-      <div class="section-label">최근 항목</div>
-      <div class="photo-grid">
-        ${state.photos.map((photo) => `<button class="photo-tile" data-photo="${photo.id}" aria-label="${escapeHTML(photo.title)}"><span class="photo-scene ${photo.scene}"></span></button>`).join("")}
-      </div>
-      <div class="section-label">사진 ${state.photos.length}장</div>`;
-    content.querySelectorAll("[data-photo]").forEach((button) => {
-      button.addEventListener("click", () => { state.activePhoto = Number(button.dataset.photo); renderPhotos(); });
-    });
+    content.innerHTML = `<div class="photos-library"><div class="photos-status"><span>7:35 ◩</span><span>▮▮ 5G ▰</span></div><div class="photos-library-heading"><div><h2>보관함</h2><strong>711개의 항목</strong></div><div class="photos-heading-actions"><button aria-label="정렬" id="photos-filter">☰</button><button id="photos-select">선택</button></div></div><div class="photos-grid">${galleryPhotos.map(p=>`<button class="photos-image-tile" data-photo="${p.id}" aria-label="${p.title}"><img src="${p.src}" loading="lazy" alt="${p.title}"></button>`).join("")}</div><div class="photos-bottom-tabs"><button class="photos-tab active" data-photos-tab="library"><span>▧</span>보관함</button><button class="photos-tab" data-photos-tab="albums"><span>▤</span>모음</button><button class="photos-search" aria-label="검색">⌕</button></div></div>`;
+    content.querySelectorAll("[data-photo]").forEach(button=>button.addEventListener("click",()=>{state.activePhoto=Number(button.dataset.photo);renderPhotos();}));
+    content.querySelectorAll("[data-photos-tab]").forEach(button=>button.addEventListener("click",()=>{if(button.dataset.photosTab==="albums"){showToast("모음 화면은 다음 단계에서 추가할 수 있어요.");}else showToast("보관함");}));
+    $("#photos-select").addEventListener("click",()=>{const grid=content.querySelector(".photos-grid");grid.classList.toggle("photos-selecting");$("#photos-select").textContent=grid.classList.contains("photos-selecting")?"완료":"선택";});
+    $("#photos-filter").addEventListener("click",()=>showToast("최근 항목 · 최신순"));
   }
 
   function renderCalls() {
