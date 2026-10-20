@@ -257,7 +257,7 @@
       ["일요일 오후 3:38", ["시현아 나야", "왜 전화 안 받아", "받을 때까지 건다 지금"]],
       ["일요일 오후 3:55", ["9번 걸었다", "9번이야 시발 9번", "내가 너 때문에 일도 못 나가고 있는데 넌 뭐가 그렇게 바쁜데", "촬영? 웃기네 어제 편의점에서 삼각김밥 처먹던 새끼가"]],
       ["어제 오후 11:30", ["집 여기 맞네. 불 켜지는 거 확인했어", "오늘은 왜 이렇게 늦게 들어왔어?", "자는 척 하지 마 병신아 다 보여", "읽씹하면 나도 방법 있어"]],
-      ["어제 오후 11:41", ["전화 5번 받아주면 어디 덧나냐", "내가 너한테 쓴 돈이 얼마인데 앨범 12장 샀다 씨발", "팬이면 개새끼 취급해도 되는 줄 알아?", "니네 집 쓰레기 봉투 가져왔다 컵라면 국물 다 새서 손에 묻었네 ㅋㅋ 니 건데 뭐 괜찮아", "몸 생각해서 좀 챙겨 먹어 이 새끼야 내가 얼마나 걱정하는데"]],
+      ["어제 오후 11:41", ["전화 5번 받아주면 어디 덧나냐", "내가 너한테 쓴 돈이 얼마인데 촬영장 커피차만 세 번 보냈다 씨발", "팬이면 개새끼 취급해도 되는 줄 알아?", "니네 집 쓰레기 봉투 가져왔다 컵라면 국물 다 새서 손에 묻었네 ㅋㅋ 니 건데 뭐 괜찮아", "몸 생각해서 좀 챙겨 먹어 이 새끼야 내가 얼마나 걱정하는데"]],
       ["오늘 오후 9:50", ["7번", "어제 집 앞에서 두 시간 기다렸어. 커튼 사이로 보이던데 왜 연락 안 받아?", "나 지금 니네 집 앞이야", "문 열어", "열라고 씨발", "나 이렇게까지 만들지 마", "사랑해서 그러는 거잖아 왜 몰라줘 개같이", "안 열면 내가 어떻게 할지 나도 몰라"]]
     ],
     "010-2095-7746": [
@@ -453,12 +453,12 @@
     "딱 들켯어 너"
   ];
   let bubbleRevealStarted = false;
-  let bubbleRevealOpened = false;
   let bubbleRevealIndex = 0;
   let bubbleNoticeTimer = null;
   let bubbleNoticeHideTimer = null;
   let bubbleUnread = 105;
   const bubbleNoticeIntervals = [0, 2000, 5000, 10000];
+  const inBubbleRoom = () => state.app === "bubble" && state.view === "app" && bubbleChatOpen;
 
   function ensureBubbleNotice() {
     let notice = document.getElementById("bubble-push-notice");
@@ -469,13 +469,11 @@
       notice.className = "bubble-push-notice";
       notice.innerHTML = '<img src="bubble-cat.jpg" alt=""><span class="bubble-push-copy"><strong>버블 · 서빈</strong><span id="bubble-push-text"></span></span><time>지금</time>';
       document.body.appendChild(notice);
+      // 알림을 눌러도 남은 메시지 도착 일정은 멈추지 않는다.
       notice.addEventListener("click", () => {
-        bubbleRevealOpened = true;
         bubbleUnread = 0;
-        clearTimeout(bubbleNoticeTimer);
         clearTimeout(bubbleNoticeHideTimer);
         notice.classList.remove("show");
-        bubbleNoticeIndexStop();
         openApp("bubble");
         bubbleChatOpen = true;
         renderBubble();
@@ -483,29 +481,38 @@
     }
     return notice;
   }
-  function bubbleNoticeIndexStop() {
-    bubbleRevealIndex = bubbleRevealMessages.length;
-  }
-  function showBubblePush(index) {
-    if (bubbleRevealOpened || index >= bubbleRevealMessages.length) return;
-    bubbleRevealIndex = index;
-    const notice = ensureBubbleNotice();
-    const text = document.getElementById("bubble-push-text");
-    if (text) text.textContent = bubbleRevealMessages[index];
-    if (!bubbleMessages.some(m => m.from === "artist" && m.day === "2025년 4월 8일" && m.text === bubbleRevealMessages[index])) {
-      bubbleMessages.push({ from: "artist", day: "2025년 4월 8일", text: bubbleRevealMessages[index], time: bubbleTime() });
-      if (!(state.app === "bubble" && state.view === "app" && bubbleChatOpen)) bubbleUnread += 1;
+  // 서빈 메시지 하나를 도착시킨다. 채팅방을 보고 있으면 바로 채팅에 붙고, 아니면 안 읽음 + 푸시 알림.
+  function deliverBubble(index) {
+    const text = bubbleRevealMessages[index];
+    if (!bubbleMessages.some(m => m.from === "artist" && m.day === "2025년 4월 8일" && m.text === text)) {
+      bubbleMessages.push({ from: "artist", day: "2025년 4월 8일", text, time: bubbleTime() });
+      if (!inBubbleRoom()) bubbleUnread += 1;
     }
-    if (state.app === "bubble" && state.view === "app") renderBubble();
-    notice.classList.add("show");
-    clearTimeout(bubbleNoticeHideTimer);
-    bubbleNoticeHideTimer = setTimeout(() => notice.classList.remove("show"), 2000);
+    if (inBubbleRoom()) {
+      const input = document.getElementById("bubble-input"), typed = input ? input.value : "";
+      renderBubble();
+      const again = document.getElementById("bubble-input");
+      if (again && typed) { again.value = typed; again.focus(); }
+    } else {
+      if (state.app === "bubble" && state.view === "app") renderBubble();
+      const notice = ensureBubbleNotice();
+      const label = document.getElementById("bubble-push-text");
+      if (label) label.textContent = text;
+      notice.classList.add("show");
+      clearTimeout(bubbleNoticeHideTimer);
+      bubbleNoticeHideTimer = setTimeout(() => notice.classList.remove("show"), 2000);
+    }
+  }
+  function scheduleBubbleReveal(index) {
+    if (index >= bubbleRevealMessages.length) return;
+    bubbleRevealIndex = index;
+    deliverBubble(index);
     if (index < bubbleRevealMessages.length - 1) {
-      bubbleNoticeTimer = setTimeout(() => showBubblePush(index + 1), bubbleNoticeIntervals[index + 1]);
+      bubbleNoticeTimer = setTimeout(() => scheduleBubbleReveal(index + 1), bubbleNoticeIntervals[index + 1]);
     }
   }
   setTimeout(() => {
-    if (!bubbleRevealStarted) { bubbleRevealStarted = true; showBubblePush(0); }
+    if (!bubbleRevealStarted) { bubbleRevealStarted = true; scheduleBubbleReveal(0); }
   }, 30000);
   function renderBubble() {
     const content = $("#app-content");
@@ -526,7 +533,9 @@
     }).join("");
     content.innerHTML = `<div class="bb-nav room"><button type="button" class="bb-ic back" id="bb-back" aria-label="뒤로">${NT_ICON.back}</button><h1>서빈</h1><span class="bb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="5.500" r="1.200" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.200" fill="currentColor" stroke="none"/><circle cx="12" cy="18.500" r="1.200" fill="currentColor" stroke="none"/></svg></span></div><div class="bubble-app"><div class="bubble-chat-log" id="bubble-chat-log">${lines}</div><form class="bubble-compose" id="bubble-form"><input id="bubble-input" maxlength="300" placeholder="메시지 보내기" autocomplete="off"><button type="submit" class="bubble-send" aria-label="보내기">↑</button></form></div>`;
     const log = $("#bubble-chat-log");
-    log.scrollTop = log.scrollHeight;
+    const toBottom = () => { log.scrollTop = log.scrollHeight; };
+    toBottom(); requestAnimationFrame(toBottom);
+    log.querySelectorAll("img").forEach((im) => { if (!im.complete) im.addEventListener("load", toBottom); });
     $("#bb-back").addEventListener("click", () => { bubbleChatOpen = false; renderBubble(); });
     $("#bubble-form").addEventListener("submit", event => {
       event.preventDefault(); const input = $("#bubble-input"); const value = input.value.trim(); if (!value) return;
