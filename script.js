@@ -211,7 +211,8 @@
     state.activeChat = null;
     state.activePhoto = null;
     state.activeNote = null;
-    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "kakao-on", "kakao-room", "photo-viewing", "phone-mode", "ig-mode");
+    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "kakao-on", "kakao-room", "no-hdr", "photo-viewing", "phone-mode", "ig-mode");
+    if (app === "messages" || app === "notes" || app === "bubble") $("#app-screen").classList.add("no-hdr");
     if (app === "calls") { phoneState.tab = "recents"; phoneState.filter = "all"; phoneState.detail = null; phoneState.query = ""; }
     $("#header-action").onclick = null;
     $("#app-title").textContent = appTitles[app] || "앱";
@@ -281,26 +282,37 @@
     {name:"세무 담당자", avatar:"세", color:"blue", time:"월요일", preview:"종합소득세 자료 중 누락된 영수증이 있어 연락드립니다."}
   ];
 
+  const MS_ICON = {
+    compose: '<svg viewBox="0 0 24 24"><path d="M11 4.5H7a3 3 0 0 0-3 3v9.500a3 3 0 0 0 3 3h9.500a3 3 0 0 0 3-3V13"/><path d="m17.600 3.700 2.700 2.700L12 14.700 8.700 15.300l.6-3.300z"/></svg>',
+    search: '<svg viewBox="0 0 24 24"><circle cx="10.500" cy="10.500" r="6.300"/><path d="m15.400 15.400 5 5"/></svg>',
+    chev: '<svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>',
+    person: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="9" r="4.300"/><path d="M3.800 22c.6-4.800 4-7.200 8.200-7.200s7.600 2.400 8.200 7.200z"/></svg>'
+  };
   function renderMessages() {
     const content = $("#app-content");
     // Messages is a read-only preview inbox. It never opens a conversation or shares data with KakaoTalk.
     state.activeChat = null;
     $("#app-title").textContent = "메시지";
     $("#header-action").textContent = "";
+    const unknown = (item) => item.avatar === "?" || /^\[/.test(item.name) || /의심/.test(item.name);
     content.innerHTML = `
-      <div class="section-label">최근 메시지 · ${smsPreviews.length}</div>
-      <div class="list-card sms-list">
-        ${smsPreviews.map((item) => `
-          <div class="list-row sms-row">
-            <span class="avatar ${item.color}">${escapeHTML(item.avatar)}</span>
-            <span class="row-main">
-              <span class="row-title">${escapeHTML(item.name)}</span>
-              <span class="row-subtitle">${escapeHTML(item.preview)}</span>
+      <div class="ms-screen">
+        <div class="ms-top"><span class="ms-edit">편집</span><span class="ms-compose">${MS_ICON.compose}</span></div>
+        <h1 class="ms-title">메시지</h1>
+        <div class="ms-search">${MS_ICON.search}<span>검색</span></div>
+        <div class="ms-list">
+          ${smsPreviews.map((item, i) => `
+          <div class="ms-row">
+            <span class="ms-dot${i === 0 ? " on" : ""}"></span>
+            ${unknown(item) ? `<span class="ms-avatar unk">${MS_ICON.person}</span>` : `<span class="ms-avatar">${escapeHTML(item.avatar)}</span>`}
+            <span class="ms-main">
+              <span class="ms-head"><strong>${escapeHTML(item.name)}</strong><time>${escapeHTML(item.time)}</time><i>${MS_ICON.chev}</i></span>
+              <span class="ms-prev">${escapeHTML(item.preview)}</span>
             </span>
-            <span class="row-trailing">${escapeHTML(item.time)}</span>
           </div>`).join("")}
-      </div>
-      <div class="sms-footer">알 수 없는 발신자의 링크는 열지 마세요.</div>`;
+        </div>
+        <div class="ms-footer">알 수 없는 발신자의 링크는 열지 마세요.</div>
+      </div>`;
   }
 
   const BUBBLE_STORAGE_KEY = "virtual-iphone-bubble-seobin-v2";
@@ -405,12 +417,11 @@
   function renderBubble() {
     const content = $("#app-content");
     $("#app-title").textContent = bubbleChatOpen ? "서빈" : "CHATS";
-    $("#header-action").textContent = bubbleChatOpen ? "" : "⌕　♧";
-    $("#header-action").setAttribute("aria-label", "버블 메뉴");
+    $("#header-action").textContent = "";
     if (!bubbleChatOpen) {
       const latest = bubbleMessages[bubbleMessages.length - 1] || bubbleInitialMessages[bubbleInitialMessages.length - 1];
       const preview = latest.image ? "사진" : latest.text;
-      content.innerHTML = `<div class="bubble-inbox"><div class="bubble-inbox-subtitle">최근 채팅방</div><button class="bubble-room-row" id="bubble-open-room"><img src="bubble-cat.jpg" alt="서빈 프로필"><span class="bubble-room-main"><strong>서빈</strong><span>${escapeHTML(preview)}</span></span><span class="bubble-room-trailing"><time>${escapeHTML(latest.time)}</time>${bubbleUnread > 0 ? `<b>${bubbleUnread}</b>` : ""}</span></button></div>`;
+      content.innerHTML = `<div class="bb-nav"><h1>CHATS</h1><span class="bb-ic">${MS_ICON.search}</span><span class="bb-ic"><svg viewBox="0 0 24 24"><path d="M6 17h12l-1.600-2.300V10.500a4.400 4.400 0 0 0-8.800 0v4.200z"/><path d="M10 19.500a2 2 0 0 0 4 0"/></svg></span></div><div class="bubble-inbox"><div class="bubble-inbox-subtitle">최근 채팅방</div><button class="bubble-room-row" id="bubble-open-room"><img src="bubble-cat.jpg" alt="서빈 프로필"><span class="bubble-room-main"><strong>서빈</strong><span>${escapeHTML(preview)}</span></span><span class="bubble-room-trailing"><time>${escapeHTML(latest.time)}</time>${bubbleUnread > 0 ? `<b>${bubbleUnread}</b>` : ""}</span></button></div>`;
       $("#bubble-open-room").addEventListener("click", () => { bubbleChatOpen = true; bubbleUnread = 0; renderBubble(); });
       return;
     }
@@ -420,9 +431,10 @@
       const body = message.image ? `<img class="bubble-photo-message" src="${message.image}" alt="서빈이 보낸 사진">` : `<div class="bubble-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div>`;
       return `${divider}<div class="bubble-line ${message.from}">${message.from === "artist" ? `<img class="bubble-mini-avatar" src="bubble-cat.jpg" alt="서빈">` : ""}<div class="bubble-message-group">${message.from === "artist" ? `<span class="bubble-sender">서빈</span>` : ""}${body}</div><time>${escapeHTML(message.time)}</time></div>`;
     }).join("");
-    content.innerHTML = `<div class="bubble-app"><div class="bubble-chat-log" id="bubble-chat-log">${lines}</div><form class="bubble-compose" id="bubble-form"><input id="bubble-input" maxlength="300" placeholder="메시지 보내기" autocomplete="off"><button type="submit" class="bubble-send" aria-label="보내기">↑</button></form></div>`;
+    content.innerHTML = `<div class="bb-nav room"><button type="button" class="bb-ic back" id="bb-back" aria-label="뒤로">${NT_ICON.back}</button><h1>서빈</h1><span class="bb-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="5.500" r="1.200" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.200" fill="currentColor" stroke="none"/><circle cx="12" cy="18.500" r="1.200" fill="currentColor" stroke="none"/></svg></span></div><div class="bubble-app"><div class="bubble-chat-log" id="bubble-chat-log">${lines}</div><form class="bubble-compose" id="bubble-form"><input id="bubble-input" maxlength="300" placeholder="메시지 보내기" autocomplete="off"><button type="submit" class="bubble-send" aria-label="보내기">↑</button></form></div>`;
     const log = $("#bubble-chat-log");
     log.scrollTop = log.scrollHeight;
+    $("#bb-back").addEventListener("click", () => { bubbleChatOpen = false; renderBubble(); });
     $("#bubble-form").addEventListener("submit", event => {
       event.preventDefault(); const input = $("#bubble-input"); const value = input.value.trim(); if (!value) return;
       bubbleMessages.push({ from: "fan", day: "2025년 4월 8일", text: value, time: bubbleTime() });
@@ -967,8 +979,8 @@
     return `<div class="ph-nav"><button type="button" class="ph-link">목록</button><span></span><button type="button" class="ph-link ph-plus" aria-label="연락처 추가">${PH_ICON.plus}</button></div>
       <h2 class="ph-large">연락처</h2>
       <label class="ph-search">${PH_ICON.search}<input id="ph-search" placeholder="검색" value="${escapeHTML(phoneState.query)}" autocomplete="off"></label>
-      <div class="ph-me" data-ph-contact="나"><span class="ph-avatar" style="background:linear-gradient(#b8bdc7,#8e9aa8)">안</span><div><strong>안시현</strong><span>내 카드</span></div></div>
-      <div class="ph-contacts-wrap"><div class="ph-contacts">${letters.map(k => `<div class="ph-group" id="ph-sec-${k}"><div class="ph-letter">${k}</div>${groups[k].map(c => `<button type="button" class="ph-contact" data-ph-contact="${escapeHTML(c.name)}">${escapeHTML(c.name)}</button>`).join("")}</div>`).join("")}${sorted.length ? `<div class="ph-count">${sorted.length}명의 연락처</div>` : '<div class="ph-empty">검색 결과 없음</div>'}</div>
+      <div class="ph-me"><span class="ph-avatar" style="background:linear-gradient(#b8bdc7,#8e9aa8)">안</span><div><strong>안시현</strong><span>내 카드</span></div></div>
+      <div class="ph-contacts-wrap"><div class="ph-contacts">${letters.map(k => `<div class="ph-group" id="ph-sec-${k}"><div class="ph-letter">${k}</div>${groups[k].map(c => CALLABLE.includes(c.name) ? `<button type="button" class="ph-contact" data-ph-contact="${escapeHTML(c.name)}">${escapeHTML(c.name)}</button>` : `<div class="ph-contact off">${escapeHTML(c.name)}</div>`).join("")}</div>`).join("")}${sorted.length ? `<div class="ph-count">${sorted.length}명의 연락처</div>` : '<div class="ph-empty">검색 결과 없음</div>'}</div>
 </div>`;
   }
 
@@ -994,16 +1006,16 @@
     const call = isCall ? RECENT_CALLS[d.index] : null;
     const who = isCall ? call.who : d.name;
     const contact = contactByName(who);
-    const name = who === "나" ? "안시현" : (contact ? contact.name : who);
-    const phone = who === "나" ? "010-0711-0711" : phoneOf(who);
+    const name = contact ? contact.name : who;
+    const phone = phoneOf(who);
     const history = RECENT_CALLS.filter(c => c.who === who);
     const kindLabel = (c) => c.kind === "missed" ? "부재중 전화" : c.kind === "out" ? "발신 전화" : "수신 전화";
     return `<div class="ph-nav ph-detail-nav"><button type="button" class="ph-link ph-back" id="ph-detail-back">‹ ${isCall ? "최근 통화" : "연락처"}</button><span></span>${contact ? '<button type="button" class="ph-link">편집</button>' : "<span></span>"}</div>
-      <div class="ph-detail-head">${who === "나" ? '<span class="ph-avatar big" style="background:linear-gradient(#b8bdc7,#8e9aa8)">안</span>' : phAvatar(who, true)}<h2>${escapeHTML(name)}</h2>${contact && contact.note ? `<p>${escapeHTML(contact.note)}</p>` : ""}</div>
+      <div class="ph-detail-head">${phAvatar(who, true)}<h2>${escapeHTML(name)}</h2>${contact && contact.note ? `<p>${escapeHTML(contact.note)}</p>` : ""}</div>
       <div class="ph-actions">${[["msg","메시지"],["phone","음성"],["video","FaceTime"],["mail","이메일"]].map(([ic,l]) => `<button type="button" data-ph-action="${ic}">${ic === "phone" ? `<span>${PH_ICON.phone}</span>` : `<span>${PH_ICON[ic]}</span>`}${l}</button>`).join("")}</div>
       ${isCall || history.length ? `<div class="ph-card"><div class="ph-card-title">최근 통화</div>${(isCall ? [call] : history.slice(0, 5)).map(c => `<div class="ph-hist${c.kind === "missed" ? " missed" : ""}"><span>${c.day} ${c.time}</span><strong>${kindLabel(c)}</strong><small>${c.dur ? c.dur : ""}</small></div>`).join("")}</div>` : ""}
       <div class="ph-card"><div class="ph-card-title">휴대전화</div><div class="ph-phone-num">${escapeHTML(phone || "알 수 없음")}</div></div>
-      ${!contact && who !== "나" ? '<div class="ph-card ph-danger-card"><button type="button" class="ph-card-btn" data-ph-action="block">이 발신자 차단</button></div>' : ""}`;
+      ${!contact ? '<div class="ph-card ph-danger-card"><button type="button" class="ph-card-btn" data-ph-action="block">이 발신자 차단</button></div>' : ""}`;
   }
 
   function bindPhone(content) {
@@ -1018,14 +1030,14 @@
     content.querySelectorAll("[data-ph-contact]").forEach(r => r.addEventListener("click", (e) => {
       if (e.target.closest("[data-ph-info-contact]")) return;
       const n = r.dataset.phContact;
-      if (phoneState.tab === "favorites" && n !== "나") { startCall(n); return; }
+      if (phoneState.tab === "favorites") { startCall(n); return; }
       phoneState.detail = {type:"contact", name:n}; renderCalls();
     }));
     const back = $("#ph-detail-back"); if (back) back.addEventListener("click", () => { phoneState.detail = null; renderCalls(); });
     content.querySelectorAll("[data-ph-action]").forEach(b => b.addEventListener("click", () => {
       const d = phoneState.detail, a = b.dataset.phAction;
       const who = d.type === "call" ? RECENT_CALLS[d.index].who : d.name;
-      if (a === "phone" && who !== "나") startCall(contactByName(who)?.name || who);
+      if (a === "phone") startCall(contactByName(who)?.name || who);
       else if (a === "block") showToast("데모에서는 차단할 수 없어요.");
       else showToast("데모에서는 지원하지 않아요.");
     }));
@@ -1051,44 +1063,60 @@
     }
   }
 
+  const NT_ICON = {
+    compose: '<svg viewBox="0 0 24 24"><path d="M11 4.500H7a3 3 0 0 0-3 3v9.500a3 3 0 0 0 3 3h9.500a3 3 0 0 0 3-3V13"/><path d="m17.600 3.700 2.700 2.700L12 14.700 8.700 15.300l.6-3.300z"/></svg>',
+    more: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="7.800" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="16.200" cy="12" r="1" fill="currentColor" stroke="none"/></svg>',
+    back: '<svg viewBox="0 0 24 24"><path d="m15 4.500-7.500 7.500 7.500 7.500"/></svg>',
+    search: '<svg viewBox="0 0 24 24"><circle cx="10.500" cy="10.500" r="6.300"/><path d="m15.400 15.400 5 5"/></svg>'
+  };
+  const ntTime = (t) => new Date(t).toLocaleTimeString("ko-KR", { hour: "numeric", minute: "2-digit", hour12: true });
   function renderNotes() {
     const content = $("#app-content");
-    $("#app-title").textContent = state.activeNote === "new" ? "새 메모" : state.activeNote !== null ? "메모 편집" : "메모";
-    $("#header-action").textContent = state.activeNote === null ? "+" : "";
+    $("#app-title").textContent = "메모";
+    $("#header-action").textContent = "";
     if (state.activeNote !== null) {
       const note = state.activeNote === "new" ? { title: "", body: "" } : state.notes.find((item) => item.id === state.activeNote);
       content.innerHTML = `
-        <div class="note-editor">
-          <input class="note-title-input" id="note-title" maxlength="100" placeholder="제목" value="${escapeHTML(note.title)}" aria-label="메모 제목">
-          <textarea class="note-body-input" id="note-body" maxlength="10000" placeholder="내용을 입력하세요..." aria-label="메모 내용">${escapeHTML(note.body)}</textarea>
-          <button class="note-save" id="save-note">완료</button>
+        <div class="nt-screen">
+          <div class="nt-nav"><button type="button" class="nt-link" id="nt-back">${NT_ICON.back}메모</button><button type="button" class="nt-link bold" id="save-note">완료</button></div>
+          <div class="nt-editor">
+            <input class="nt-title" id="note-title" maxlength="100" placeholder="제목" value="${escapeHTML(note.title)}" aria-label="메모 제목">
+            <textarea class="nt-body" id="note-body" maxlength="10000" placeholder="" aria-label="메모 내용">${escapeHTML(note.body)}</textarea>
+          </div>
         </div>`;
-      $("#save-note").addEventListener("click", () => {
-        const title = $("#note-title").value.trim() || "제목 없음";
-        const body = $("#note-body").value;
+      const save = () => {
+        const title = $("#note-title").value.trim(), body = $("#note-body").value;
         if (state.activeNote === "new") {
-          state.notes.unshift({ id: state.nextNoteId++, title, body, updated: Date.now() });
+          if (title || body.trim()) state.notes.unshift({ id: state.nextNoteId++, title: title || body.trim().split("\n")[0].slice(0, 30) || "새로운 메모", body, updated: Date.now() });
         } else {
           const existing = state.notes.find((item) => item.id === state.activeNote);
-          if (existing) Object.assign(existing, { title, body, updated: Date.now() });
+          if (existing) Object.assign(existing, { title: title || existing.title, body, updated: Date.now() });
         }
         state.activeNote = null;
         renderNotes();
-        showToast("메모를 저장했어요.");
-      });
+      };
+      $("#save-note").addEventListener("click", save);
+      $("#nt-back").addEventListener("click", save);
       return;
     }
 
     const sorted = [...state.notes].sort((a, b) => b.updated - a.updated);
     content.innerHTML = `
-      <div class="notes-toolbar"><span>${sorted.length}개의 메모</span><span>iCloud 동기화 꺼짐</span></div>
-      <div class="list-card">
-        ${sorted.length ? sorted.map((note) => `
-          <button class="note-item" data-note="${note.id}">
-            <strong>${escapeHTML(note.title)}</strong>
-            <p>${escapeHTML(note.body.replace(/\n/g, " ")) || "내용 없음"}</p>
-          </button>`).join("") : '<div class="empty-state">아직 메모가 없습니다.<br>오른쪽 위 + 버튼으로 새 메모를 만들어 보세요.</div>'}
+      <div class="nt-screen">
+        <div class="nt-nav"><span></span><span class="nt-circle">${NT_ICON.more}</span></div>
+        <div class="nt-scroll">
+          <h1 class="nt-large">메모</h1>
+          <div class="nt-search">${NT_ICON.search}<span>검색</span></div>
+          ${sorted.length ? `<div class="nt-section">오늘</div>
+          <div class="nt-card">${sorted.map((note) => `
+            <button class="nt-item" data-note="${note.id}">
+              <strong>${escapeHTML(note.title)}</strong>
+              <span><time>${ntTime(note.updated)}</time>${escapeHTML(note.body.replace(/\n/g, " ")) || "추가 텍스트 없음"}</span>
+            </button>`).join("")}</div>` : ""}
+        </div>
+        <div class="nt-bar"><span></span><span class="nt-count">${sorted.length}개의 메모</span><button type="button" class="nt-new" id="nt-new" aria-label="새로운 메모">${NT_ICON.compose}</button></div>
       </div>`;
+    $("#nt-new").addEventListener("click", () => { state.activeNote = "new"; renderNotes(); });
     content.querySelectorAll("[data-note]").forEach((button) => {
       button.addEventListener("click", () => { state.activeNote = Number(button.dataset.note); renderNotes(); });
     });
@@ -1171,9 +1199,6 @@
     } else if (state.app === "photos" && state.activePhoto) {
       state.activePhoto = null;
       renderPhotos();
-    } else if (state.app === "notes" && state.activeNote !== null) {
-      state.activeNote = null;
-      renderNotes();
     } else {
       goHome();
     }
@@ -1219,12 +1244,6 @@
     }
   });
 
-  $("#header-action").addEventListener("click", () => {
-    if (state.app === "notes" && state.activeNote === null) {
-      state.activeNote = "new";
-      renderNotes();
-    }
-  });
 
   try { if (seobinScenario === "new") { setTimeout(() => { if (!seobinChat.messages.some(m => m.from === "date" && m.text === "2025년 1월 5일")) seobinChat.messages.push({from:"date",text:"2025년 1월 5일"}); saveSeobinChat(); addSeobinIncoming("시혀나ㅏㅏ 뭐 해ㅐㅐㅐ"); saveSeobinScenario("received"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 6500); } } catch (_) {}
   document.addEventListener("keydown", (e) => {

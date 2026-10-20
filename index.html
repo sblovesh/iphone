@@ -49,40 +49,32 @@
         </section>
 
         <section id="home-screen" class="home-screen screen-view hidden">
-          <div class="home-weather-widget" aria-label="서울 날씨 위젯">
-            <div class="weather-location">서울 <span>현재 날씨</span></div>
-            <div class="weather-main"><strong>18°</strong><span class="weather-cloud">☀️</span></div>
-            <div class="weather-condition">맑음</div>
-            <div class="weather-range"><span>최고 21°</span><span>최저 12°</span></div>
-          </div>
           <div class="app-grid">
-            <button class="app-icon" data-open="messages">
-              <span class="app-art messages-art"><img src="messages-icon.svg" alt=""></span><span>메시지</span>
-            </button>
+            <div class="widget-cell">
+              <div class="home-weather-widget" aria-label="서울 날씨 위젯">
+                <div class="weather-location">서울 <span>현재 날씨</span></div>
+                <div class="weather-main"><strong>18°</strong><span class="weather-cloud">☀️</span></div>
+                <div class="weather-condition">맑음</div>
+                <div class="weather-range"><span>최고 21°</span><span>최저 12°</span></div>
+              </div>
+              <small>날씨</small>
+            </div>
             <button class="app-icon" data-open="photos">
               <span class="app-art photos-art"><img src="photos-icon.svg" alt=""></span><span>사진</span>
             </button>
-            <button class="app-icon" data-open="calls">
-              <span class="app-art calls-art"><img src="phone-icon.svg" alt=""></span><span>전화</span>
-            </button>
             <button class="app-icon" data-open="notes">
               <span class="app-art notes-art"><img src="notes-icon.svg" alt=""></span><span>메모</span>
-            </button>
-            <button class="app-icon" data-open="kakao">
-              <span class="app-art kakao-art"><img src="kakao-icon.svg" alt=""></span><span>카카오톡</span><i id="unread-dot" class="unread-dot hidden"></i>
-            </button>
-            <button class="app-icon" data-open="instagram">
-              <span class="app-art instagram-art"><img src="instagram-icon.svg" alt=""></span><span>Instagram</span>
             </button>
             <button class="app-icon" data-open="bubble">
               <span class="app-art bubble-art"><img src="bubble-icon.svg" alt=""></span><span>버블</span>
             </button>
           </div>
+          <div class="home-search" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.3"/><path d="m15.4 15.4 5 5"/></svg>검색</div>
           <div class="dock">
             <button class="dock-icon app-art calls-art" data-open="calls" aria-label="전화"><img src="phone-icon.svg" alt=""></button>
             <button class="dock-icon app-art messages-art" data-open="messages" aria-label="메시지"><img src="messages-icon.svg" alt=""></button>
-            <button class="dock-icon app-art photos-art" data-open="photos" aria-label="사진"><img src="photos-icon.svg" alt=""></button>
-            <button class="dock-icon app-art notes-art" data-open="notes" aria-label="메모"><img src="notes-icon.svg" alt=""></button>
+            <span class="dock-item"><button class="dock-icon app-art kakao-art" data-open="kakao" aria-label="카카오톡"><img src="kakao-icon.svg" alt=""></button><i id="unread-dot" class="unread-dot hidden">1</i></span>
+            <button class="dock-icon app-art instagram-art" data-open="instagram" aria-label="Instagram"><img src="instagram-icon.svg" alt=""></button>
           </div>
         </section>
 
@@ -103,10 +95,10 @@
           </div>
           <div id="passcode-error" class="passcode-error" aria-live="polite">암호를 입력하세요.</div>
           <div class="keypad">
-            <button data-digit="1">1</button><button data-digit="2">2</button><button data-digit="3">3</button>
-            <button data-digit="4">4</button><button data-digit="5">5</button><button data-digit="6">6</button>
-            <button data-digit="7">7</button><button data-digit="8">8</button><button data-digit="9">9</button>
-            <span></span><button data-digit="0">0</button><button id="passcode-delete" class="keypad-delete">⌫</button>
+            <button data-digit="1"><b>1</b><small></small></button><button data-digit="2"><b>2</b><small>ABC</small></button><button data-digit="3"><b>3</b><small>DEF</small></button>
+            <button data-digit="4"><b>4</b><small>GHI</small></button><button data-digit="5"><b>5</b><small>JKL</small></button><button data-digit="6"><b>6</b><small>MNO</small></button>
+            <button data-digit="7"><b>7</b><small>PQRS</small></button><button data-digit="8"><b>8</b><small>TUV</small></button><button data-digit="9"><b>9</b><small>WXYZ</small></button>
+            <span></span><button data-digit="0"><b>0</b><small></small></button><button id="passcode-delete" class="keypad-delete">⌫</button>
           </div>
         </section>
       </div>
