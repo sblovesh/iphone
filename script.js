@@ -133,6 +133,7 @@
 
   function setView(view) {
     state.view = view;
+    const sv = document.getElementById("story-viewer"); if (sv) sv.remove();
     if (view !== "lock") views.lock.style.transform = "";
     Object.entries(views).forEach(([key, element]) => element.classList.toggle("hidden", key !== view));
     $("#home-indicator").style.background = view === "lock" ? "#fff" : "#222";
@@ -207,6 +208,7 @@
 
   function openApp(app) {
     if (app === "bubble") bubbleChatOpen = false;
+    if (app === "messages") msThread = null;
     state.app = app;
     state.activeChat = null;
     state.activePhoto = null;
@@ -249,52 +251,73 @@
     else if (state.app === "bubble") renderBubble();
   }
 
+  // 스토커 문자 스레드: 최근 통화 기록의 번호와 동일 (STALKER 번호 3개)
+  const stalkerThreads = {
+    "010-4827-3391": [
+      ["일요일 오후 3:38", ["시현아 나야", "왜 전화 안 받아", "받을 때까지 건다 지금"]],
+      ["일요일 오후 3:55", ["9번 걸었다", "9번이야 시발 9번", "내가 너 때문에 일도 못 나가고 있는데 넌 뭐가 그렇게 바쁜데", "촬영? 웃기네 어제 편의점에서 삼각김밥 처먹던 새끼가"]],
+      ["어제 오후 11:30", ["집 여기 맞네. 불 켜지는 거 확인했어", "오늘은 왜 이렇게 늦게 들어왔어?", "자는 척 하지 마 병신아 다 보여", "읽씹하면 나도 방법 있어"]],
+      ["어제 오후 11:41", ["전화 5번 받아주면 어디 덧나냐", "내가 너한테 쓴 돈이 얼마인데 앨범 12장 샀다 씨발", "팬이면 개새끼 취급해도 되는 줄 알아?", "니네 집 쓰레기 봉투 가져왔다 컵라면 국물 다 새서 손에 묻었네 ㅋㅋ 니 건데 뭐 괜찮아", "몸 생각해서 좀 챙겨 먹어 이 새끼야 내가 얼마나 걱정하는데"]],
+      ["오늘 오후 9:50", ["7번", "어제 집 앞에서 두 시간 기다렸어. 커튼 사이로 보이던데 왜 연락 안 받아?", "나 지금 니네 집 앞이야", "문 열어", "열라고 씨발", "나 이렇게까지 만들지 마", "사랑해서 그러는 거잖아 왜 몰라줘 개같이", "안 열면 내가 어떻게 할지 나도 몰라"]]
+    ],
+    "010-2095-7746": [
+      ["목요일 오전 3:05", ["안 자지?", "새벽엔 폰 보잖아 니가 인스타 올리는 시간 나 다 알아", "나 지금 니 소속사 건물 앞 편의점이야"]],
+      ["목요일 오전 3:20", ["전화 11번 했는데 왜 안 받아", "받아 받아 받아 받아 받아", "받아라 개새끼야"]],
+      ["오늘 오후 4:20", ["단골 카페 바꿨더라. 피해 다녀도 소용없어. 어디 가는지 다 알고 있으니까", "오늘 촬영장 뒤편에서 기다린 거 봤지? 모른 척하지 마", "나만큼 오래 좋아한 사람 없잖아", "다른 것들은 다 가짜야 니 사생활 쫓아다니는 쓰레기들이지 나는 달라"]],
+      ["오늘 오후 4:25", ["너는 나만 알아야 되는데", "내일도 간다"]]
+    ],
+    "010-6613-0584": [
+      ["금요일 오후 7:31", ["시현 배우님 맞으시죠?", "저 진짜 오래전부터 팬이었어요"]],
+      ["토요일 오후 6:10", ["숙소 주소 알아냈어요", "선물 보냈으니까 꼭 받아요"]],
+      ["어제 오후 2:30", ["택배 받았죠?", "안 뜯었어요? 제가 직접 만든 건데", "지금 뜯어요 뜯는 거 보고 싶으니까"]],
+      ["어제 오후 2:41", ["왜 전화 안 받아요", "계속 무시하면 직접 찾아갈 수밖에 없잖아요", "경비 아저씨 얼굴 알아놨어요 들어가는 거 일도 아니에요"]]
+    ]
+  };
+  const stalkerPreview = (n) => { const t = stalkerThreads[n]; const last = t[t.length - 1][1]; return last[last.length - 1]; };
   const smsPreviews = [
-    {name:"매니저 우연 형", avatar:"우", color:"blue", time:"오후 8:42", preview:"내일 콜타임 06:30. 차는 5:50에 도착할게. 늦지 말고 자."},
-    {name:"[광고] 프리미엄 대출", avatar:"광", color:"gold", time:"오후 8:17", preview:"고객님만을 위한 한도 조회, 지금 바로 확인하세요."},
-    {name:"제작팀 조연출", avatar:"조", color:"blue", time:"오후 7:56", preview:"내일 32씬 대본 수정본 전달드립니다. 확인 부탁드려요."},
-    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 7:31", preview:"시현 배우님 맞으시죠? 저 진짜 오래전부터 팬이었어요."},
-    {name:"소속사 홍보팀", avatar:"홍", color:"pink", time:"오후 6:48", preview:"인터뷰 기사 초안 보내드렸습니다. 인용문만 체크해주세요."},
-    {name:"스타일리스트 수연", avatar:"수", color:"green", time:"오후 6:15", preview:"내일 제작발표회 착장 최종안 공유드려요!"},
-    {name:"[국제발신] 당첨 안내", avatar:"당", color:"gold", time:"오후 5:59", preview:"축하합니다! 경품 수령을 위해 링크를 확인하세요."},
-    {name:"캐스팅 디렉터", avatar:"캐", color:"blue", time:"오후 5:26", preview:"차기작 미팅 일정 관련해 연락드렸습니다."},
-    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 5:02", preview:"오늘 촬영장 뒤편에서 기다린 거 봤죠? 모른 척하지 마요. 나만큼 오래 좋아한 사람 없잖아."},
-    {name:"광고대행사 윤 담당자", avatar:"윤", color:"green", time:"오후 4:41", preview:"브랜드 캠페인 제안서와 촬영 가이드 전달드립니다."},
-    {name:"[Web발신] 택배", avatar:"택", color:"blue", time:"오후 4:12", preview:"배송 완료: 문 앞에 상품을 두었습니다."},
-    {name:"매니저 우연 형", avatar:"우", color:"blue", time:"오후 3:50", preview:"차량 번호 32가 8124야. 끝나면 바로 연락해."},
-    {name:"영화제 사무국", avatar:"영", color:"gold", time:"오후 3:14", preview:"초청 및 레드카펫 참석 여부 회신 부탁드립니다."},
-    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오후 2:58", preview:"집 여기 맞네. 불 켜지는 거 확인했어. 오늘은 왜 이렇게 늦게 들어왔어?"},
-    {name:"보이스피싱 의심", avatar:"금", color:"blue", time:"오후 2:23", preview:"[금융기관] 계좌 보호를 위해 본인 인증이 필요합니다."},
-    {name:"드라마 제작사", avatar:"제", color:"green", time:"오후 1:46", preview:"대본 리딩은 금요일 오후 2시, 3층 회의실입니다."},
-    {name:"팬카페 운영진", avatar:"팬", color:"pink", time:"오후 1:12", preview:"생일 서포트 관련해 소속사 확인을 요청드립니다."},
-    {name:"[광고] 휴대폰 결제", avatar:"광", color:"gold", time:"오후 12:54", preview:"미납 요금이 있습니다. 즉시 납부하지 않으면 제한됩니다."},
-    {name:"사진작가 도현", avatar:"도", color:"blue", time:"오전 11:38", preview:"어제 화보 셀렉본 업로드했습니다. 마음에 드는 컷 골라주세요."},
-    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"오전 10:52", preview:"단골 카페 바꿨더라. 피해 다녀도 소용없어요. 어디 가는지 다 알고 있으니까."},
-    {name:"매니저 우연 형", avatar:"우", color:"blue", time:"오전 10:15", preview:"인터뷰 예상 질문 정리해 뒀어. 차에서 같이 보자."},
-    {name:"오디션 안내", avatar:"오", color:"green", time:"오전 9:44", preview:"오디션 지정 대사와 캐릭터 설명을 첨부해드립니다."},
-    {name:"[Web발신] 카드", avatar:"카", color:"gold", time:"오전 9:03", preview:"해외 승인 1,280,000원. 본인 사용이 아니라면 문의 바랍니다."},
-    {name:"매니지먼트 팀장", avatar:"팀", color:"blue", time:"어제", preview:"계약서 수정 사항 표시해 두었으니 확인 부탁합니다."},
-    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"어제", preview:"어제 집 앞에서 두 시간 기다렸어. 커튼 사이로 보이던데 왜 연락 안 받아? 나 이렇게까지 만들지 마."},
-    {name:"뷰티 브랜드", avatar:"뷰", color:"green", time:"어제", preview:"신제품 협찬 관련 콘텐츠 업로드 일정 확인 부탁드립니다."},
-    {name:"방송국 작가님", avatar:"작", color:"pink", time:"어제", preview:"예능 출연 관련 사전 질문지를 보내드립니다."},
-    {name:"[광고] 투자 리딩방", avatar:"투", color:"gold", time:"어제", preview:"연예인도 참여하는 비공개 급등주 정보방에 초대합니다."},
-    {name:"알 수 없는 번호", avatar:"?", color:"gold", time:"월요일", preview:"숙소 주소 알아냈어요. 선물 보냈으니까 꼭 받아요. 계속 무시하면 직접 찾아갈 수밖에 없잖아."},
-    {name:"세무 담당자", avatar:"세", color:"blue", time:"월요일", preview:"종합소득세 자료 중 누락된 영수증이 있어 연락드립니다."}
+    {name:"010-4827-3391", time:"오후 9:50", thread:"010-4827-3391"},
+    {name:"우연 형", time:"오후 8:42", preview:"카톡 확인해. 전화도 안 받네. 내일 콜타임 06:30, 차는 5:50에 도착할게."},
+    {name:"1588-2034", time:"오후 8:17", preview:"(광고) 고객님만을 위한 한도 조회, 지금 바로 확인하세요."},
+    {name:"조연출 박성민", time:"오후 7:56", preview:"내일 32씬 대본 수정본 전달드립니다. 확인 부탁드려요."},
+    {name:"소속사 홍보팀", time:"오후 6:48", preview:"인터뷰 기사 초안 보내드렸습니다. 인용문만 체크해주세요."},
+    {name:"수연 실장님", time:"오후 6:15", preview:"내일 제작발표회 착장 최종안 공유드려요!"},
+    {name:"+63 917 555 0142", time:"오후 5:59", preview:"[국제발신] 축하합니다! 경품 수령을 위해 링크를 확인하세요."},
+    {name:"캐스팅 디렉터", time:"오후 5:26", preview:"차기작 미팅 일정 관련해 연락드렸습니다."},
+    {name:"광고대행사 윤 담당자", time:"오후 4:41", preview:"브랜드 캠페인 제안서와 촬영 가이드 전달드립니다."},
+    {name:"010-2095-7746", time:"오후 4:25", thread:"010-2095-7746"},
+    {name:"1588-0192", time:"오후 4:12", preview:"[Web발신] 배송 완료: 문 앞에 상품을 두었습니다."},
+    {name:"영화제 사무국", time:"오후 3:14", preview:"초청 및 레드카펫 참석 여부 회신 부탁드립니다."},
+    {name:"02-3487-2290", time:"오후 2:23", preview:"[Web발신] [금융기관] 계좌 보호를 위해 본인 인증이 필요합니다."},
+    {name:"드라마 제작사 PD님", time:"오후 1:46", preview:"대본 리딩은 금요일 오후 2시, 3층 회의실입니다."},
+    {name:"1522-9041", time:"오후 12:54", preview:"(광고) 미납 요금이 있습니다. 즉시 납부하지 않으면 제한됩니다."},
+    {name:"사진작가 도현", time:"오전 11:38", preview:"어제 화보 셀렉본 업로드했습니다. 마음에 드는 컷 골라주세요."},
+    {name:"02-6014-8832", time:"오전 9:44", preview:"[오디션 안내] 지정 대사와 캐릭터 설명을 첨부해드립니다."},
+    {name:"1544-7010", time:"오전 9:03", preview:"[Web발신] 해외 승인 1,280,000원. 본인 사용이 아니라면 문의 바랍니다."},
+    {name:"010-6613-0584", time:"어제", thread:"010-6613-0584"},
+    {name:"매니지먼트 팀장님", time:"어제", preview:"계약서 수정 사항 표시해 두었으니 확인 부탁합니다."},
+    {name:"브랜드 협찬 담당자", time:"어제", preview:"신제품 협찬 관련 콘텐츠 업로드 일정 확인 부탁드립니다."},
+    {name:"방송국 작가님", time:"어제", preview:"예능 출연 관련 사전 질문지를 보내드립니다."},
+    {name:"010-8841-2276", time:"어제", preview:"(광고) 연예인도 참여하는 비공개 급등주 정보방에 초대합니다."},
+    {name:"세무 담당자", time:"월요일", preview:"종합소득세 자료 중 누락된 영수증이 있어 연락드렸습니다."}
   ];
 
   const MS_ICON = {
     compose: '<svg viewBox="0 0 24 24"><path d="M11 4.5H7a3 3 0 0 0-3 3v9.500a3 3 0 0 0 3 3h9.500a3 3 0 0 0 3-3V13"/><path d="m17.600 3.700 2.700 2.700L12 14.700 8.700 15.300l.6-3.300z"/></svg>',
     search: '<svg viewBox="0 0 24 24"><circle cx="10.500" cy="10.500" r="6.300"/><path d="m15.400 15.400 5 5"/></svg>',
     chev: '<svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>',
+    plusc: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#e9e9ee" stroke="none"/><path d="M12 6.500v11M6.500 12h11" stroke="#6b6b70" stroke-width="2.200"/></svg>',
+    mic: '<svg viewBox="0 0 24 24"><rect x="9" y="3.500" width="6" height="11" rx="3"/><path d="M5.500 11.500a6.500 6.500 0 0 0 13 0M12 18v3"/></svg>',
     person: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="9" r="4.300"/><path d="M3.800 22c.6-4.800 4-7.200 8.200-7.200s7.600 2.400 8.200 7.200z"/></svg>'
   };
+  let msThread = null;
   function renderMessages() {
     const content = $("#app-content");
-    // Messages is a read-only preview inbox. It never opens a conversation or shares data with KakaoTalk.
+    // 스토커 번호의 문자만 열람 가능. 나머지는 목록 미리보기만.
     state.activeChat = null;
     $("#app-title").textContent = "메시지";
     $("#header-action").textContent = "";
-    const unknown = (item) => item.avatar === "?" || /^\[/.test(item.name) || /의심/.test(item.name);
+    if (msThread) { renderSmsThread(content, msThread); return; }
+    const unknown = (item) => /^[0-9+]/.test(item.name);
     content.innerHTML = `
       <div class="ms-screen">
         <div class="ms-top"><span class="ms-edit">편집</span><span class="ms-compose">${MS_ICON.compose}</span></div>
@@ -302,17 +325,87 @@
         <div class="ms-search">${MS_ICON.search}<span>검색</span></div>
         <div class="ms-list">
           ${smsPreviews.map((item, i) => `
-          <div class="ms-row">
+          <div class="ms-row${item.thread ? " tap" : ""}"${item.thread ? ` data-thread="${item.thread}"` : ""}>
             <span class="ms-dot${i === 0 ? " on" : ""}"></span>
-            ${unknown(item) ? `<span class="ms-avatar unk">${MS_ICON.person}</span>` : `<span class="ms-avatar">${escapeHTML(item.avatar)}</span>`}
+            ${unknown(item) ? `<span class="ms-avatar unk">${MS_ICON.person}</span>` : `<span class="ms-avatar">${escapeHTML(item.name.charAt(0))}</span>`}
             <span class="ms-main">
               <span class="ms-head"><strong>${escapeHTML(item.name)}</strong><time>${escapeHTML(item.time)}</time><i>${MS_ICON.chev}</i></span>
-              <span class="ms-prev">${escapeHTML(item.preview)}</span>
+              <span class="ms-prev">${escapeHTML(item.thread ? stalkerPreview(item.thread) : item.preview)}</span>
             </span>
           </div>`).join("")}
         </div>
         <div class="ms-footer">알 수 없는 발신자의 링크는 열지 마세요.</div>
       </div>`;
+    content.querySelectorAll("[data-thread]").forEach((row) => row.addEventListener("click", () => { msThread = row.dataset.thread; renderMessages(); }));
+  }
+  function renderSmsThread(content, num) {
+    const clusters = stalkerThreads[num];
+    content.innerHTML = `
+      <div class="mt-screen">
+        <div class="mt-nav">
+          <button type="button" class="mt-back" id="mt-back">${NT_ICON.back}<span>메시지</span></button>
+          <div class="mt-who"><span class="mt-av">${MS_ICON.person}</span><small>${escapeHTML(num)} ${MS_ICON.chev}</small></div>
+          <span class="mt-right"></span>
+        </div>
+        <div class="mt-log" id="mt-log">
+          <div class="mt-sms">문자 메시지</div>
+          ${clusters.map(([label, texts]) => { const [day, ...tm] = label.split(" "); return `<div class="mt-time"><b>${escapeHTML(day)}</b> ${escapeHTML(tm.join(" "))}</div>${texts.map((t, i) => `<div class="mt-bubble${i === texts.length - 1 ? " last" : ""}">${escapeHTML(t)}</div>`).join("")}`; }).join("")}
+        </div>
+        <div class="mt-compose"><span class="mt-plus">${MS_ICON.plusc}</span><div class="mt-field"><span>문자 메시지</span><i>${MS_ICON.mic}</i></div></div>
+      </div>`;
+    const log = $("#mt-log"); log.scrollTop = log.scrollHeight;
+    $("#mt-back").addEventListener("click", () => { msThread = null; renderMessages(); });
+  }
+
+  // ===== 서빈 인스타 스토리 (사진 + "퇴근즁", 6초 후 자동 종료) =====
+  const STORY_KEY = "virtual-iphone-seobin-story-seen-v1";
+  let storySeen = false;
+  try { storySeen = localStorage.getItem(STORY_KEY) === "1"; } catch (e) {}
+  function closeStory(markSeen = true) {
+    const ov = document.getElementById("story-viewer");
+    if (!ov || ov.dataset.closing) return;
+    ov.dataset.closing = "1";
+    if (markSeen) { storySeen = true; try { localStorage.setItem(STORY_KEY, "1"); } catch (e) {} document.querySelectorAll(".igx-story[data-story] .igx-ring").forEach((r) => r.classList.add("seen")); }
+    if (reduceMotion()) { ov.remove(); return; }
+    ov.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "scale(.94) translateY(16px)" }], { duration: 200, easing: "ease-in", fill: "forwards" }).finished.then(() => ov.remove(), () => ov.remove());
+  }
+  function openStory() {
+    if (document.getElementById("story-viewer")) return;
+    const ov = document.createElement("section");
+    ov.id = "story-viewer"; ov.className = "story-viewer";
+    ov.innerHTML = `
+      <img class="story-bg" src="seobin-story.jpg" alt="">
+      <div class="story-stage"><img class="story-img" src="seobin-story.jpg" alt="서빈의 스토리"><div class="story-text">퇴근즁</div></div>
+      <div class="story-shade"></div>
+      <div class="story-top">
+        <div class="story-bar"><b></b></div>
+        <div class="story-head"><img src="instagram-seobin.jpg" alt=""><strong>seo_BBini</strong><time>2시간</time><span class="story-more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.600"/><circle cx="12" cy="12" r="1.600"/><circle cx="19" cy="12" r="1.600"/></svg></span><button type="button" class="story-close" id="story-close" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+      </div>
+      <div class="story-bottom"><div class="story-reply">seo_BBini님에게 메시지 보내기...</div><span class="story-ic"><svg viewBox="0 0 24 24"><path d="M12 20.300 4.700 13.200a4.700 4.700 0 0 1 6.600-6.700l.7.700.7-.7a4.700 4.700 0 0 1 6.600 6.700z"/></svg></span><span class="story-ic"><svg viewBox="0 0 24 24"><path d="M21 3.500 10.500 14M21 3.500l-6.800 17-3.700-6.500L4 10.300z"/></svg></span></div>`;
+    $(".screen").appendChild(ov);
+    if (!reduceMotion()) ov.animate([{ opacity: 0, transform: "scale(.9)" }, { opacity: 1, transform: "none" }], { duration: 240, easing: "cubic-bezier(.2,.9,.3,1)" });
+    const fill = ov.querySelector(".story-bar b");
+    const prog = fill.animate([{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }], { duration: 6000, easing: "linear", fill: "forwards" });
+    prog.finished.then(() => closeStory(), () => {});
+    let downAt = 0, startY = 0, held = false, holdT;
+    ov.addEventListener("pointerdown", (e) => {
+      if (e.target.closest(".story-close")) return;
+      downAt = Date.now(); startY = e.clientY; held = false;
+      holdT = setTimeout(() => { held = true; prog.pause(); ov.classList.add("hold"); }, 180);
+    });
+    const up = (e) => {
+      clearTimeout(holdT);
+      if (!downAt) return; const dt = Date.now() - downAt, dy = e.clientY - startY; downAt = 0;
+      if (held) { prog.play(); ov.classList.remove("hold"); }
+      if (dy > 90) { closeStory(); return; }
+      if (!held && dt < 250 && !e.target.closest(".story-close")) {
+        const r = ov.getBoundingClientRect();
+        if (e.clientX - r.left < r.width * .3) prog.currentTime = 0; else closeStory();
+      }
+    };
+    ov.addEventListener("pointerup", up);
+    ov.addEventListener("pointercancel", () => { clearTimeout(holdT); if (held) { prog.play(); ov.classList.remove("hold"); } downAt = 0; });
+    ov.querySelector("#story-close").addEventListener("click", (e) => { e.stopPropagation(); closeStory(); });
   }
 
   const BUBBLE_STORAGE_KEY = "virtual-iphone-bubble-seobin-v2";
@@ -706,13 +799,14 @@
     const stories = [["내 스토리","avatar-default.jpg",true],["seo_BBini","instagram-seobin.jpg"]];
     content.innerHTML = `<div class="igx-app"><div class="igx-body">
       <div class="igx-top"><button type="button" class="igx-ic-btn" aria-label="만들기">${IG.plus}</button><strong class="igx-logo">Instagram</strong><button type="button" class="igx-ic-btn" aria-label="알림">${IG.heart}</button></div>
-      <div class="igx-stories">${stories.map(([n,src,mine]) => `<div class="igx-story"><span class="igx-ring${mine ? " mine" : ""}"><img src="${src}" alt="">${mine ? `<i>${IG.miniPlus}</i>` : ""}</span><small>${n}</small></div>`).join("")}</div>
+      <div class="igx-stories">${stories.map(([n,src,mine]) => `<div class="igx-story"${n === "seo_BBini" ? ' data-story="1"' : ""}><span class="igx-ring${mine ? " mine" : ""}${n === "seo_BBini" && storySeen ? " seen" : ""}"><img src="${src}" alt="">${mine ? `<i>${IG.miniPlus}</i>` : ""}</span><small>${n}</small></div>`).join("")}</div>
       <article class="igx-post">
         <div class="igx-post-head"><img class="igx-av s32" src="TVING.jpg" alt="tvN 드라마 프로필"><div><strong>tvn_drama</strong><small>광고</small></div><button type="button" class="igx-ic-btn" aria-label="더 보기">${IG.more}</button></div>
         <div class="ig-drama-ad ig-actor-photo"><img class="ig-blurred-bg" src="actor-feed.jpg" alt="청춘 실종 사건 드라마 홍보 이미지"><div class="ig-promo-overlay"><span>tvN 새 드라마</span><strong>청춘 실종 사건</strong><b>배우 안시현<br>남자 주인공 캐스팅</b><small>COMING SOON · 2026</small></div></div>
         <div class="igx-actions"><button type="button" data-like="drama" aria-label="좋아요">${IG.heart}<span id="ig-likes">2.4만</span></button><button type="button" data-comment="drama" aria-label="댓글">${IG.comment}<span>318</span></button><button type="button" data-share="drama" aria-label="공유">${IG.send}<span>1,203</span></button><button type="button" class="igx-save" data-save="drama" aria-label="저장">${IG.save}</button></div>
         <div class="igx-copy"><p><strong>tvn_drama</strong> 배우 안시현, 드라마 '청춘 실종 사건' 남자 주인공으로 캐스팅 🎬<br>올겨울, 청춘의 비밀을 추적할 새로운 얼굴을 만나보세요.<br><span class="ig-hashtags">#안시현 #청춘실종사건 #캐스팅 #tvN드라마</span></p><p class="ig-comments">댓글 318개 모두 보기</p><small>2시간 전 · 광고</small></div>
       </article></div>${tabs("feed")}</div>`;
+    content.querySelectorAll("[data-story]").forEach((el) => el.addEventListener("click", openStory));
     content.querySelectorAll("[data-like]").forEach(button=>button.addEventListener("click",()=>{const on=button.classList.toggle("liked");button.querySelector("svg").outerHTML=on?IG.heartFill:IG.heart;}));
     content.querySelectorAll("[data-save]").forEach(button=>button.addEventListener("click",()=>{const on=button.classList.toggle("saved");button.querySelector("svg").outerHTML=on?IG.saveFill:IG.save;}));
     content.querySelectorAll("[data-comment]").forEach(button=>button.addEventListener("click",()=>showToast("댓글 기능은 다음 단계에서 추가할 수 있어요.")));
