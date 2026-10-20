@@ -104,16 +104,6 @@
     })[char]);
   }
 
-  function updateClock() {
-    const now = new Date();
-    const time = now.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", hour12: false });
-    const date = now.toLocaleDateString("ko-KR", { month: "long", day: "numeric", weekday: "long" });
-    $("#status-time").textContent = time;
-    $("#lock-clock").textContent = now.toLocaleTimeString("ko-KR", { hour: "numeric", minute: "2-digit", hour12: false });
-    $("#lock-date").textContent = date;
-
-  }
-
   function showToast(message, kind = "generic") {
     const toast = $("#toast");
     toast.innerHTML = "";
@@ -209,12 +199,13 @@
   function openApp(app) {
     if (app === "bubble") bubbleChatOpen = false;
     if (app === "messages") msThread = null;
+    if (app === "settings") xs.setPage = "main"; if (app === "safari") xs.safari = null; if (app === "calendar") xs.calY = null;
     state.app = app;
     state.activeChat = null;
     state.activePhoto = null;
     state.activeNote = null;
     $("#app-screen").classList.remove("photos-mode", "kakao-mode", "kakao-on", "kakao-room", "no-hdr", "photo-viewing", "phone-mode", "ig-mode");
-    if (app === "messages" || app === "notes" || app === "bubble") $("#app-screen").classList.add("no-hdr");
+    if (app === "messages" || app === "notes" || app === "bubble" || ["calendar","clock","safari","settings"].includes(app)) $("#app-screen").classList.add("no-hdr");
     if (app === "calls") { phoneState.tab = "recents"; phoneState.filter = "all"; phoneState.detail = null; phoneState.query = ""; }
     $("#header-action").onclick = null;
     $("#app-title").textContent = appTitles[app] || "앱";
@@ -249,6 +240,7 @@
     else if (state.app === "kakao") renderKakao();
     else if (state.app === "instagram") renderInstagram();
     else if (state.app === "bubble") renderBubble();
+    else if (XAPPS[state.app]) XAPPS[state.app]();
   }
 
   // 스토커 문자 스레드: 최근 통화 기록의 번호와 동일 (STALKER 번호 3개)
@@ -1190,10 +1182,10 @@
       const save = () => {
         const title = $("#note-title").value.trim(), body = $("#note-body").value;
         if (state.activeNote === "new") {
-          if (title || body.trim()) state.notes.unshift({ id: state.nextNoteId++, title: title || body.trim().split("\n")[0].slice(0, 30) || "새로운 메모", body, updated: Date.now() });
+          if (title || body.trim()) state.notes.unshift({ id: state.nextNoteId++, title: title || body.trim().split("\n")[0].slice(0, 30) || "새로운 메모", body, updated: vnow().getTime() });
         } else {
           const existing = state.notes.find((item) => item.id === state.activeNote);
-          if (existing) Object.assign(existing, { title: title || existing.title, body, updated: Date.now() });
+          if (existing) Object.assign(existing, { title: title || existing.title, body, updated: vnow().getTime() });
         }
         state.activeNote = null;
         renderNotes();
@@ -1356,7 +1348,126 @@
     else if (e.key === "ArrowRight") t.scrollBy({ left: t.clientWidth, behavior: "smooth" });
     else if (e.key === "Escape") { state.activePhoto = null; renderPhotos(); }
   });
+  // ===== v35: 가상 시간 + 캘린더/시계/Safari/설정 =====
+  // ★ 가상 시간 기본값 (로컬 시각). 설정 앱 > 일반 > 날짜 및 시간에서도, 주소 뒤에 ?time=2026-10-18T21:50 을 붙여서도 바꿀 수 있어요.
+  const VT_DEFAULT = "2026-10-18T21:50";
+  const VT_KEY = "virtual-iphone-vtime-v1";
+  const vt = Object.assign({ off: Date.parse(VT_DEFAULT) - Date.now(), frozen: null, h24: true, auto: false }, (() => { try { return JSON.parse(localStorage.getItem(VT_KEY)) || {}; } catch (_) { return {}; } })());
+  const urlTime = new URLSearchParams(location.search).get("time");
+  if (urlTime && !isNaN(Date.parse(urlTime))) { vt.off = Date.parse(urlTime) - Date.now(); vt.frozen = null; }
+  const vtSave = () => { try { localStorage.setItem(VT_KEY, JSON.stringify(vt)); } catch (_) {} };
+  const vnow = () => new Date(vt.frozen !== null ? vt.frozen : Date.now() + vt.off);
+  const setVTime = (d) => { vt.off = d - Date.now(); if (vt.frozen !== null) vt.frozen = +d; vt.auto = false; vtSave(); updateClock(); };
+  const pad = (n) => String(n).padStart(2, "0");
+  const WD = "일월화수목금토";
+  const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const addDays = (d, n) => { const r = new Date(d); r.setDate(r.getDate() + n); return r; };
+  const ampm = (h, m) => `${h < 12 ? "오전" : "오후"} ${h % 12 || 12}:${pad(m)}`;
+  function updateClock() {
+    const n = vnow(), h = n.getHours(), m = pad(n.getMinutes());
+    $("#status-time").textContent = vt.h24 ? `${pad(h)}:${m}` : `${h % 12 || 12}:${m}`;
+    $("#lock-clock").textContent = vt.h24 ? `${h}:${m}` : `${h % 12 || 12}:${m}`;
+    $("#lock-date").textContent = n.toLocaleDateString("ko-KR", { month: "long", day: "numeric", weekday: "long" });
+    const cd = $("#cal-day"), cw = $("#cal-wd"); if (cd) { cd.textContent = n.getDate(); cw.textContent = WD[n.getDay()] + "요일"; }
+    if (state.view === "app" && state.app === "clock" && xs.clockTab === "world") renderClock();
+  }
+  const xs = { calSel: null, calY: null, calM: null, clockTab: "world", swRun: false, swStart: 0, swAcc: 0, laps: [], setPage: "main", safari: null,
+    alarms: [{ t: "오전 5:00", l: "기상", on: true }, { t: "오전 5:10", l: "알람", on: true }, { t: "오전 6:00", l: "알람", on: false }],
+    tg: { air: false, wifi: true, bt: true, dnd: false } };
+  // 캘린더 일정: d = 오늘 기준 며칠 뒤(음수는 과거), 자유롭게 추가/수정하세요
+  const CAL_EVENTS = [
+    { d: 1, t: "오전 6:30", title: "콜타임 (차량 5:50 도착)", c: "#ff3b30" },
+    { d: 1, t: "오후 2:00", title: "32씬 촬영", c: "#ff9500" },
+    { d: 3, t: "오후 2:00", title: "대본 리딩 · 3층 회의실", c: "#34c759" },
+    { d: 5, t: "하루 종일", title: "제작발표회", c: "#007aff" }
+  ];
+  // Safari에 미리 만들어 둘 페이지: { "주소나 검색어": "<html 내용>" }
+  const SAFARI_PAGES = {};
+  const FAVS = [["Google", "#4285f4", "G"], ["네이버", "#03c75a", "N"], ["YouTube", "#ff0000", "▶"], ["Instagram", "#e1306c", "◎"], ["나무위키", "#00a495", "나"], ["TVING", "#ff153c", "T"], ["Melon", "#00cd3c", "M"], ["쿠팡", "#e44232", "C"]];
+  const I = { chev: '<svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg>', back: '<svg viewBox="0 0 24 24"><path d="m15 4.5-7.5 7.5 7.5 7.5"/></svg>' };
+  const body = (cls, h) => { $("#app-content").innerHTML = `<div class="xa ${cls}">${h}</div>`; };
+  const sw = (k, on) => `<span class="xsw${on ? " on" : ""}" data-x="tg" data-k="${k}"><i></i></span>`;
+
+  function renderCalendar() {
+    const now = vnow(), today = ymd(now);
+    if (xs.calY === null) { xs.calY = now.getFullYear(); xs.calM = now.getMonth(); xs.calSel = today; }
+    const first = new Date(xs.calY, xs.calM, 1).getDay(), days = new Date(xs.calY, xs.calM + 1, 0).getDate();
+    const ev = CAL_EVENTS.map((e) => ({ ...e, key: ymd(addDays(now, e.d)) }));
+    let cells = "<span></span>".repeat(first);
+    for (let d = 1; d <= days; d++) {
+      const key = `${xs.calY}-${pad(xs.calM + 1)}-${pad(d)}`, dot = ev.some((e) => e.key === key);
+      cells += `<button data-x="calsel" data-k="${key}" class="cd${key === today ? " today" : ""}${key === xs.calSel ? " sel" : ""}${(first + d - 1) % 7 === 0 ? " sun" : ""}"><b>${d}</b><i class="${dot ? "dot" : ""}"></i></button>`;
+    }
+    const list = ev.filter((e) => e.key === xs.calSel), sd = new Date(xs.calSel + "T00:00");
+    body("cal", `<div class="cal-top"><button data-x="calnav" data-k="-1" class="xl">${I.back}${xs.calY}년</button><span class="cal-m">${xs.calM + 1}월</span><button data-x="calnav" data-k="1" class="xl r">${I.chev}</button></div>
+      <div class="cal-wk">${[...WD].map((w, i) => `<span class="${i ? "" : "sun"}">${w}</span>`).join("")}</div><div class="cal-grid">${cells}</div>
+      <div class="cal-day">${sd.getMonth() + 1}월 ${sd.getDate()}일 ${WD[sd.getDay()]}요일</div>
+      ${list.length ? list.map((e) => `<div class="cal-ev"><u style="background:${e.c}"></u><div><b>${escapeHTML(e.title)}</b><small>${e.t}</small></div></div>`).join("") : '<div class="cal-none">일정 없음</div>'}`);
+  }
+
+  const CITIES = [["서울", "Asia/Seoul"], ["뉴욕", "America/New_York"], ["런던", "Europe/London"], ["도쿄", "Asia/Tokyo"], ["파리", "Europe/Paris"]];
+  const swMs = () => xs.swAcc + (xs.swRun ? Date.now() - xs.swStart : 0);
+  const swFmt = (ms) => `${pad(Math.floor(ms / 60000))}:${pad(Math.floor(ms / 1000) % 60)}.${pad(Math.floor(ms / 10) % 100)}`;
+  function renderClock() {
+    const t = xs.clockTab, now = vnow(), tabs = [["world", "세계 시계"], ["alarm", "알람"], ["sw", "스톱워치"]];
+    const off = (tz) => new Date(now.toLocaleString("en-US", { timeZone: tz })) - new Date(now.toLocaleString("en-US", { timeZone: "UTC" })), wall = (tz) => new Date(+now + off(tz) - off("Asia/Seoul"));
+    let main = "";
+    if (t === "world") main = `<h1 class="xt">세계 시계</h1>` + CITIES.map(([c, tz]) => { const w = wall(tz), s = wall("Asia/Seoul"), diff = Math.round((w - s) / 36e5), dd = w.getDate() === s.getDate() ? "오늘" : w > s ? "내일" : "어제"; return `<div class="wc"><div><small>${dd}, ${diff >= 0 ? "+" : ""}${diff}시간</small><b>${c}</b></div><span>${ampm(w.getHours(), w.getMinutes())}</span></div>`; }).join("");
+    else if (t === "alarm") main = `<h1 class="xt">알람</h1>` + xs.alarms.map((a, i) => `<div class="wc"><div><span class="al ${a.on ? "" : "off"}">${a.t}</span><small>${a.l}</small></div><span class="xsw${a.on ? " on" : ""}" data-x="alarm" data-k="${i}"><i></i></span></div>`).join("");
+    else main = `<div class="swb"><div class="swt" id="sw-time">${swFmt(swMs())}</div><div class="swr"><button data-x="swlap" class="xb gray">${xs.swRun ? "랩" : "재설정"}</button><button data-x="swgo" class="xb ${xs.swRun ? "red" : "green"}">${xs.swRun ? "중단" : "시작"}</button></div>${xs.laps.map((l, i) => `<div class="wc"><span>랩 ${xs.laps.length - i}</span><span>${swFmt(l)}</span></div>`).join("")}</div>`;
+    body("clk", `<div class="clk-main">${main}</div><nav class="xtab">${tabs.map(([k, l]) => `<button data-x="ctab" data-k="${k}" class="${k === t ? "on" : ""}">${l}</button>`).join("")}</nav>`);
+  }
+  setInterval(() => { const e = $("#sw-time"); if (e && xs.swRun) e.textContent = swFmt(swMs()); }, 40);
+
+  function renderSafari() {
+    if (xs.safari) {
+      const key = xs.safari, page = SAFARI_PAGES[key];
+      body("saf", `<div class="saf-page">${page || `<div class="saf-err"><h2>Safari가 페이지를 열 수 없습니다.</h2><p>iPhone이 인터넷에 연결되어 있지 않은 것 같습니다.</p></div>`}</div>
+        <div class="saf-bar"><button data-x="safhome" class="xl">${I.back}</button><div class="saf-url" id="saf-url">${escapeHTML(key)}</div></div>`); return;
+    }
+    body("saf", `<div class="saf-page"><h2>즐겨찾기</h2><div class="saf-fav">${FAVS.map(([n, c, g]) => `<button data-x="safgo" data-k="${n}"><span style="background:${c}">${g}</span>${n}</button>`).join("")}</div></div>
+      <div class="saf-bar"><form class="saf-url" id="saf-form"><input id="saf-in" placeholder="검색 또는 웹사이트 이름 입력" autocomplete="off"></form></div>`);
+    $("#saf-form").addEventListener("submit", (e) => { e.preventDefault(); const v = $("#saf-in").value.trim(); if (v) { xs.safari = v; renderSafari(); } });
+  }
+
+  const row = (ic, bg, label, right = "", act = "") => `<div class="sr${act ? " tap" : ""}" ${act ? `data-x="spage" data-k="${act}"` : ""}><u style="background:${bg}">${ic}</u><span>${label}</span><em>${right}</em>${act ? I.chev : ""}</div>`;
+  function renderSettings() {
+    const p = xs.setPage, now = vnow();
+    if (p === "main") body("set", `<h1 class="xt">설정</h1><div class="sg"><div class="sr prof"><span class="pa">안</span><div><b>안시현</b><small>Apple ID, iCloud+, 미디어 및 구입</small></div>${I.chev}</div></div>
+      <div class="sg"><div class="sr"><u style="background:#ff9500">✈︎</u><span>비행기 모드</span>${sw("air", xs.tg.air)}</div>${row("◉", "#007aff", "Wi-Fi", xs.tg.wifi ? "SK_WiFi_5G" : "끔", "x")}${row("ᛒ", "#007aff", "Bluetooth", xs.tg.bt ? "켬" : "끔", "x")}${row("◍", "#34c759", "셀룰러", "", "x")}</div>
+      <div class="sg">${row("●", "#ff3b30", "알림", "", "x")}${row("♪", "#ff2d55", "사운드 및 햅틱", "", "x")}${row("☾", "#5856d6", "집중 모드", xs.tg.dnd ? "방해 금지 모드" : "", "x")}${row("⧗", "#5856d6", "스크린 타임", "", "x")}</div>
+      <div class="sg">${row("⚙︎", "#8e8e93", "일반", "", "general")}${row("▦", "#007aff", "제어 센터", "", "x")}${row("☀︎", "#007aff", "디스플레이 및 밝기", "", "x")}${row("✿", "#34aadc", "배경화면", "", "x")}${row("◔", "#34c759", "배터리", "100%", "x")}${row("✋", "#007aff", "개인정보 보호 및 보안", "", "x")}</div>`);
+    else if (p === "general") body("set", `<div class="snav"><button data-x="spage" data-k="main" class="xl">${I.back}설정</button><b>일반</b><span></span></div><div class="sg">${row("", "transparent", "정보", "", "x")}${row("", "transparent", "소프트웨어 업데이트", "", "x")}</div><div class="sg">${row("", "transparent", "AirDrop", "", "x")}${row("", "transparent", "CarPlay", "", "x")}</div><div class="sg">${row("", "transparent", "키보드", "", "x")}${row("", "transparent", "언어 및 지역", "", "x")}${row("", "transparent", "날짜 및 시간", "", "dt")}</div>`);
+    else if (p === "dt") body("set", `<div class="snav"><button data-x="spage" data-k="general" class="xl">${I.back}일반</button><b>날짜 및 시간</b><span></span></div>
+      <div class="sg"><div class="sr"><span>24시간제</span>${sw("h24", vt.h24)}</div><div class="sr"><span>자동으로 설정</span>${sw("auto", vt.auto)}</div></div>
+      ${vt.auto ? '<p class="sn">이 기기의 실제 현재 시각을 사용합니다.</p>' : `<div class="sg"><div class="sr"><span>날짜</span><input type="date" id="vt-date" value="${ymd(now)}"></div><div class="sr"><span>시간</span><input type="time" id="vt-time" value="${pad(now.getHours())}:${pad(now.getMinutes())}"></div></div>
+      <div class="sg"><div class="sr"><span>시간 멈추기 <small>(촬영용)</small></span>${sw("frozen", vt.frozen !== null)}</div></div><p class="sn">여기서 정한 시각부터 시계가 흘러갑니다. 상태 표시줄, 잠금 화면, 캘린더, 시계, 메모에 반영돼요.</p>`}`);
+    else body("set", `<div class="snav"><button data-x="spage" data-k="main" class="xl">${I.back}설정</button><b>설정</b><span></span></div><p class="sn" style="margin-top:40px;text-align:center">이 화면은 데모에서 사용되지 않아요.</p>`);
+    const dd = $("#vt-date"), tt = $("#vt-time"); if (dd) { const ch = () => { const d = new Date(`${dd.value}T${tt.value || "00:00"}`); if (!isNaN(d)) setVTime(d); }; dd.onchange = tt.onchange = ch; }
+  }
+
+  const ACT = {
+    calsel: (t) => { xs.calSel = t.dataset.k; renderCalendar(); },
+    calnav: (t) => { xs.calM += +t.dataset.k; if (xs.calM < 0) { xs.calM = 11; xs.calY--; } if (xs.calM > 11) { xs.calM = 0; xs.calY++; } renderCalendar(); },
+    ctab: (t) => { xs.clockTab = t.dataset.k; renderClock(); },
+    alarm: (t) => { const a = xs.alarms[+t.dataset.k]; a.on = !a.on; renderClock(); },
+    swgo: () => { if (xs.swRun) { xs.swAcc = swMs(); xs.swRun = false; } else { xs.swStart = Date.now(); xs.swRun = true; } renderClock(); },
+    swlap: () => { if (xs.swRun) xs.laps.unshift(swMs()); else { xs.swAcc = 0; xs.laps = []; } renderClock(); },
+    safgo: (t) => { xs.safari = t.dataset.k; renderSafari(); },
+    safhome: () => { xs.safari = null; renderSafari(); },
+    spage: (t) => { xs.setPage = t.dataset.k; renderSettings(); },
+    tg: (t) => { const k = t.dataset.k, n = vnow();
+      if (k === "h24") vt.h24 = !vt.h24;
+      else if (k === "auto") { vt.auto = !vt.auto; if (vt.auto) { vt.off = 0; vt.frozen = null; } else vt.off = Date.parse(VT_DEFAULT) - Date.now(); }
+      else if (k === "frozen") vt.frozen = vt.frozen === null ? +n : null;
+      else xs.tg[k] = !xs.tg[k];
+      vtSave(); updateClock(); renderSettings(); }
+  };
+  $("#app-content").addEventListener("click", (e) => { const t = e.target.closest("[data-x]"); if (t && t.closest(".xa") && ACT[t.dataset.x]) ACT[t.dataset.x](t); });
+  const XAPPS = { calendar: renderCalendar, clock: renderClock, safari: renderSafari, settings: renderSettings };
+  Object.assign(appTitles, { calendar: "캘린더", clock: "시계", safari: "Safari", settings: "설정" });
+
   updateClock();
-  setInterval(updateClock, 30000);
+  setInterval(updateClock, 1000);
   $("#unread-dot").classList.toggle("hidden", !state.unread);
 })();
