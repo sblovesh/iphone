@@ -119,7 +119,8 @@
     toast.innerHTML = "";
     if (kind === "kakao") {
       toast.classList.add("kakao-notification");
-      toast.innerHTML = '<span class="kakao-notify-icon">●</span><span class="kakao-notify-copy"><strong>카카오톡</strong><span>' + escapeHTML(message.replace(/^카카오톡 · /, "")) + '</span></span><time>지금</time>';
+      { const m = /^카카오톡 · (.+?)(?:: (.*)|이 사진을 보냈어요)$/.exec(message) || []; const who = m[1] || "서빈 형", body = m[2] !== undefined ? m[2] : "사진을 보냈습니다.";
+        toast.innerHTML = '<img class="kakao-notify-icon" src="kakao-icon.svg" alt=""><span class="kakao-notify-copy"><strong>' + escapeHTML(who) + '</strong><span>' + escapeHTML(body) + '</span></span><time>지금</time>'; }
       toast.onclick = () => { toast.classList.remove("show"); openApp("kakao"); state.activeChat = "seobin"; renderKakao(); };
       toast.style.pointerEvents = "auto";
     } else {
@@ -210,7 +211,7 @@
     state.activeChat = null;
     state.activePhoto = null;
     state.activeNote = null;
-    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "photo-viewing", "phone-mode", "ig-mode");
+    $("#app-screen").classList.remove("photos-mode", "kakao-mode", "kakao-on", "kakao-room", "photo-viewing", "phone-mode", "ig-mode");
     if (app === "calls") { phoneState.tab = "recents"; phoneState.filter = "all"; phoneState.detail = null; phoneState.query = ""; }
     $("#header-action").onclick = null;
     $("#app-title").textContent = appTitles[app] || "앱";
@@ -431,40 +432,102 @@
 
   function kakaoAvatar(chat, small = false) { return chat.photo ? `<img class="kakao-avatar-img ${small ? "small" : ""}" src="${chat.photo}" alt="${escapeHTML(chat.name)} 프로필">` : `<img class="kakao-avatar-img ${small ? "small" : ""}" src="avatar-default.jpg" alt="${escapeHTML(chat.name)} 프로필">`; }
 
+  // ===== v31: 실제 카카오톡 UI =====
+  const KT = {
+    search: '<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.3"/><path d="m15.4 15.4 5 5"/></svg>',
+    newChat: '<svg viewBox="0 0 24 24"><path d="M12 4.2c-4.6 0-8.2 3-8.2 6.9 0 2.2 1.2 4.1 3 5.4l-.7 3.4 3.6-2.1c.7.1 1.5.2 2.3.2 4.6 0 8.2-3 8.2-6.9"/><path d="M18.5 2.8v5.4M15.8 5.5h5.4"/></svg>',
+    gear: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.1"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
+    back: '<svg viewBox="0 0 24 24"><path d="m15 4.5-7.5 7.5 7.5 7.5"/></svg>',
+    menu: '<svg viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>',
+    plus: '<svg viewBox="0 0 24 24"><path d="M12 4.5v15M4.5 12h15"/></svg>',
+    smile: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M8.2 14.2c.9 1.5 2.2 2.3 3.8 2.3s2.9-.8 3.8-2.3"/><circle cx="9.1" cy="9.8" r=".6" fill="currentColor"/><circle cx="14.9" cy="9.8" r=".6" fill="currentColor"/></svg>',
+    hash: '<svg viewBox="0 0 24 24"><path d="M9.5 4 8 20M16 4l-1.5 16M5 9h15M4 15h15"/></svg>',
+    send: '<svg viewBox="0 0 24 24"><path d="M12 19V5.5M6 11.5l6-6 6 6"/></svg>',
+    tabFriends: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.9"/><path d="M4.6 20.2c.5-4 3.5-6.1 7.4-6.1s6.9 2.1 7.4 6.1"/></svg>',
+    tabChat: '<svg viewBox="0 0 24 24"><path d="M12 3.4c-5 0-9 3.3-9 7.4 0 2.6 1.6 4.9 4 6.2l-.9 3.6 4-2.4c.6.1 1.3.2 1.9.2 5 0 9-3.3 9-7.4S17 3.4 12 3.4z" fill="currentColor" stroke="none"/></svg>',
+    tabOpen: '<svg viewBox="0 0 24 24"><path d="M12 3.6c-4.7 0-8.4 3-8.4 6.8 0 2.2 1.2 4.1 3.2 5.3l-.6 3.4 3.5-2c.7.1 1.5.2 2.3.2 4.7 0 8.4-3 8.4-6.9S16.700 3.600 12 3.600z"/><circle cx="8.400" cy="10.300" r=".9" fill="currentColor"/><circle cx="12" cy="10.300" r=".9" fill="currentColor"/><circle cx="15.600" cy="10.300" r=".9" fill="currentColor"/></svg>',
+    tabShop: '<svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.600a3 3 0 0 1 6 0V8"/></svg>',
+    tabMore: '<svg viewBox="0 0 24 24"><circle cx="5.500" cy="12" r="1.600" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.600" fill="currentColor" stroke="none"/><circle cx="18.500" cy="12" r="1.600" fill="currentColor" stroke="none"/></svg>'
+  };
+  const ktGroupCount = { agency: 4, fanclub: 7, college: 12 };
+  const ktUnread = () => ({ seobin: state.unread ? 1 : 0, agency: 2, coactor: 1, fanclub: 12, college: 5 });
+  const ktLastTime = (chat) => { for (let i = chat.messages.length - 1; i >= 0; i--) { const m = chat.messages[i]; if (m.from !== "date" && m.time) return m.time; } return chat.time === "방금" ? "" : chat.time; };
+  const ktDate = (text) => { const m = /(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/.exec(text); if (!m || /요일/.test(text)) return text; return text + " " + "일월화수목금토"[new Date(+m[1], +m[2] - 1, +m[3]).getDay()] + "요일"; };
+  const ktSenderKind = (m) => (m.from === "photo" ? "incoming" : m.from);
+
   function renderKakao() {
     const content = $("#app-content");
-    $("#app-title").textContent = state.activeChat ? (state.messages.find((item) => item.id === state.activeChat)?.name || "채팅") : "채팅";
-    $("#app-screen").classList.toggle("kakao-mode", !state.activeChat);
-    $("#header-action").textContent = state.activeChat ? "" : "＋";
+    const appEl = $("#app-screen");
+    appEl.classList.add("kakao-on");
+    appEl.classList.toggle("kakao-room", !!state.activeChat);
+    $("#header-action").textContent = "";
     if (state.activeChat) {
       if (state.activeChat === "seobin") { state.unread = false; $("#unread-dot").classList.add("hidden"); }
       const chat = state.messages.find((item) => item.id === state.activeChat);
       if (!chat) { state.activeChat = null; renderKakao(); return; }
+      const msgs = chat.messages;
+      let lastIncoming = -1; msgs.forEach((m, i) => { if (ktSenderKind(m) === "incoming") lastIncoming = i; });
+      const rows = msgs.map((m, i) => {
+        if (m.from === "date") return `<div class="kt-date">${escapeHTML(ktDate(m.text))}</div>`;
+        const kind = ktSenderKind(m), prev = msgs[i - 1], next = msgs[i + 1];
+        const sameRun = (o) => o && o.from !== "date" && ktSenderKind(o) === kind && !!o.time && o.time === m.time;
+        const first = !sameRun(prev), last = !sameRun(next);
+        const body = m.from === "photo"
+          ? `<div class="kt-photo"><img src="${m.text}" alt="사진"></div>`
+          : `<div class="kt-bubble ${kind}${first ? " tail" : ""}">${escapeHTML(m.text).replace(/\n/g, "<br>")}</div>`;
+        const unread1 = kind === "outgoing" && i > lastIncoming;
+        const meta = `<span class="kt-meta">${unread1 ? '<b class="kt-unread">1</b>' : ""}${last && m.time ? `<time>${escapeHTML(m.time)}</time>` : ""}</span>`;
+        if (kind === "outgoing") return `<div class="kt-row outgoing${first ? " first" : ""}">${meta}${body}</div>`;
+        return `<div class="kt-row incoming${first ? " first" : ""}">${first ? kakaoAvatar(chat, true).replace("kakao-avatar-img", "kt-avatar") : '<span class="kt-avatar-gap"></span>'}<div class="kt-col">${first ? `<div class="kt-name">${escapeHTML(chat.name)}</div>` : ""}<div class="kt-line">${body}${meta}</div></div></div>`;
+      }).join("");
+      const gc = ktGroupCount[chat.id];
+      const finished = chat.id === "seobin" && seobinScenario === "finished";
       content.innerHTML = `
-        <div class="kakao-chat-screen">
-          <div class="kakao-chat-log" id="kakao-chat-log">
-            ${chat.messages.map((message) => message.from === "date" ? `<div class="kakao-date">${escapeHTML(message.text)}</div>` : message.from === "photo" ? `<div class="kakao-message-photo incoming">${kakaoAvatar(chat, true)}<img src="${message.text}" alt="서빈 형이 보낸 사진"></div>` : `<div class="kakao-message-wrap ${message.from}">${message.from === "incoming" ? kakaoAvatar(chat, true) : ""}${message.from === "incoming" ? `<div class="kakao-message-body"><strong class="kakao-sender-name">${escapeHTML(chat.name)}</strong><div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div></div>` : `<div class="kakao-message ${message.from}">${escapeHTML(message.text).replace(/\n/g, "<br>")}</div>`}${message.time ? `<small class="kakao-message-time">${escapeHTML(message.time)}</small>` : ""}</div>`).join("")}
+        <div class="kt-room-screen">
+          <div class="kt-room-head">
+            <button type="button" class="kt-ic back" id="kt-back" aria-label="뒤로">${KT.back}</button><span class="kt-back-count">289</span>
+            <div class="kt-room-title"><strong>${escapeHTML(chat.name)}</strong>${gc ? `<em>${gc}</em>` : ""}</div>
+            <span class="kt-ic">${KT.search}</span><span class="kt-ic">${KT.menu}</span>
           </div>
+          <div class="kt-log" id="kakao-chat-log">${rows}</div>
           ${chat.id === "seobin" && seobinScenario === "received" ? `<div class="seobin-quick-replies"><button type="button" id="seobin-quick-reply">저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?</button></div>` : ""}
-          <form class="kakao-compose" id="kakao-form"><button type="button" aria-label="첨부">＋</button><input id="kakao-input" maxlength="300" placeholder="${chat.id === "seobin" && seobinScenario === "finished" ? "서빈 형은 자고 있어요…" : "메시지 입력"}" autocomplete="off"><button type="submit" aria-label="보내기">➤</button></form>
+          <form class="kt-compose" id="kakao-form">
+            <button type="button" class="kt-plus" aria-label="첨부">${KT.plus}</button>
+            <div class="kt-field"><input id="kakao-input" maxlength="300" placeholder="${finished ? "서빈 형은 자고 있어요…" : ""}" autocomplete="off"><span class="kt-smile">${KT.smile}</span></div>
+            <button type="button" class="kt-hash" id="kt-hash" aria-label="샵검색">${KT.hash}</button>
+            <button type="submit" class="kt-send" id="kt-send" aria-label="전송">${KT.send}</button>
+          </form>
         </div>`;
-      const log = $("#kakao-chat-log"); log.scrollTop = log.scrollHeight;
+      const log = $("#kakao-chat-log"); const toBottom = () => { log.scrollTop = log.scrollHeight; }; toBottom(); requestAnimationFrame(toBottom); log.querySelectorAll("img").forEach((im) => { if (!im.complete) im.addEventListener("load", toBottom); });
+      $("#kt-back").addEventListener("click", () => { state.activeChat = null; renderKakao(); });
       const quickReply = $("#seobin-quick-reply"); if (quickReply) quickReply.addEventListener("click", startSeobinSleepStory);
-      $("#kakao-form").addEventListener("submit", (event) => {
-        event.preventDefault(); const input = $("#kakao-input"); const value = input.value.trim(); if (!value) return;
-        chat.messages.push({ from: "outgoing", text: value, time: kakaoTime() }); chat.preview = value; chat.time = "방금"; if(chat.id === "seobin") saveSeobinChat(); renderKakao();
+      const input = $("#kakao-input"), form = $("#kakao-form");
+      input.addEventListener("input", () => form.classList.toggle("has-text", input.value.trim().length > 0));
+      form.addEventListener("submit", (event) => {
+        event.preventDefault(); const value = input.value.trim(); if (!value) return;
+        chat.messages.push({ from: "outgoing", text: value, time: kakaoTime() }); chat.preview = value; chat.time = "방금"; if (chat.id === "seobin") saveSeobinChat(); renderKakao();
       });
       return;
     }
+    const unreadMap = ktUnread();
     content.innerHTML = `
-      <div class="kakao-top-actions"><span>⌕</span><span>☏＋</span><span>⚙</span></div>
-      <div class="kakao-filters"><b>전체</b><span>안읽음 <i>289</i></span><span>ChatGPT</span><span>통화</span><span>☷</span></div>
-      <div class="kakao-ad"><small>AD</small><strong>찬 바람 불면 우울한가요?</strong><span>계절성 우울증인지 확인하기</span></div>
-      <div class="kakao-list-label">채팅 ${state.messages.length}</div>
-      <div class="kakao-list">
-        ${state.messages.map((chat) => `<button class="kakao-row" data-kakao-chat="${chat.id}">${kakaoAvatar(chat)}<span class="kakao-row-main"><strong>${escapeHTML(chat.name)}</strong><span>${escapeHTML(chat.preview)}</span></span><span class="kakao-row-meta">${escapeHTML(chat.time)}<i>1</i></span></button>`).join("")}
-      </div>
-      <div class="kakao-bottom-tabs"><span>♙<small>친구</small></span><span class="selected">▤<small>채팅</small></span><span>◉<small>오픈채팅</small></span><span>◷<small>쇼핑</small></span><span>•••<small>더보기</small></span></div>`;
+      <div class="kt-list-screen">
+        <div class="kt-head"><h2>채팅</h2><span class="kt-ic">${KT.search}</span><span class="kt-ic">${KT.newChat}</span><span class="kt-ic">${KT.gear}</span></div>
+        <div class="kt-chips"><b>전체</b><span>안읽음 <i>289</i></span><span>ChatGPT</span><span>통화</span><span>즐겨찾기</span></div>
+        <div class="kt-scroll">
+          <div class="kt-ad"><small>AD</small><strong>찬 바람 불면 우울한가요?</strong><span>계절성 우울증인지 확인하기</span></div>
+          <div class="kt-list">
+            ${state.messages.map((chat) => { const n = unreadMap[chat.id] || 0, gc = ktGroupCount[chat.id]; return `<button class="kt-item" data-kakao-chat="${chat.id}">${kakaoAvatar(chat).replace("kakao-avatar-img", "kt-avatar big")}<span class="kt-item-main"><span class="kt-item-name"><strong>${escapeHTML(chat.name)}</strong>${gc ? `<em>${gc}</em>` : ""}</span><span class="kt-item-prev">${escapeHTML(chat.preview)}</span></span><span class="kt-item-meta"><time>${escapeHTML(ktLastTime(chat))}</time>${n ? `<i>${n}</i>` : ""}</span></button>`; }).join("")}
+          </div>
+        </div>
+        <nav class="kt-tabs">
+          <span class="kt-tab" aria-label="친구">${KT.tabFriends}</span>
+          <span class="kt-tab sel" aria-label="채팅">${KT.tabChat}<i>99+</i></span>
+          <span class="kt-tab" aria-label="오픈채팅">${KT.tabOpen}</span>
+          <span class="kt-tab" aria-label="쇼핑">${KT.tabShop}</span>
+          <span class="kt-tab" aria-label="더보기">${KT.tabMore}</span>
+        </nav>
+      </div>`;
     content.querySelectorAll("[data-kakao-chat]").forEach((button) => button.addEventListener("click", () => { if (!["seobin", "uyeon"].includes(button.dataset.kakaoChat)) return; state.activeChat = button.dataset.kakaoChat; renderKakao(); }));
   }
 
@@ -501,7 +564,7 @@
   const igDmSent = [];
   function renderInstagram() {
     const content = $("#app-content");
-    $("#app-screen").classList.remove("kakao-mode");
+    $("#app-screen").classList.remove("kakao-mode", "kakao-on", "kakao-room");
     const defaultAvatar = '<img class="ig-avatar-photo" src="avatar-default.jpg" alt="프로필">';
     const seobinAvatar = '<img class="ig-avatar-photo" src="instagram-seobin.jpg" alt="서빈 프로필">';
     const dmItems = [
