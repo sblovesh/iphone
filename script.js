@@ -205,7 +205,7 @@
     state.activePhoto = null;
     state.activeNote = null;
     $("#app-screen").classList.remove("photos-mode", "kakao-mode", "kakao-on", "kakao-room", "no-hdr", "photo-viewing", "phone-mode", "ig-mode");
-    if (app === "messages" || app === "notes" || app === "bubble" || ["calendar","clock","safari","settings"].includes(app)) $("#app-screen").classList.add("no-hdr");
+    if (app === "messages" || app === "notes" || app === "bubble" || ["calendar","clock","safari","settings","setlog"].includes(app)) $("#app-screen").classList.add("no-hdr");
     if (app === "calls") { phoneState.tab = "recents"; phoneState.filter = "all"; phoneState.detail = null; phoneState.query = ""; }
     $("#header-action").onclick = null;
     $("#app-title").textContent = appTitles[app] || "앱";
@@ -245,20 +245,20 @@
 
   // 스토커 문자 스레드: 최근 통화 기록의 번호와 동일 (STALKER 번호 3개)
   const stalkerThreads = {
-    "010-4827-3391": [
+    "010#1": [
       ["일요일 오후 3:38", ["시현아 나야", "왜 전화 안 받아", "받을 때까지 건다 지금"]],
       ["일요일 오후 3:55", ["9번 걸었다", "9번이야 시발 9번", "내가 너 때문에 일도 못 나가고 있는데 넌 뭐가 그렇게 바쁜데", "촬영? 웃기네 어제 편의점에서 삼각김밥 처먹던 새끼가"]],
       ["어제 오후 11:30", ["집 여기 맞네. 불 켜지는 거 확인했어", "오늘은 왜 이렇게 늦게 들어왔어?", "자는 척 하지 마 병신아 다 보여", "읽씹하면 나도 방법 있어"]],
       ["어제 오후 11:41", ["전화 5번 받아주면 어디 덧나냐", "내가 너한테 쓴 돈이 얼마인데 촬영장 커피차만 세 번 보냈다 씨발", "팬이면 개새끼 취급해도 되는 줄 알아?", "니네 집 쓰레기 봉투 가져왔다 컵라면 국물 다 새서 손에 묻었네 ㅋㅋ 니 건데 뭐 괜찮아", "몸 생각해서 좀 챙겨 먹어 이 새끼야 내가 얼마나 걱정하는데"]],
       ["오늘 오후 9:50", ["7번", "어제 집 앞에서 두 시간 기다렸어. 커튼 사이로 보이던데 왜 연락 안 받아?", "나 지금 니네 집 앞이야", "문 열어", "열라고 씨발", "나 이렇게까지 만들지 마", "사랑해서 그러는 거잖아 왜 몰라줘 개같이", "안 열면 내가 어떻게 할지 나도 몰라"]]
     ],
-    "010-2095-7746": [
+    "010#2": [
       ["목요일 오전 3:05", ["안 자지?", "새벽엔 폰 보잖아 니가 인스타 올리는 시간 나 다 알아", "나 지금 니 소속사 건물 앞 편의점이야"]],
       ["목요일 오전 3:20", ["전화 11번 했는데 왜 안 받아", "받아 받아 받아 받아 받아", "받아라 개새끼야"]],
       ["오늘 오후 4:20", ["단골 카페 바꿨더라. 피해 다녀도 소용없어. 어디 가는지 다 알고 있으니까", "오늘 촬영장 뒤편에서 기다린 거 봤지? 모른 척하지 마", "나만큼 오래 좋아한 사람 없잖아", "다른 것들은 다 가짜야 니 사생활 쫓아다니는 쓰레기들이지 나는 달라"]],
       ["오늘 오후 4:25", ["너는 나만 알아야 되는데", "내일도 간다"]]
     ],
-    "010-6613-0584": [
+    "010#3": [
       ["금요일 오후 7:31", ["시현 배우님 맞으시죠?", "저 진짜 오래전부터 팬이었어요"]],
       ["토요일 오후 6:10", ["숙소 주소 알아냈어요", "선물 보냈으니까 꼭 받아요"]],
       ["어제 오후 2:30", ["택배 받았죠?", "안 뜯었어요? 제가 직접 만든 건데", "지금 뜯어요 뜯는 거 보고 싶으니까"]],
@@ -267,29 +267,29 @@
   };
   const stalkerPreview = (n) => { const t = stalkerThreads[n]; const last = t[t.length - 1][1]; return last[last.length - 1]; };
   const smsPreviews = [
-    {name:"010-4827-3391", time:"오후 9:50", thread:"010-4827-3391"},
+    {name:"010-xxxx-xxxx", time:"오후 9:50", thread:"010#1"},
     {name:"우연 형", time:"오후 8:42", preview:"카톡 확인해. 전화도 안 받네. 내일 콜타임 06:30, 차는 5:50에 도착할게."},
-    {name:"1588-2034", time:"오후 8:17", preview:"(광고) 고객님만을 위한 한도 조회, 지금 바로 확인하세요."},
+    {name:"1588-xxxx", time:"오후 8:17", preview:"(광고) 고객님만을 위한 한도 조회, 지금 바로 확인하세요."},
     {name:"조연출 박성민", time:"오후 7:56", preview:"내일 32씬 대본 수정본 전달드립니다. 확인 부탁드려요."},
     {name:"소속사 홍보팀", time:"오후 6:48", preview:"인터뷰 기사 초안 보내드렸습니다. 인용문만 체크해주세요."},
     {name:"수연 실장님", time:"오후 6:15", preview:"내일 제작발표회 착장 최종안 공유드려요!"},
-    {name:"+63 917 555 0142", time:"오후 5:59", preview:"[국제발신] 축하합니다! 경품 수령을 위해 링크를 확인하세요."},
+    {name:"+63 xxx xxx xxxx", time:"오후 5:59", preview:"[국제발신] 축하합니다! 경품 수령을 위해 링크를 확인하세요."},
     {name:"캐스팅 디렉터", time:"오후 5:26", preview:"차기작 미팅 일정 관련해 연락드렸습니다."},
     {name:"광고대행사 윤 담당자", time:"오후 4:41", preview:"브랜드 캠페인 제안서와 촬영 가이드 전달드립니다."},
-    {name:"010-2095-7746", time:"오후 4:25", thread:"010-2095-7746"},
-    {name:"1588-0192", time:"오후 4:12", preview:"[Web발신] 배송 완료: 문 앞에 상품을 두었습니다."},
+    {name:"010-xxxx-xxxx", time:"오후 4:25", thread:"010#2"},
+    {name:"1588-xxxx", time:"오후 4:12", preview:"[Web발신] 배송 완료: 문 앞에 상품을 두었습니다."},
     {name:"영화제 사무국", time:"오후 3:14", preview:"초청 및 레드카펫 참석 여부 회신 부탁드립니다."},
-    {name:"02-3487-2290", time:"오후 2:23", preview:"[Web발신] [금융기관] 계좌 보호를 위해 본인 인증이 필요합니다."},
+    {name:"02-xxxx-xxxx", time:"오후 2:23", preview:"[Web발신] [금융기관] 계좌 보호를 위해 본인 인증이 필요합니다."},
     {name:"드라마 제작사 PD님", time:"오후 1:46", preview:"대본 리딩은 금요일 오후 2시, 3층 회의실입니다."},
-    {name:"1522-9041", time:"오후 12:54", preview:"(광고) 미납 요금이 있습니다. 즉시 납부하지 않으면 제한됩니다."},
+    {name:"1522-xxxx", time:"오후 12:54", preview:"(광고) 미납 요금이 있습니다. 즉시 납부하지 않으면 제한됩니다."},
     {name:"사진작가 도현", time:"오전 11:38", preview:"어제 화보 셀렉본 업로드했습니다. 마음에 드는 컷 골라주세요."},
-    {name:"02-6014-8832", time:"오전 9:44", preview:"[오디션 안내] 지정 대사와 캐릭터 설명을 첨부해드립니다."},
-    {name:"1544-7010", time:"오전 9:03", preview:"[Web발신] 해외 승인 1,280,000원. 본인 사용이 아니라면 문의 바랍니다."},
-    {name:"010-6613-0584", time:"어제", thread:"010-6613-0584"},
+    {name:"02-xxxx-xxxx", time:"오전 9:44", preview:"[오디션 안내] 지정 대사와 캐릭터 설명을 첨부해드립니다."},
+    {name:"1544-xxxx", time:"오전 9:03", preview:"[Web발신] 해외 승인 1,280,000원. 본인 사용이 아니라면 문의 바랍니다."},
+    {name:"010-xxxx-xxxx", time:"어제", thread:"010#3"},
     {name:"매니지먼트 팀장님", time:"어제", preview:"계약서 수정 사항 표시해 두었으니 확인 부탁합니다."},
     {name:"브랜드 협찬 담당자", time:"어제", preview:"신제품 협찬 관련 콘텐츠 업로드 일정 확인 부탁드립니다."},
     {name:"방송국 작가님", time:"어제", preview:"예능 출연 관련 사전 질문지를 보내드립니다."},
-    {name:"010-8841-2276", time:"어제", preview:"(광고) 연예인도 참여하는 비공개 급등주 정보방에 초대합니다."},
+    {name:"010-xxxx-xxxx", time:"어제", preview:"(광고) 연예인도 참여하는 비공개 급등주 정보방에 초대합니다."},
     {name:"세무 담당자", time:"월요일", preview:"종합소득세 자료 중 누락된 영수증이 있어 연락드렸습니다."}
   ];
 
@@ -336,7 +336,7 @@
       <div class="mt-screen">
         <div class="mt-nav">
           <button type="button" class="mt-back" id="mt-back">${NT_ICON.back}<span>메시지</span></button>
-          <div class="mt-who"><span class="mt-av">${MS_ICON.person}</span><small>${escapeHTML(num)} ${MS_ICON.chev}</small></div>
+          <div class="mt-who"><span class="mt-av">${MS_ICON.person}</span><small>${escapeHTML(showNum(num))} ${MS_ICON.chev}</small></div>
           <span class="mt-right"></span>
         </div>
         <div class="mt-log" id="mt-log">
@@ -905,39 +905,39 @@
 
   // ===== 전화 앱 (최근 통화 / 연락처 / 키패드 ...) =====
   const CONTACTS = [
-    {name:"서빈 형", phone:"010-3821-7745", photo:"avatar-seobin.jpg", fav:true},
-    {name:"우연 형", phone:"010-4417-2086", photo:"avatar-uyeon.jpg", fav:true, note:"매니저"},
-    {name:"엄마", phone:"010-9264-1103", fav:true},
-    {name:"아빠", phone:"010-9264-1108", fav:true},
-    {name:"할머니", phone:"010-5530-8841"},
-    {name:"김도윤 감독님", phone:"010-2748-6392", note:"<청춘 실종 사건> 감독"},
-    {name:"강하늘 선배님", phone:"010-7391-5520", note:"선배 배우"},
-    {name:"박서진 선배님", phone:"010-6205-4417", note:"선배 배우"},
-    {name:"고은채", phone:"010-3358-9071", note:"동료 배우"},
-    {name:"한지훈", phone:"010-8842-1356", note:"동료 배우"},
-    {name:"지훈이", phone:"010-5126-7739", note:"동료 배우", fav:true},
-    {name:"나유진", phone:"010-2093-6648", note:"동료 배우"},
-    {name:"동기 재현", phone:"010-7714-2205", note:"연기과 동기"},
-    {name:"소속사 대표님", phone:"010-4650-3187", note:"소속사"},
-    {name:"소속사 홍보팀", phone:"02-6021-4410", note:"소속사"},
-    {name:"매니지먼트 팀장님", phone:"010-3067-8294", note:"소속사"},
-    {name:"수연 실장님", phone:"010-9183-5546", note:"스타일리스트"},
-    {name:"은지 실장님", phone:"010-6672-0931", note:"헤어"},
-    {name:"다은 실장님", phone:"010-5409-7823", note:"메이크업"},
-    {name:"사진작가 도현", phone:"010-2281-4067", note:"화보 촬영"},
-    {name:"조연출 박성민", phone:"010-8035-6912", note:"제작팀"},
-    {name:"캐스팅 디렉터", phone:"010-4976-2358", note:"캐스팅"},
-    {name:"드라마 제작사 PD님", phone:"02-3412-7750", note:"제작사"},
-    {name:"방송국 작가님", phone:"010-7468-1624", note:"방송 작가"},
-    {name:"광고대행사 윤 담당자", phone:"010-3590-8176", note:"광고"},
-    {name:"브랜드 협찬 담당자", phone:"010-6841-2049", note:"협찬"},
-    {name:"영화제 사무국", phone:"02-780-3300", note:"영화제"},
-    {name:"세무 담당자", phone:"010-2714-9965", note:"세무"},
-    {name:"Ryan 트레이너", phone:"010-9507-3318", note:"헬스"},
-    {name:"Jenny 어학원", phone:"02-515-4472", note:"영어 회화"}
+    {name:"서빈 형", phone:"010-xxxx-xxxx", photo:"avatar-seobin.jpg", fav:true},
+    {name:"우연 형", phone:"010-xxxx-xxxx", photo:"avatar-uyeon.jpg", fav:true, note:"매니저"},
+    {name:"엄마", phone:"010-xxxx-xxxx", fav:true},
+    {name:"아빠", phone:"010-xxxx-xxxx", fav:true},
+    {name:"할머니", phone:"010-xxxx-xxxx"},
+    {name:"김도윤 감독님", phone:"010-xxxx-xxxx", note:"<청춘 실종 사건> 감독"},
+    {name:"강하늘 선배님", phone:"010-xxxx-xxxx", note:"선배 배우"},
+    {name:"박서진 선배님", phone:"010-xxxx-xxxx", note:"선배 배우"},
+    {name:"고은채", phone:"010-xxxx-xxxx", note:"동료 배우"},
+    {name:"한지훈", phone:"010-xxxx-xxxx", note:"동료 배우"},
+    {name:"지훈이", phone:"010-xxxx-xxxx", note:"동료 배우", fav:true},
+    {name:"나유진", phone:"010-xxxx-xxxx", note:"동료 배우"},
+    {name:"동기 재현", phone:"010-xxxx-xxxx", note:"연기과 동기"},
+    {name:"소속사 대표님", phone:"010-xxxx-xxxx", note:"소속사"},
+    {name:"소속사 홍보팀", phone:"02-xxxx-xxxx", note:"소속사"},
+    {name:"매니지먼트 팀장님", phone:"010-xxxx-xxxx", note:"소속사"},
+    {name:"수연 실장님", phone:"010-xxxx-xxxx", note:"스타일리스트"},
+    {name:"은지 실장님", phone:"010-xxxx-xxxx", note:"헤어"},
+    {name:"다은 실장님", phone:"010-xxxx-xxxx", note:"메이크업"},
+    {name:"사진작가 도현", phone:"010-xxxx-xxxx", note:"화보 촬영"},
+    {name:"조연출 박성민", phone:"010-xxxx-xxxx", note:"제작팀"},
+    {name:"캐스팅 디렉터", phone:"010-xxxx-xxxx", note:"캐스팅"},
+    {name:"드라마 제작사 PD님", phone:"02-xxxx-xxxx", note:"제작사"},
+    {name:"방송국 작가님", phone:"010-xxxx-xxxx", note:"방송 작가"},
+    {name:"광고대행사 윤 담당자", phone:"010-xxxx-xxxx", note:"광고"},
+    {name:"브랜드 협찬 담당자", phone:"010-xxxx-xxxx", note:"협찬"},
+    {name:"영화제 사무국", phone:"02-xxxx-xxxx", note:"영화제"},
+    {name:"세무 담당자", phone:"010-xxxx-xxxx", note:"세무"},
+    {name:"Ryan 트레이너", phone:"010-xxxx-xxxx", note:"헬스"},
+    {name:"Jenny 어학원", phone:"02-xxxx-xxxx", note:"영어 회화"}
   ];
   const CALLABLE = ["서빈 형", "우연 형"]; // 이 두 사람에게만 전화가 연결됨
-  const STALKER = ["010-4827-3391", "010-2095-7746", "010-6613-0584"];
+  const STALKER = ["010#1", "010#2", "010#3"];
   // kind: out(발신) / in(수신) / missed(부재중). who: 연락처 이름 또는 번호. count: 연속 통화 수
   const RECENT_CALLS = [
     {who:STALKER[0], kind:"missed", count:7, time:"오후 9:47", day:"오늘", dur:null},
@@ -996,13 +996,14 @@
     const idx = [...name].reduce((a, ch) => a + ch.charCodeAt(0), 0) % PH_COLORS.length;
     return `<span class="${cls}" style="background:linear-gradient(#b8bdc7,${PH_COLORS[idx]})">${escapeHTML(name.replace(/^[^가-힣A-Za-z]+/, "").charAt(0))}</span>`;
   }
-  const phoneOf = (who) => (contactByName(who) ? contactByName(who).phone : /^[0-9-]+$/.test(who) ? who : "");
+  const showNum = (k) => /^010#\d$/.test(k) ? "010-xxxx-xxxx" : k; // 스토커 번호는 내부 id(010#1~3)로 구분하고 화면에는 가려진 번호만 표시
+  const phoneOf = (who) => (contactByName(who) ? contactByName(who).phone : /^010#\d$/.test(who) ? showNum(who) : /^[0-9-]+$/.test(who) ? who : "");
 
   function startCall(name) {
     phoneState.calling = name; phoneState.callSecs = -1;
     const overlay = document.createElement("section");
     overlay.className = "call-overlay"; overlay.id = "call-overlay";
-    overlay.innerHTML = `<div class="call-top">${phAvatar(name, true)}<h2>${escapeHTML(contactByName(name)?.name || name)}</h2><p id="call-status">전화 거는 중...</p></div>
+    overlay.innerHTML = `<div class="call-top">${phAvatar(name, true)}<h2>${escapeHTML(contactByName(name)?.name || showNum(name))}</h2><p id="call-status">전화 거는 중...</p></div>
       <div class="call-grid">${[["mute","소리 끔"],["keypad","키패드"],["speaker","스피커"],["add","통화 추가"],["video","FaceTime"],["contacts","연락처"]].map(([k,l]) => `<button type="button"><i></i><span>${l}</span></button>`).join("")}</div>
       <button type="button" class="call-end" id="call-end" aria-label="통화 종료">${PH_ICON.phone}</button>`;
     $(".screen").appendChild(overlay);
@@ -1051,7 +1052,7 @@
       <h2 class="ph-large">최근 통화</h2>
       <div class="ph-list">${list.map(c => {
         const contact = contactByName(c.who);
-        const name = contact ? contact.name : c.who;
+        const name = contact ? contact.name : showNum(c.who);
         const sub = contact ? "휴대전화" : (c.who === "발신자 표시 제한" ? "알 수 없음" : "휴대전화 · 대한민국");
         const ic = c.kind === "out" ? `<i class="ph-out">${PH_ICON.out}</i>` : "";
         return `<div class="ph-row${c.kind === "missed" ? " missed" : ""}" data-ph-call="${c.i}"><div class="ph-row-main"><strong>${escapeHTML(name)}${c.count ? ` <em>(${c.count})</em>` : ""}</strong><span>${ic}${sub}</span></div><time>${c.day === "오늘" ? c.time : c.day}</time><button type="button" class="ph-info" data-ph-info="${c.i}" aria-label="상세 정보">ⓘ</button></div>`;
@@ -1101,7 +1102,7 @@
     const call = isCall ? RECENT_CALLS[d.index] : null;
     const who = isCall ? call.who : d.name;
     const contact = contactByName(who);
-    const name = contact ? contact.name : who;
+    const name = contact ? contact.name : showNum(who);
     const phone = phoneOf(who);
     const history = RECENT_CALLS.filter(c => c.who === who);
     const kindLabel = (c) => c.kind === "missed" ? "부재중 전화" : c.kind === "out" ? "발신 전화" : "수신 전화";
@@ -1349,9 +1350,9 @@
     else if (e.key === "Escape") { state.activePhoto = null; renderPhotos(); }
   });
   // ===== v35: 가상 시간 + 캘린더/시계/Safari/설정 =====
-  // ★ 가상 시간 기본값 (로컬 시각). 설정 앱 > 일반 > 날짜 및 시간에서도, 주소 뒤에 ?time=2026-10-18T21:50 을 붙여서도 바꿀 수 있어요.
-  const VT_DEFAULT = "2026-10-18T21:50";
-  const VT_KEY = "virtual-iphone-vtime-v1";
+  // ★ 가상 시간 기본값 (로컬 시각). 설정 앱 > 일반 > 날짜 및 시간에서도, 주소 뒤에 ?time=2025-05-11T21:50 을 붙여서도 바꿀 수 있어요.
+  const VT_DEFAULT = "2025-05-11T21:50";
+  const VT_KEY = "virtual-iphone-vtime-v2";
   const vt = Object.assign({ off: Date.parse(VT_DEFAULT) - Date.now(), frozen: null, h24: true, auto: false }, (() => { try { return JSON.parse(localStorage.getItem(VT_KEY)) || {}; } catch (_) { return {}; } })());
   const urlTime = new URLSearchParams(location.search).get("time");
   if (urlTime && !isNaN(Date.parse(urlTime))) { vt.off = Date.parse(urlTime) - Date.now(); vt.frozen = null; }
@@ -1465,6 +1466,57 @@
   };
   $("#app-content").addEventListener("click", (e) => { const t = e.target.closest("[data-x]"); if (t && t.closest(".xa") && ACT[t.dataset.x]) ACT[t.dataset.x](t); });
   const XAPPS = { calendar: renderCalendar, clock: renderClock, safari: renderSafari, settings: renderSettings };
+  // ===== 셋로그형 앱: 방(로그) 안에서 매시간 2초 클립 공유 =====
+  const SETLOG_NAME = "셋로그";            // 배포용으로 바꾸고 싶으면 여기만 수정
+  const SETLOG_ROOM = "촬영 동기방";
+  // photo가 없으면 이니셜 타일로 표시돼요. 멤버는 최대 12명까지 추가 가능
+  const SL_MEMBERS = [
+    { n: "시현", me: true },
+    { n: "서빈 형", photo: "avatar-seobin.jpg" },
+    { n: "우연 형", photo: "avatar-uyeon.jpg" },
+    { n: "지훈이" }
+  ];
+  // 시간대별 캡션 [아침5-8, 9-11, 점심12-13, 14-17, 저녁18-20, 밤21-23, 새벽0-4]
+  const SL_CAPS = [
+    ["일어남 ☀️", "대본 보는 중", "점심 🍚", "대기 중", "저녁 먹는 중", "집이다", "못 자는 중"],
+    ["아침 러닝", "촬영장 도착", "김밥", "촬영 중 🎬", "퇴근", "숙소 도착", "자는 중 😴"],
+    ["차 대기 중", "스케줄 확인", "미팅", "이동 중", "운전 중", "정리 중", "자는 중"],
+    ["아직 자는 중", "카페 라떼", "국밥", "연습실", "헬스장", "폰만 봄", "게임"]
+  ];
+  const slBucket = (h) => h < 5 ? 6 : h < 9 ? 0 : h < 12 ? 1 : h < 14 ? 2 : h < 18 ? 3 : h < 21 ? 4 : 5;
+  const SL_BG = ["#f6b26b,#e8745a", "#7ec8e3,#4a90d9", "#f9d976,#f39f86", "#8fd3b6,#4e9f8a", "#b39ddb,#6a5acd", "#4b5d8f,#1f2a4d", "#2a2f4a,#0d1020"];
+  xs.sl = { open: null, mine: {}, rec: false, like: {} };
+  function slHours() {
+    const now = vnow(), day0 = new Date(now); if (now.getHours() < 4) day0.setDate(day0.getDate() - 1); day0.setHours(4, 0, 0, 0);
+    const out = []; for (let t = new Date(day0); t <= now; t = new Date(+t + 36e5)) out.push({ h: t.getHours(), key: `${ymd(day0)}-${t.getHours()}` });
+    return out.reverse();
+  }
+  function slPosts(hr, isNow) {
+    const posts = [];
+    SL_MEMBERS.forEach((m, i) => {
+      const done = m.me ? (isNow ? xs.sl.mine[hr.key] : (hr.h * 7 + 2) % 6 !== 0) : (hr.h * 7 + i * 3) % 5 !== 0 && !(isNow && i === 3);
+      if (done) posts.push({ m, i, cap: m.me && xs.sl.mine[hr.key] ? xs.sl.mine[hr.key] : SL_CAPS[i][slBucket(hr.h)], min: (hr.h * 13 + i * 17) % (isNow ? Math.max(1, vnow().getMinutes()) : 50) + 1, id: `${hr.key}-${i}` });
+    });
+    return posts;
+  }
+  const slTile = (p, hr, big) => `<div class="slt${big ? " big" : ""}" ${big ? "" : `data-x="slopen" data-k="${p.id}"`} style="background-image:${p.m.photo ? `linear-gradient(#0000 45%,#000a),url(${p.m.photo})` : `linear-gradient(#0000 45%,#000a),linear-gradient(160deg,${SL_BG[slBucket(hr.h)]})`}">${p.m.photo ? "" : `<b class="sli">${p.m.n.charAt(0)}</b>`}<span class="slc">${escapeHTML(p.cap)}</span><small>${p.m.n} · ${hr.h}:${pad(p.min)}</small></div>`;
+  function renderSetlog() {
+    const hrs = slHours(), now = vnow(), curKey = hrs[0].key, mineNow = !!xs.sl.mine[curKey];
+    const dayLbl = `${now.getMonth() + 1}월 ${now.getDate()}일 ${WD[now.getDay()]}요일`;
+    const secs = hrs.map((hr, idx) => { const ps = slPosts(hr, idx === 0); return `<div class="slh"><div class="slhl">${hr.h < 12 ? "오전" : "오후"} ${hr.h % 12 || 12}시 <i>${ps.length}/${SL_MEMBERS.length}</i></div><div class="slg">${ps.map((p) => slTile(p, hr)).join("")}</div></div>`; }).join("");
+    let ov = ""; if (xs.sl.open) { const [hk, mi] = [xs.sl.open.slice(0, xs.sl.open.lastIndexOf("-")), +xs.sl.open.slice(xs.sl.open.lastIndexOf("-") + 1)], hr = hrs.find((x) => x.key === hk), p = hr && slPosts(hr, hr === hrs[0]).find((q) => q.i === mi);
+      if (p) ov = `<div class="slov"><button class="xl" data-x="slclose">${I.back}닫기</button>${slTile(p, hr, true)}<div class="slre">${["❤️", "😂", "🔥", "👀"].map((e) => `<button data-x="sllike" data-k="${e}" class="${xs.sl.like[xs.sl.open + e] ? "on" : ""}">${e}</button>`).join("")}</div><div class="slin">댓글 달기…</div></div>`; }
+    body("sl", `<div class="slbar"><div><b>${escapeHTML(SETLOG_NAME)}</b><small>${escapeHTML(SETLOG_ROOM)} · ${SL_MEMBERS.length}/12명 · ${dayLbl}</small></div></div>
+      <div class="slscroll">${mineNow ? "" : `<div class="slnow">⏰ 지금 찍을 시간이에요<button data-x="slrec">2초 촬영</button></div>`}${secs}<p class="sln">새벽 4시에 하루가 초기화되고, 오늘의 클립이 한 편의 브이로그로 합쳐져요.</p></div>
+      ${xs.sl.rec ? '<div class="slrec"><i></i>REC 0:02</div>' : ""}${ov}`);
+  }
+  Object.assign(ACT, {
+    slopen: (t) => { xs.sl.open = t.dataset.k; renderSetlog(); }, slclose: () => { xs.sl.open = null; renderSetlog(); },
+    sllike: (t) => { const k = xs.sl.open + t.dataset.k; xs.sl.like[k] = !xs.sl.like[k]; renderSetlog(); },
+    slrec: () => { xs.sl.rec = true; renderSetlog(); setTimeout(() => { xs.sl.rec = false; xs.sl.mine[slHours()[0].key] = "방금 찍음 📱"; if (state.app === "setlog") renderSetlog(); }, 2000); }
+  });
+  XAPPS.setlog = renderSetlog; appTitles.setlog = SETLOG_NAME;
+
   Object.assign(appTitles, { calendar: "캘린더", clock: "시계", safari: "Safari", settings: "설정" });
 
   updateClock();

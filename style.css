@@ -1171,3 +1171,17 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .snav { display:grid; grid-template-columns:90px 1fr 90px; align-items:center; padding:2px 12px 12px; } .snav b { text-align:center; font-size:17px; } .snav .xl { color:#007aff; }
 .sr input { border:0; background:#e9e9ee; border-radius:8px; padding:7px 9px; font-size:15px; font-family:inherit; } .sn { color:#8e8e93; font-size:12.5px; margin:-12px 32px 20px; }
 .xa > * { flex-shrink:0; } .xa.clk { overflow:hidden; } .xa.clk .clk-main { flex-shrink:1; min-height:0; } .xa.saf { overflow:hidden; } .xa.saf .saf-page { flex-shrink:1; min-height:0; }
+/* 셋로그 */
+.xa.sl { background:#111; color:#fff; padding-top:50px; overflow:hidden; } .slbar { padding:6px 16px 10px; } .slbar b { font-size:22px; letter-spacing:-.5px; } .slbar small { display:block; color:#9a9aa3; font-size:12px; margin-top:2px; }
+.slscroll { flex:1 1 auto !important; min-height:0; overflow-y:auto; padding:0 12px 30px; }
+.slnow { display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg,#ff7a59,#d6336c); border-radius:14px; padding:12px 14px; margin-bottom:14px; font-weight:600; } .slnow button { border:0; background:#fff; color:#d6336c; border-radius:20px; padding:8px 14px; font-weight:700; }
+.slhl { font-size:13px; color:#c9c9d1; margin:14px 2px 8px; font-weight:600; } .slhl i { font-style:normal; color:#77777f; font-weight:400; margin-left:4px; }
+.slg { display:grid; grid-template-columns:1fr 1fr; gap:6px; } .slt { position:relative; aspect-ratio:3/4; border-radius:12px; background-size:cover; background-position:center; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:9px; cursor:pointer; }
+.slt.big { aspect-ratio:3/4.2; margin:10px 16px; cursor:default; } .sli { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:56px; opacity:.35; }
+.slc { font-weight:600; font-size:14px; position:relative; text-shadow:0 1px 4px #0008; } .slt small { position:relative; font-size:11px; color:#ddd; margin-top:2px; }
+.sln { color:#6e6e76; font-size:11.5px; text-align:center; margin:24px 10px 0; }
+.slov { position:absolute; inset:0; background:#111; z-index:5; padding-top:54px; display:flex; flex-direction:column; } .slov .xl { margin-left:14px; }
+.slre { display:flex; justify-content:center; gap:14px; margin-top:4px; } .slre button { border:0; background:#26262b; border-radius:50%; width:48px; height:48px; font-size:22px; } .slre .on { background:#d6336c55; outline:2px solid #d6336c; }
+.slin { margin:16px 20px; background:#26262b; border-radius:20px; padding:11px 16px; color:#77777f; font-size:14px; }
+.slrec { position:absolute; inset:0; background:#000c; z-index:9; display:flex; align-items:center; justify-content:center; gap:10px; font-size:22px; font-weight:700; } .slrec i { width:16px; height:16px; border-radius:50%; background:#ff3b30; animation:blink .5s infinite alternate; } @keyframes blink { to { opacity:.2; } }
+.screen:has(.xa.sl) .status-bar { color:#fff; }
