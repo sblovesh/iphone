@@ -17,7 +17,7 @@
     activeNote: null,
     unread: false,
     messages: [
-      { id: "seobin", name: "서빈 형", avatar: "서", color: "pink", photo: "avatar-seobin.jpg", preview: "시현님은 맨날 다 괜찮다구 해서...", time: "오후 5:58", messages: [{from:"date",text:"2024년 9월 16일"},{from:"incoming",text:"혹시 늦어요??",time:"오후 8:12"},{from:"outgoing",text:"저 이제 퇴근 중!! 왜요??",time:"오후 8:14"},{from:"incoming",text:"저 아직 저녁 안 먹었는데 드시고 싶은 거 있나 해서...",time:"오후 8:16"},{from:"outgoing",text:"서빈 님 좋아하는 걸루 시켜용",time:"오후 8:18"},{from:"incoming",text:"음... 그러면 치킨?",time:"오후 8:21"},{from:"outgoing",text:"그럼 제가 맥주 사서 갈게요!!",time:"오후 8:23"},{from:"incoming",text:"좋아여",time:"오후 8:25"},{from:"date",text:"2024년 9월 20일"},{from:"incoming",text:"시현님",time:"오후 5:06"},{from:"outgoing",text:"무슨 일이에요??",time:"오후 5:07"},{from:"incoming",text:"저 인스타에 사진 올리려고 했는데",time:"오후 5:08"},{from:"incoming",text:"이거 괜찮나 싶어서...",time:"오후 5:08"},{from:"photo",text:"seobin-photo.jpg",time:"오후 5:09"},{from:"outgoing",text:"ㄱㄱ 좋은데여?",time:"오후 5:12"},{from:"incoming",text:"진짜 괜찮져?",time:"오후 5:13"},{from:"outgoing",text:"넹 좋아여",time:"오후 5:14"},{from:"incoming",text:"시현님은 맨날 다 괜찮다구 해서...",time:"오후 5:16"},{from:"outgoing",text:"그건 서빈님이 잘생긴 탓",time:"오후 5:18"}] },
+      { id: "seobin", name: "서빈 형", avatar: "서", color: "pink", photo: "avatar-seobin.jpg", preview: "나 다시 쫌 잘겡 촬영 열시미 해ㅐㅐ", time: "1월 5일", messages: [{from:"date",text:"2024년 9월 16일"},{from:"incoming",text:"혹시 늦어요??",time:"오후 8:12"},{from:"outgoing",text:"저 이제 퇴근 중!! 왜요??",time:"오후 8:14"},{from:"incoming",text:"저 아직 저녁 안 먹었는데 드시고 싶은 거 있나 해서...",time:"오후 8:16"},{from:"outgoing",text:"서빈 님 좋아하는 걸루 시켜용",time:"오후 8:18"},{from:"incoming",text:"음... 그러면 치킨?",time:"오후 8:21"},{from:"outgoing",text:"그럼 제가 맥주 사서 갈게요!!",time:"오후 8:23"},{from:"incoming",text:"좋아여",time:"오후 8:25"},{from:"date",text:"2024년 9월 20일"},{from:"incoming",text:"시현님",time:"오후 5:06"},{from:"outgoing",text:"무슨 일이에요??",time:"오후 5:07"},{from:"incoming",text:"저 인스타에 사진 올리려고 했는데",time:"오후 5:08"},{from:"incoming",text:"이거 괜찮나 싶어서...",time:"오후 5:08"},{from:"photo",text:"seobin-photo.jpg",time:"오후 5:09"},{from:"outgoing",text:"ㄱㄱ 좋은데여?",time:"오후 5:12"},{from:"incoming",text:"진짜 괜찮져?",time:"오후 5:13"},{from:"outgoing",text:"넹 좋아여",time:"오후 5:14"},{from:"incoming",text:"시현님은 맨날 다 괜찮다구 해서...",time:"오후 5:16"},{from:"outgoing",text:"그건 서빈님이 잘생긴 탓",time:"오후 5:18"},{from:"date",text:"2025년 1월 5일"},{from:"incoming",text:"시혀나ㅏㅏ 뭐 해ㅐㅐㅐ",time:"오전 10:34"},{from:"outgoing",text:"저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?",time:"오전 10:35"},{from:"incoming",text:"나는 침대랑 한 몸이야....",time:"오전 10:36"},{from:"photo",text:"seobin-bed-photo.jpg",time:"오전 10:37"},{from:"incoming",text:"나 다시 쫌 잘겡 촬영 열시미 해ㅐㅐ",time:"오전 10:38"}] },
       { id: "uyeon", name: "우연 형", avatar: "우", color: "blue", photo: "avatar-uyeon.jpg", preview: "미친놈;", time: "오후 6:58", messages: [{from:"date",text:"2024년 9월 14일"},{from:"incoming",text:"어때 최애랑 같이 사는 기분이?",time:"오전 1:12"},{from:"outgoing",text:"개좋음 진짜",time:"오전 1:13"},{from:"incoming",text:"야야 말버릇;",time:"오전 1:14"},{from:"outgoing",text:"이런 표현이 아니면 설명이 안 됨 진짜로",time:"오전 1:14"},{from:"incoming",text:"이상한 짓 하지 말고",time:"오전 1:15"},{from:"outgoing",text:"내가 뭔 이상한 짓을 해 ㅡㅡ",time:"오전 1:16"},{from:"incoming",text:"아무튼 서빈 님 잘 챙겨주고 알겠냐",time:"오전 1:17"},{from:"outgoing",text:"명을 받들겠습니다",time:"오전 1:18"},{from:"incoming",text:"오냐 형 잔다",time:"오전 1:19"},{from:"outgoing",text:"ㅂㅂ 잘자",time:"오전 1:20"},{from:"date",text:"2024년 9월 20일"},{from:"outgoing",text:"형형형 혹시",time:"오후 6:12"},{from:"outgoing",text:"서빈 님이 사진 하나 보내고 이거 괜찮냐고 물어보면 절대 ㄴㄴ안된다고해 절대로 제발",time:"오후 6:13"},{from:"incoming",text:"?",time:"오후 6:14"},{from:"incoming",text:"인스타에 올려도 괜찮냐고 물어보시긴 했는데",time:"오후 6:15"},{from:"incoming",text:"이거?",time:"오후 6:15"},{from:"photo",text:"seobin-photo.jpg",time:"오후 6:16"},{from:"outgoing",text:"ㅇㅇㅇ그거!!",time:"오후 6:17"},{from:"incoming",text:"왜? 괜찮은데?",time:"오후 6:18"},{from:"outgoing",text:"나만 가질 거임",time:"오후 6:19"},{from:"incoming",text:"미친놈;",time:"오후 6:20"}] },
       { id: "mom", name: "엄마", avatar: "엄", color: "green", preview: "밥은 꼭 챙겨 먹어", time: "오후 8:42", messages: [{from:"incoming",text:"밥은 꼭 챙겨 먹어"},{from:"outgoing",text:"응 엄마. 촬영 끝나고 먹었어."}] },
       { id: "director", name: "김도윤 감독님", avatar: "김", color: "gold", preview: "오늘 감정 연기 좋았습니다.", time: "오후 7:18", messages: [{from:"incoming",text:"오늘 감정 연기 좋았습니다. 다음 장면도 잘 부탁해요."}] },
@@ -32,26 +32,9 @@
     nextNoteId: 3
   };
 
-  const SEOBIN_STORAGE_KEY = "virtual-iphone-seobin-chat-v1";
   const seobinChat = state.messages.find((chat) => chat.id === "seobin");
-  try {
-    const saved = localStorage.getItem(SEOBIN_STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.every(m => m && ["date","incoming","outgoing","photo"].includes(m.from) && typeof m.text === "string")) {
-        // 저장된 이전 테스트의 스토리 메시지를 제거해, 방문할 때마다 새 시나리오로 시작
-        const savedDateIndex = parsed.findIndex(m => m.from === "date" && m.text === "2025년 1월 5일");
-        seobinChat.messages = savedDateIndex >= 0 ? parsed.slice(0, savedDateIndex) : parsed;
-        localStorage.setItem(SEOBIN_STORAGE_KEY, JSON.stringify(seobinChat.messages));
-      }
-    }
-  } catch (_) {}
-  function saveSeobinChat() { try { localStorage.setItem(SEOBIN_STORAGE_KEY, JSON.stringify(seobinChat.messages)); } catch (_) {} }
-  const SEOBIN_SCENARIO_KEY = "virtual-iphone-seobin-sleep-story-v1";
-  // 시나리오 상태는 페이지 방문마다 초기화해, 이전 테스트 진행 상태를 이어받지 않음
-  let seobinScenario = "new";
-  try { localStorage.setItem(SEOBIN_SCENARIO_KEY, "new"); } catch (_) {}
-  function saveSeobinScenario(value) { seobinScenario = value; try { localStorage.setItem(SEOBIN_SCENARIO_KEY, value); } catch (_) {} }
+  // 예전 버전이 남긴 저장값 정리 (이제 대화는 항상 코드에 적힌 그대로 보여요)
+  try { ["virtual-iphone-seobin-chat-v1", "virtual-iphone-seobin-sleep-story-v1"].forEach((k) => localStorage.removeItem(k)); } catch (_) {}
   // 앱마다 독립된 가상 시계 (24시간제 시작 시각 → "오전/오후 h:mm" 문자열, 1분씩 증가)
   function makeChatClock(startHour, startMinute) {
     let total = startHour * 60 + startMinute;
@@ -61,23 +44,8 @@
       return `${h < 12 ? "오전" : "오후"} ${h % 12 === 0 ? 12 : h % 12}:${String(m).padStart(2, "0")}`;
     };
   }
-  const kakaoTime = makeChatClock(10, 34);   // 카카오톡 서빈 시나리오 (2025년 1월 5일 오전)
+  const kakaoTime = () => ampm(vnow().getHours(), vnow().getMinutes());   // 새로 보내는 메시지는 가상 현재 시각으로
   const bubbleTime = makeChatClock(15, 10);  // 버블 (2025년 4월 8일 마지막 메시지 오후 2:52 이후)
-  function addSeobinIncoming(text, photo=false) {
-    seobinChat.messages.push({from: photo ? "photo" : "incoming", text: photo ? "seobin-bed-photo.jpg" : text, time: kakaoTime()});
-    seobinChat.preview = photo ? "사진" : text; seobinChat.time = "방금"; saveSeobinChat();
-    if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao();
-    else { showToast(photo ? "카카오톡 · 서빈 형이 사진을 보냈어요" : "카카오톡 · 서빈 형: " + text, "kakao"); state.unread = true; const dot=$("#unread-dot"); if(dot) dot.classList.remove("hidden"); if (state.app === "kakao" && !state.activeChat && state.view === "app") renderKakao(); }
-  }
-  function startSeobinSleepStory() {
-    if (seobinScenario !== "received") return;
-    saveSeobinScenario("replied");
-    seobinChat.messages.push({from:"outgoing", text:"저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?", time:kakaoTime()});
-    seobinChat.preview = "저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?"; seobinChat.time="방금"; saveSeobinChat(); renderKakao();
-    setTimeout(() => addSeobinIncoming("나는 침대랑 한 몸이야...."), 900);
-    setTimeout(() => addSeobinIncoming("", true), 2200);
-    setTimeout(() => { addSeobinIncoming("나 다시 쫌 잘겡 촬영 열시미 해ㅐㅐ"); saveSeobinScenario("finished"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 3600);
-  }
   const appTitles = { messages: "메시지", photos: "사진", calls: "전화", notes: "메모", kakao: "카카오톡", instagram: "Instagram", bubble: "bubble" };
   let toastTimer;
   let notificationTimer;
@@ -437,75 +405,7 @@
   // 카카오 서빈 채팅과 동일하게 방문할 때마다 처음 상태에서 시작 (이전 저장값은 삭제)
   try { localStorage.removeItem(BUBBLE_STORAGE_KEY); } catch (_) {}
 
-  // 방문 30초 후 서빈의 버블 알림 시나리오: 각 알림이 뜨는 순간 해당 메시지를 실제 대화에 추가
-  const bubbleRevealMessages = [
-    "시혀나",
-    "나 너 휴대폰 봣는데",
-    "너 왜 내 버블 구독하구 있냐",
-    "딱 들켯어 너"
-  ];
-  let bubbleRevealStarted = false;
-  let bubbleRevealIndex = 0;
-  let bubbleNoticeTimer = null;
-  let bubbleNoticeHideTimer = null;
   let bubbleUnread = 105;
-  const bubbleNoticeIntervals = [0, 2000, 5000, 10000];
-  const inBubbleRoom = () => state.app === "bubble" && state.view === "app" && bubbleChatOpen;
-
-  function ensureBubbleNotice() {
-    let notice = document.getElementById("bubble-push-notice");
-    if (!notice) {
-      notice = document.createElement("button");
-      notice.type = "button";
-      notice.id = "bubble-push-notice";
-      notice.className = "bubble-push-notice";
-      notice.innerHTML = '<img src="bubble-cat.jpg" alt=""><span class="bubble-push-copy"><strong>버블 · 서빈</strong><span id="bubble-push-text"></span></span><time>지금</time>';
-      document.body.appendChild(notice);
-      // 알림을 눌러도 남은 메시지 도착 일정은 멈추지 않는다.
-      notice.addEventListener("click", () => {
-        bubbleUnread = 0;
-        clearTimeout(bubbleNoticeHideTimer);
-        notice.classList.remove("show");
-        openApp("bubble");
-        bubbleChatOpen = true;
-        renderBubble();
-      });
-    }
-    return notice;
-  }
-  // 서빈 메시지 하나를 도착시킨다. 채팅방을 보고 있으면 바로 채팅에 붙고, 아니면 안 읽음 + 푸시 알림.
-  function deliverBubble(index) {
-    const text = bubbleRevealMessages[index];
-    if (!bubbleMessages.some(m => m.from === "artist" && m.day === "2025년 4월 8일" && m.text === text)) {
-      bubbleMessages.push({ from: "artist", day: "2025년 4월 8일", text, time: bubbleTime() });
-      if (!inBubbleRoom()) bubbleUnread += 1;
-    }
-    if (inBubbleRoom()) {
-      const input = document.getElementById("bubble-input"), typed = input ? input.value : "";
-      renderBubble();
-      const again = document.getElementById("bubble-input");
-      if (again && typed) { again.value = typed; again.focus(); }
-    } else {
-      if (state.app === "bubble" && state.view === "app") renderBubble();
-      const notice = ensureBubbleNotice();
-      const label = document.getElementById("bubble-push-text");
-      if (label) label.textContent = text;
-      notice.classList.add("show");
-      clearTimeout(bubbleNoticeHideTimer);
-      bubbleNoticeHideTimer = setTimeout(() => notice.classList.remove("show"), 2000);
-    }
-  }
-  function scheduleBubbleReveal(index) {
-    if (index >= bubbleRevealMessages.length) return;
-    bubbleRevealIndex = index;
-    deliverBubble(index);
-    if (index < bubbleRevealMessages.length - 1) {
-      bubbleNoticeTimer = setTimeout(() => scheduleBubbleReveal(index + 1), bubbleNoticeIntervals[index + 1]);
-    }
-  }
-  setTimeout(() => {
-    if (!bubbleRevealStarted) { bubbleRevealStarted = true; scheduleBubbleReveal(0); }
-  }, 30000);
   function renderBubble() {
     const content = $("#app-content");
     $("#app-title").textContent = bubbleChatOpen ? "서빈" : "CHATS";
@@ -587,8 +487,7 @@
         return `<div class="kt-row incoming${first ? " first" : ""}">${first ? kakaoAvatar(chat, true).replace("kakao-avatar-img", "kt-avatar") : '<span class="kt-avatar-gap"></span>'}<div class="kt-col">${first ? `<div class="kt-name">${escapeHTML(chat.name)}</div>` : ""}<div class="kt-line">${body}${meta}</div></div></div>`;
       }).join("");
       const gc = ktGroupCount[chat.id];
-      const finished = chat.id === "seobin" && seobinScenario === "finished";
-      content.innerHTML = `
+            content.innerHTML = `
         <div class="kt-room-screen">
           <div class="kt-room-head">
             <button type="button" class="kt-ic back" id="kt-back" aria-label="뒤로">${KT.back}</button><span class="kt-back-count">289</span>
@@ -596,22 +495,20 @@
             <span class="kt-ic">${KT.search}</span><span class="kt-ic">${KT.menu}</span>
           </div>
           <div class="kt-log" id="kakao-chat-log">${rows}</div>
-          ${chat.id === "seobin" && seobinScenario === "received" ? `<div class="seobin-quick-replies"><button type="button" id="seobin-quick-reply">저 촬영 중!! 잠시 브레이크 중! 형은 뭐 해여?</button></div>` : ""}
           <form class="kt-compose" id="kakao-form">
             <button type="button" class="kt-plus" aria-label="첨부">${KT.plus}</button>
-            <div class="kt-field"><input id="kakao-input" maxlength="300" placeholder="${finished ? "서빈 형은 자고 있어요…" : ""}" autocomplete="off"><span class="kt-smile">${KT.smile}</span></div>
+            <div class="kt-field"><input id="kakao-input" maxlength="300" placeholder="" autocomplete="off"><span class="kt-smile">${KT.smile}</span></div>
             <button type="button" class="kt-hash" id="kt-hash" aria-label="샵검색">${KT.hash}</button>
             <button type="submit" class="kt-send" id="kt-send" aria-label="전송">${KT.send}</button>
           </form>
         </div>`;
       const log = $("#kakao-chat-log"); const toBottom = () => { log.scrollTop = log.scrollHeight; }; toBottom(); requestAnimationFrame(toBottom); log.querySelectorAll("img").forEach((im) => { if (!im.complete) im.addEventListener("load", toBottom); });
       $("#kt-back").addEventListener("click", () => { state.activeChat = null; renderKakao(); });
-      const quickReply = $("#seobin-quick-reply"); if (quickReply) quickReply.addEventListener("click", startSeobinSleepStory);
       const input = $("#kakao-input"), form = $("#kakao-form");
       input.addEventListener("input", () => form.classList.toggle("has-text", input.value.trim().length > 0));
       form.addEventListener("submit", (event) => {
         event.preventDefault(); const value = input.value.trim(); if (!value) return;
-        chat.messages.push({ from: "outgoing", text: value, time: kakaoTime() }); chat.preview = value; chat.time = "방금"; if (chat.id === "seobin") saveSeobinChat(); renderKakao();
+        chat.messages.push({ from: "outgoing", text: value, time: kakaoTime() }); chat.preview = value; chat.time = "방금"; renderKakao();
       });
       return;
     }
@@ -1339,9 +1236,6 @@
       setView("lock");
     }
   });
-
-
-  try { if (seobinScenario === "new") { setTimeout(() => { if (!seobinChat.messages.some(m => m.from === "date" && m.text === "2025년 1월 5일")) seobinChat.messages.push({from:"date",text:"2025년 1월 5일"}); saveSeobinChat(); addSeobinIncoming("시혀나ㅏㅏ 뭐 해ㅐㅐㅐ"); saveSeobinScenario("received"); if (state.app === "kakao" && state.activeChat === "seobin" && state.view === "app") renderKakao(); }, 6500); } } catch (_) {}
   document.addEventListener("keydown", (e) => {
     if (state.view !== "app" || state.app !== "photos" || !state.activePhoto) return;
     const t = $("#photo-track"); if (!t) return;
@@ -1353,10 +1247,12 @@
   // ★ 가상 시간 기본값 (로컬 시각). 설정 앱 > 일반 > 날짜 및 시간에서도, 주소 뒤에 ?time=2025-05-11T21:50 을 붙여서도 바꿀 수 있어요.
   const VT_DEFAULT = "2025-05-11T21:50";
   const VT_KEY = "virtual-iphone-vtime-v2";
-  const vt = Object.assign({ off: Date.parse(VT_DEFAULT) - Date.now(), frozen: null, h24: true, auto: false }, (() => { try { return JSON.parse(localStorage.getItem(VT_KEY)) || {}; } catch (_) { return {}; } })());
+  const vt = { off: Date.parse(VT_DEFAULT) - Date.now(), frozen: null, h24: true, auto: false };
+  // 이전 방문 때 저장된 시간 설정이 스토리 시점을 덮어쓰지 않도록 정리 (항상 VT_DEFAULT에서 시작)
+  try { [VT_KEY, "virtual-iphone-vtime-v1"].forEach((k) => localStorage.removeItem(k)); } catch (_) {}
   const urlTime = new URLSearchParams(location.search).get("time");
   if (urlTime && !isNaN(Date.parse(urlTime))) { vt.off = Date.parse(urlTime) - Date.now(); vt.frozen = null; }
-  const vtSave = () => { try { localStorage.setItem(VT_KEY, JSON.stringify(vt)); } catch (_) {} };
+  const vtSave = () => {};   // 시간 설정은 저장하지 않아요 (새로고침하면 스토리 시점으로 복귀)
   const vnow = () => new Date(vt.frozen !== null ? vt.frozen : Date.now() + vt.off);
   const setVTime = (d) => { vt.off = d - Date.now(); if (vt.frozen !== null) vt.frozen = +d; vt.auto = false; vtSave(); updateClock(); };
   const pad = (n) => String(n).padStart(2, "0");
@@ -1440,8 +1336,8 @@
       <div class="sg">${row("⚙︎", "#8e8e93", "일반", "", "general")}${row("▦", "#007aff", "제어 센터", "", "x")}${row("☀︎", "#007aff", "디스플레이 및 밝기", "", "x")}${row("✿", "#34aadc", "배경화면", "", "x")}${row("◔", "#34c759", "배터리", "100%", "x")}${row("✋", "#007aff", "개인정보 보호 및 보안", "", "x")}</div>`);
     else if (p === "general") body("set", `<div class="snav"><button data-x="spage" data-k="main" class="xl">${I.back}설정</button><b>일반</b><span></span></div><div class="sg">${row("", "transparent", "정보", "", "x")}${row("", "transparent", "소프트웨어 업데이트", "", "x")}</div><div class="sg">${row("", "transparent", "AirDrop", "", "x")}${row("", "transparent", "CarPlay", "", "x")}</div><div class="sg">${row("", "transparent", "키보드", "", "x")}${row("", "transparent", "언어 및 지역", "", "x")}${row("", "transparent", "날짜 및 시간", "", "dt")}</div>`);
     else if (p === "dt") body("set", `<div class="snav"><button data-x="spage" data-k="general" class="xl">${I.back}일반</button><b>날짜 및 시간</b><span></span></div>
-      <div class="sg"><div class="sr"><span>24시간제</span>${sw("h24", vt.h24)}</div><div class="sr"><span>자동으로 설정</span>${sw("auto", vt.auto)}</div></div>
-      ${vt.auto ? '<p class="sn">이 기기의 실제 현재 시각을 사용합니다.</p>' : `<div class="sg"><div class="sr"><span>날짜</span><input type="date" id="vt-date" value="${ymd(now)}"></div><div class="sr"><span>시간</span><input type="time" id="vt-time" value="${pad(now.getHours())}:${pad(now.getMinutes())}"></div></div>
+      <div class="sg"><div class="sr"><span>24시간제</span>${sw("h24", vt.h24)}</div></div>
+      ${`<div class="sg"><div class="sr"><span>날짜</span><input type="date" id="vt-date" value="${ymd(now)}"></div><div class="sr"><span>시간</span><input type="time" id="vt-time" value="${pad(now.getHours())}:${pad(now.getMinutes())}"></div></div>
       <div class="sg"><div class="sr"><span>시간 멈추기 <small>(촬영용)</small></span>${sw("frozen", vt.frozen !== null)}</div></div><p class="sn">여기서 정한 시각부터 시계가 흘러갑니다. 상태 표시줄, 잠금 화면, 캘린더, 시계, 메모에 반영돼요.</p>`}`);
     else body("set", `<div class="snav"><button data-x="spage" data-k="main" class="xl">${I.back}설정</button><b>설정</b><span></span></div><p class="sn" style="margin-top:40px;text-align:center">이 화면은 데모에서 사용되지 않아요.</p>`);
     const dd = $("#vt-date"), tt = $("#vt-time"); if (dd) { const ch = () => { const d = new Date(`${dd.value}T${tt.value || "00:00"}`); if (!isNaN(d)) setVTime(d); }; dd.onchange = tt.onchange = ch; }
@@ -1466,54 +1362,62 @@
   };
   $("#app-content").addEventListener("click", (e) => { const t = e.target.closest("[data-x]"); if (t && t.closest(".xa") && ACT[t.dataset.x]) ACT[t.dataset.x](t); });
   const XAPPS = { calendar: renderCalendar, clock: renderClock, safari: renderSafari, settings: renderSettings };
-  // ===== 셋로그형 앱: 방(로그) 안에서 매시간 2초 클립 공유 =====
-  const SETLOG_NAME = "셋로그";            // 배포용으로 바꾸고 싶으면 여기만 수정
-  const SETLOG_ROOM = "촬영 동기방";
-  // photo가 없으면 이니셜 타일로 표시돼요. 멤버는 최대 12명까지 추가 가능
+  // ===== 셋로그형 앱 v2: 화면 하나 = 한 시간대, 멤버 카드가 세로로 쌓임 =====
+  const SETLOG_NAME = "셋로그";            // 배포용으로 바꾸고 싶으면 여기만 수정 (홈 아이콘 글자는 index.html에서도 수정)
+  const SETLOG_ROOM = "🤪";               // 방 이름 (이모지만 써도 돼요)
+  // photo가 없는 멤버는 검은 원 프로필로 표시돼요. 멤버는 최대 12명
   const SL_MEMBERS = [
-    { n: "시현", me: true },
     { n: "서빈 형", photo: "avatar-seobin.jpg" },
     { n: "우연 형", photo: "avatar-uyeon.jpg" },
-    { n: "지훈이" }
+    { n: "지훈이" },
+    { n: "시현", me: true }
   ];
-  // 시간대별 캡션 [아침5-8, 9-11, 점심12-13, 14-17, 저녁18-20, 밤21-23, 새벽0-4]
+  // 시간대별 캡션 [아침5-8, 9-11, 점심12-13, 14-17, 저녁18-20, 밤21-23, 새벽0-4]  (멤버 순서와 동일)
   const SL_CAPS = [
-    ["일어남 ☀️", "대본 보는 중", "점심 🍚", "대기 중", "저녁 먹는 중", "집이다", "못 자는 중"],
-    ["아침 러닝", "촬영장 도착", "김밥", "촬영 중 🎬", "퇴근", "숙소 도착", "자는 중 😴"],
+    ["아침 러닝", "촬영장 도착", "김밥", "촬영 중", "퇴근", "숙소 도착", "자는 중"],
     ["차 대기 중", "스케줄 확인", "미팅", "이동 중", "운전 중", "정리 중", "자는 중"],
-    ["아직 자는 중", "카페 라떼", "국밥", "연습실", "헬스장", "폰만 봄", "게임"]
+    ["아직 자는 중", "카페 라떼", "국밥", "연습실", "헬스장", "폰만 봄", "게임"],
+    ["일어남", "대본 보는 중", "점심 먹는 중", "대기 중", "저녁 먹는 중", "집이다", "못 자는 중"]
   ];
+  const SL_PHOTOS = ["photo-01.jpg", "photo-02.jpg", "photo-03.jpg", "photo-04.jpg", "photo-05.jpg", "photo-06.jpg", "photo-07.jpg", "photo-08.jpg", "photo-09.jpg"];
   const slBucket = (h) => h < 5 ? 6 : h < 9 ? 0 : h < 12 ? 1 : h < 14 ? 2 : h < 18 ? 3 : h < 21 ? 4 : 5;
-  const SL_BG = ["#f6b26b,#e8745a", "#7ec8e3,#4a90d9", "#f9d976,#f39f86", "#8fd3b6,#4e9f8a", "#b39ddb,#6a5acd", "#4b5d8f,#1f2a4d", "#2a2f4a,#0d1020"];
-  xs.sl = { open: null, mine: {}, rec: false, like: {} };
-  function slHours() {
+  xs.sl = { page: null, mine: {}, rec: false };
+  function slHours() {   // 새벽 4시(하루 시작)부터 지금까지의 시간대, 오래된 순
     const now = vnow(), day0 = new Date(now); if (now.getHours() < 4) day0.setDate(day0.getDate() - 1); day0.setHours(4, 0, 0, 0);
     const out = []; for (let t = new Date(day0); t <= now; t = new Date(+t + 36e5)) out.push({ h: t.getHours(), key: `${ymd(day0)}-${t.getHours()}` });
-    return out.reverse();
+    return out;
   }
-  function slPosts(hr, isNow) {
-    const posts = [];
-    SL_MEMBERS.forEach((m, i) => {
-      const done = m.me ? (isNow ? xs.sl.mine[hr.key] : (hr.h * 7 + 2) % 6 !== 0) : (hr.h * 7 + i * 3) % 5 !== 0 && !(isNow && i === 3);
-      if (done) posts.push({ m, i, cap: m.me && xs.sl.mine[hr.key] ? xs.sl.mine[hr.key] : SL_CAPS[i][slBucket(hr.h)], min: (hr.h * 13 + i * 17) % (isNow ? Math.max(1, vnow().getMinutes()) : 50) + 1, id: `${hr.key}-${i}` });
-    });
-    return posts;
+  function slPost(hr, i, isNow) {   // 이 멤버가 이 시간에 올렸으면 {photo, cap}, 아니면 null
+    const m = SL_MEMBERS[i];
+    if (m.me && xs.sl.mine[hr.key]) return { photo: SL_PHOTOS[(hr.h * 5 + i) % 9], cap: xs.sl.mine[hr.key] };
+    const done = m.me ? !isNow && (hr.h * 7 + 2) % 6 !== 0 : (hr.h * 7 + i * 3) % 5 !== 0 && !(isNow && i === 2);
+    return done ? { photo: SL_PHOTOS[(hr.h * 3 + i * 2) % 9], cap: SL_CAPS[i][slBucket(hr.h)] } : null;
   }
-  const slTile = (p, hr, big) => `<div class="slt${big ? " big" : ""}" ${big ? "" : `data-x="slopen" data-k="${p.id}"`} style="background-image:${p.m.photo ? `linear-gradient(#0000 45%,#000a),url(${p.m.photo})` : `linear-gradient(#0000 45%,#000a),linear-gradient(160deg,${SL_BG[slBucket(hr.h)]})`}">${p.m.photo ? "" : `<b class="sli">${p.m.n.charAt(0)}</b>`}<span class="slc">${escapeHTML(p.cap)}</span><small>${p.m.n} · ${hr.h}:${pad(p.min)}</small></div>`;
+  const SL_I = { share: '<svg viewBox="0 0 24 24"><path d="M12 15V3.5M8 7l4-4 4 4M6 11H5.5A1.5 1.5 0 0 0 4 12.500v7A1.500 1.500 0 0 0 5.500 21h13a1.500 1.500 0 0 0 1.500-1.500v-7A1.500 1.500 0 0 0 18.500 11H18"/></svg>', cal: '<svg viewBox="0 0 24 24"><rect x="3.500" y="4.500" width="17" height="16" rx="2.500" fill="currentColor" stroke="none"/><path d="M3.500 9h17" stroke="#fff"/><path d="M8 3v3M16 3v3"/></svg>', chat: '<svg viewBox="0 0 24 24"><path d="M12 4C7.600 4 4 7 4 10.800c0 1.800.8 3.400 2.100 4.600L5 20l4.200-2.100c.9.200 1.800.3 2.800.3 4.400 0 8-3 8-6.700S16.400 4 12 4z"/></svg>' };
   function renderSetlog() {
-    const hrs = slHours(), now = vnow(), curKey = hrs[0].key, mineNow = !!xs.sl.mine[curKey];
-    const dayLbl = `${now.getMonth() + 1}월 ${now.getDate()}일 ${WD[now.getDay()]}요일`;
-    const secs = hrs.map((hr, idx) => { const ps = slPosts(hr, idx === 0); return `<div class="slh"><div class="slhl">${hr.h < 12 ? "오전" : "오후"} ${hr.h % 12 || 12}시 <i>${ps.length}/${SL_MEMBERS.length}</i></div><div class="slg">${ps.map((p) => slTile(p, hr)).join("")}</div></div>`; }).join("");
-    let ov = ""; if (xs.sl.open) { const [hk, mi] = [xs.sl.open.slice(0, xs.sl.open.lastIndexOf("-")), +xs.sl.open.slice(xs.sl.open.lastIndexOf("-") + 1)], hr = hrs.find((x) => x.key === hk), p = hr && slPosts(hr, hr === hrs[0]).find((q) => q.i === mi);
-      if (p) ov = `<div class="slov"><button class="xl" data-x="slclose">${I.back}닫기</button>${slTile(p, hr, true)}<div class="slre">${["❤️", "😂", "🔥", "👀"].map((e) => `<button data-x="sllike" data-k="${e}" class="${xs.sl.like[xs.sl.open + e] ? "on" : ""}">${e}</button>`).join("")}</div><div class="slin">댓글 달기…</div></div>`; }
-    body("sl", `<div class="slbar"><div><b>${escapeHTML(SETLOG_NAME)}</b><small>${escapeHTML(SETLOG_ROOM)} · ${SL_MEMBERS.length}/12명 · ${dayLbl}</small></div></div>
-      <div class="slscroll">${mineNow ? "" : `<div class="slnow">⏰ 지금 찍을 시간이에요<button data-x="slrec">2초 촬영</button></div>`}${secs}<p class="sln">새벽 4시에 하루가 초기화되고, 오늘의 클립이 한 편의 브이로그로 합쳐져요.</p></div>
-      ${xs.sl.rec ? '<div class="slrec"><i></i>REC 0:02</div>' : ""}${ov}`);
+    const hrs = slHours(), last = hrs.length - 1;
+    if (xs.sl.page === null || xs.sl.page > last) xs.sl.page = last;
+    const pg = xs.sl.page, hr = hrs[pg], isNow = pg === last;
+    const cards = SL_MEMBERS.map((m, i) => {
+      const p = slPost(hr, i, isNow), t = `${pad(hr.h)}:00`;
+      const av = m.photo ? `<img src="${m.photo}" alt="">` : "";
+      const head = `<div class="slch"><span class="slav${m.photo ? "" : " blk"}">${av}</span><span class="slnm">${escapeHTML(m.n)}</span></div>`;
+      if (p) return `<div class="slcard has" style="background-image:url(${p.photo})">${head}<div class="slmid"><b>${t}</b><span>${escapeHTML(p.cap)}</span></div><button class="slmore" data-x="slmore">···</button></div>`;
+      return `<div class="slcard">${head}<div class="slmid"><b>${t}</b></div>${m.me && isNow ? `<button class="slshoot" data-x="slrec">눌러서 촬영</button>` : ""}${m.me ? '<button class="slmore" data-x="slmore">···</button>' : ""}</div>`;
+    }).join("");
+    const from = Math.max(0, Math.min(pg - 3, last - 6)), to = Math.min(last, from + 6);
+    const dots = hrs.slice(from, to + 1).map((_, k) => { const idx = from + k; return `<i class="sld ${idx === pg ? "on" : idx > pg ? "nx" : "pv"}" data-x="slgo" data-k="${idx}"></i>`; }).join("");
+    body("sl", `<div class="sltop"><button class="slc1" data-x="slback">${I.back}</button><button class="slic" data-x="slmore">${SL_I.share}</button><div class="sltt">${escapeHTML(SETLOG_ROOM)} ${I.chev}</div><div class="slpill"><button data-x="slmore">${SL_I.cal}</button><button data-x="slmore">${SL_I.chat}</button></div></div>
+      <div class="sldots">${dots}</div><div class="slpage" id="slpage">${cards}</div>${xs.sl.rec ? '<div class="slrec"><i></i>REC 0:02</div>' : ""}`);
+    const el = $("#slpage"); let sx = null;
+    el.addEventListener("pointerdown", (e) => { sx = e.clientX; });
+    el.addEventListener("pointerup", (e) => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) { xs.sl.page = Math.max(0, Math.min(last, pg + (dx < 0 ? 1 : -1))); renderSetlog(); } });
   }
   Object.assign(ACT, {
-    slopen: (t) => { xs.sl.open = t.dataset.k; renderSetlog(); }, slclose: () => { xs.sl.open = null; renderSetlog(); },
-    sllike: (t) => { const k = xs.sl.open + t.dataset.k; xs.sl.like[k] = !xs.sl.like[k]; renderSetlog(); },
-    slrec: () => { xs.sl.rec = true; renderSetlog(); setTimeout(() => { xs.sl.rec = false; xs.sl.mine[slHours()[0].key] = "방금 찍음 📱"; if (state.app === "setlog") renderSetlog(); }, 2000); }
+    slgo: (t) => { xs.sl.page = +t.dataset.k; renderSetlog(); },
+    slback: () => $("#home-indicator").click(),
+    slmore: () => showToast("데모에서는 지원하지 않아요."),
+    slrec: () => { xs.sl.rec = true; renderSetlog(); setTimeout(() => { xs.sl.rec = false; xs.sl.mine[slHours().slice(-1)[0].key] = "방금 찍음"; if (state.app === "setlog") renderSetlog(); }, 2000); }
   });
   XAPPS.setlog = renderSetlog; appTitles.setlog = SETLOG_NAME;
 

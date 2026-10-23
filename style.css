@@ -150,8 +150,6 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .empty-state { text-align: center; color: #8b8d95; padding: 40px 24px; font-size: 13px; line-height: 1.6; }
 .toast { position: fixed; z-index: 1000; left: 50%; top: max(12px, env(safe-area-inset-top)); bottom: auto; transform: translate(-50%, -18px); opacity: 0; pointer-events: none; padding: 13px 16px; border-radius: 18px; background: rgba(35,35,38,.94); color: white; font-size: 12px; line-height: 1.4; transition: .22s ease; width: min(350px, calc(100vw - 30px)); box-sizing: border-box; text-align: left; box-shadow: 0 5px 22px #0003; backdrop-filter: blur(16px); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
-.seobin-quick-replies { flex: 0 0 auto; padding: 8px 12px 3px; background: #f8f8f8; }
-.seobin-quick-replies button { width: 100%; border: 1px solid #e7d35a; border-radius: 12px; background: #fff9c9; color: #3e3920; padding: 10px 12px; font-size: 12px; line-height: 1.4; text-align: left; cursor: pointer; }
 .kakao-compose input:disabled { background: #eee; color: #888; }
 .kakao-compose button:disabled { opacity: .35; }
 .home-indicator { position: absolute; z-index: 30; bottom: 8px; left: 50%; transform: translateX(-50%); width: 112px; height: 4px; border: 0; border-radius: 5px; background: #171717; opacity: .8; }
@@ -532,13 +530,6 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 
 
 /* iOS-style tappable Bubble push notification */
-.bubble-push-notice { position: fixed; z-index: 2000; top: max(12px, env(safe-area-inset-top)); left: 12px; right: 12px; width: calc(100% - 24px); display: flex; align-items: center; gap: 11px; padding: 12px 14px; border: 1px solid #ffffffa8; border-radius: 20px; background: rgba(250,248,248,.94); color: #222; box-shadow: 0 8px 28px #0002; text-align: left; font: inherit; opacity: 0; transform: translateY(-140%); pointer-events: none; transition: transform .32s ease, opacity .32s ease; backdrop-filter: blur(20px); }
-.bubble-push-notice.show { opacity: 1; transform: translateY(0); pointer-events: auto; cursor: pointer; }
-.bubble-push-notice > img { width: 42px; height: 42px; border-radius: 13px; object-fit: cover; flex: 0 0 auto; }
-.bubble-push-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 4px; }
-.bubble-push-copy strong { font-size: 12px; font-weight: 750; }
-.bubble-push-copy span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 14px; }
-.bubble-push-notice time { align-self: flex-start; color: #8b8989; font-size: 11px; white-space: nowrap; }
 
 /* iOS-like app glyph refinements and home weather widget */
 .home-weather-widget {
@@ -952,7 +943,6 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .kt-bubble.incoming.tail::before { content:""; position:absolute; left:-7px; top:0; width:0; height:0; border-top:9px solid #fff; border-left:7px solid transparent; }
 .kt-bubble.outgoing.tail::before { content:""; position:absolute; right:-7px; top:0; width:0; height:0; border-top:9px solid #fee500; border-right:7px solid transparent; }
 .kt-photo img { display:block; width:182px; max-height:240px; object-fit:cover; border-radius:10px; }
-.kt-room-screen .seobin-quick-replies { background:#fff; padding:8px 12px 4px; }
 .kt-compose { flex:none; display:flex; align-items:center; gap:8px; padding:8px 10px 30px 8px; background:#fff; }
 .kt-compose button { border:0; background:transparent; padding:0; color:#4a4d52; }
 .kt-plus { width:34px; height:36px; display:grid; place-items:center; flex:none; }
@@ -1171,17 +1161,23 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 3px
 .snav { display:grid; grid-template-columns:90px 1fr 90px; align-items:center; padding:2px 12px 12px; } .snav b { text-align:center; font-size:17px; } .snav .xl { color:#007aff; }
 .sr input { border:0; background:#e9e9ee; border-radius:8px; padding:7px 9px; font-size:15px; font-family:inherit; } .sn { color:#8e8e93; font-size:12.5px; margin:-12px 32px 20px; }
 .xa > * { flex-shrink:0; } .xa.clk { overflow:hidden; } .xa.clk .clk-main { flex-shrink:1; min-height:0; } .xa.saf { overflow:hidden; } .xa.saf .saf-page { flex-shrink:1; min-height:0; }
-/* 셋로그 */
-.xa.sl { background:#111; color:#fff; padding-top:50px; overflow:hidden; } .slbar { padding:6px 16px 10px; } .slbar b { font-size:22px; letter-spacing:-.5px; } .slbar small { display:block; color:#9a9aa3; font-size:12px; margin-top:2px; }
-.slscroll { flex:1 1 auto !important; min-height:0; overflow-y:auto; padding:0 12px 30px; }
-.slnow { display:flex; justify-content:space-between; align-items:center; background:linear-gradient(135deg,#ff7a59,#d6336c); border-radius:14px; padding:12px 14px; margin-bottom:14px; font-weight:600; } .slnow button { border:0; background:#fff; color:#d6336c; border-radius:20px; padding:8px 14px; font-weight:700; }
-.slhl { font-size:13px; color:#c9c9d1; margin:14px 2px 8px; font-weight:600; } .slhl i { font-style:normal; color:#77777f; font-weight:400; margin-left:4px; }
-.slg { display:grid; grid-template-columns:1fr 1fr; gap:6px; } .slt { position:relative; aspect-ratio:3/4; border-radius:12px; background-size:cover; background-position:center; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:9px; cursor:pointer; }
-.slt.big { aspect-ratio:3/4.2; margin:10px 16px; cursor:default; } .sli { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:56px; opacity:.35; }
-.slc { font-weight:600; font-size:14px; position:relative; text-shadow:0 1px 4px #0008; } .slt small { position:relative; font-size:11px; color:#ddd; margin-top:2px; }
-.sln { color:#6e6e76; font-size:11.5px; text-align:center; margin:24px 10px 0; }
-.slov { position:absolute; inset:0; background:#111; z-index:5; padding-top:54px; display:flex; flex-direction:column; } .slov .xl { margin-left:14px; }
-.slre { display:flex; justify-content:center; gap:14px; margin-top:4px; } .slre button { border:0; background:#26262b; border-radius:50%; width:48px; height:48px; font-size:22px; } .slre .on { background:#d6336c55; outline:2px solid #d6336c; }
-.slin { margin:16px 20px; background:#26262b; border-radius:20px; padding:11px 16px; color:#77777f; font-size:14px; }
-.slrec { position:absolute; inset:0; background:#000c; z-index:9; display:flex; align-items:center; justify-content:center; gap:10px; font-size:22px; font-weight:700; } .slrec i { width:16px; height:16px; border-radius:50%; background:#ff3b30; animation:blink .5s infinite alternate; } @keyframes blink { to { opacity:.2; } }
-.screen:has(.xa.sl) .status-bar { color:#fff; }
+/* 셋로그 v2 (밝은 회색 테마) */
+.xa.sl { background:#f5f5f5; color:#000; padding-top:50px; overflow:hidden; }
+.sltop { display:flex; align-items:center; gap:8px; padding:6px 12px 0; position:relative; }
+.sltop button { border:0; background:none; color:#000; padding:0; display:flex; align-items:center; justify-content:center; } .sltop svg { width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.slc1 { width:44px; height:44px; border-radius:50%; background:#fff !important; box-shadow:0 2px 10px #0001; } .slic { width:36px; height:44px; }
+.sltt { flex:1; display:flex; align-items:center; justify-content:center; gap:4px; font-size:17px; font-weight:500; } .sltt svg { width:15px; height:15px; stroke-width:2.800; }
+.slpill { display:flex; background:#fff; border-radius:24px; box-shadow:0 2px 10px #0001; height:44px; } .slpill button { width:48px; height:44px; }
+.sldots { display:flex; justify-content:center; align-items:center; gap:10px; height:26px; }
+.sld { width:9px; height:9px; border-radius:50%; background:#c9c9c9; cursor:pointer; } .sld.nx { background:#f070f0; } .sld.on { background:#000; box-shadow:0 0 0 3px #bdbdbd; }
+.slpage { flex:1; min-height:0; overflow-y:auto; padding:2px 10px 18px; display:flex; flex-direction:column; gap:3px; touch-action:pan-y; }
+.slcard { flex:0 0 auto; height:calc((100% - 6px) / 3); min-height:200px; border-radius:22px; position:relative; overflow:hidden; background-color:#e4e4e4; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .3 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.slcard.has { background-image:none; } .slcard.has::before { content:""; position:absolute; inset:0; background:inherit; }
+.slch { position:absolute; left:14px; top:12px; display:flex; align-items:center; gap:9px; z-index:2; }
+.slav { width:30px; height:30px; border-radius:50%; overflow:hidden; background:#eee; display:block; } .slav img { width:100%; height:100%; object-fit:cover; } .slav.blk { background:#000; }
+.slnm { font-size:17px; color:#777; } .slcard.has .slnm { color:#fff; text-shadow:0 1px 4px #0006; }
+.slmid { text-align:center; z-index:2; display:flex; flex-direction:column; align-items:center; gap:2px; } .slmid b { font-family:"Archivo Black","Arial Black",Arial,sans-serif; font-weight:900; font-size:26px; letter-spacing:1px; color:#c4c4c4; transform:scaleX(1.12); }
+.slcard.has .slmid b { color:#fff; text-shadow:0 1px 6px #0005; } .slmid span { color:#fff; font-size:16px; font-weight:500; text-shadow:0 1px 6px #0007; }
+.slshoot { position:absolute; left:50%; top:50%; transform:translate(-50%,-4px); margin-top:36px; border:0; background:#fff; border-radius:26px; padding:12px 28px; font-size:17px; z-index:3; box-shadow:0 2px 8px #0001; }
+.slmore { position:absolute; right:14px; bottom:10px; border:0; background:none; color:#fff; font-size:20px; letter-spacing:1px; z-index:3; } .slcard:not(.has) .slmore { color:#777; }
+.slrec { position:absolute; inset:0; background:#000b; color:#fff; z-index:9; display:flex; align-items:center; justify-content:center; gap:10px; font-size:22px; font-weight:700; } .slrec i { width:16px; height:16px; border-radius:50%; background:#ff3b30; animation:blink .5s infinite alternate; } @keyframes blink { to { opacity:.2; } }
